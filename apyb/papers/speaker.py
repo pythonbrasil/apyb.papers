@@ -2,6 +2,8 @@
 from five import grok
 from plone.directives import dexterity, form
 
+from plone.namedfile.field import NamedImage
+
 from zope import schema
 
 from zope.component import getUtility
@@ -17,11 +19,12 @@ class ISpeaker(form.Schema):
     """
     A speaker
     """
+    
     form.omitted('uid')
     uid = schema.Int(
         title=_(u"uid"),
         required=False,
-        )
+    )
     #
     fullname = schema.TextLine(
         title=_(u'Fullname'),
@@ -53,7 +56,7 @@ class ISpeaker(form.Schema):
         description=_(u"Speaker's site"),
     )
     
-    image = schema.Bytes(
+    image = NamedImage(
         title=_(u"Portrait"),
         required=False,
         description=_(u"Upload an image to be used as speakers' portrait."),
@@ -73,10 +76,14 @@ class Speaker(dexterity.Item):
     def Title(self):
         return self.title
     
+    def UID(self):
+        return self.uid
+    
     @property
     def uid(self):
         intids = getUtility(IIntIds)
         return intids.getId(self)
+    
     
 class SampleView(grok.View):
     grok.context(ISpeaker)

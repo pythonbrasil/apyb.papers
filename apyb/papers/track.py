@@ -50,6 +50,9 @@ class Track(dexterity.Container):
     def Title(self):
         return self.title
     
+    def UID(self):
+        return self.uid
+    
     @property
     def uid(self):
         intids = getUtility(IIntIds)
