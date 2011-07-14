@@ -18,5 +18,8 @@
       <role name="Manager"/>
       <role name="Editor"/>
     </permission>
+
+    <permission name="apyb.papers: Allocate Talk" acquire="False">
+    </permission>
   </permissions>
 </rolemap>
