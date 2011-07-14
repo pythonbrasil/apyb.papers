@@ -8,6 +8,7 @@
 
     <!-- Include configuration for dependencies listed in setup.py -->
     <includeDependencies package="." />
+    <!-- Base permissions -->
     <permission
         id="apyb.papers.AddProgram"
         title="apyb.papers: Add Program"
@@ -24,6 +25,12 @@
         id="apyb.papers.AddSpeaker"
         title="apyb.papers: Add Speaker"
       />
+    <!-- Manage talk permissions -->
+    <permission
+        id="apyb.apers.AllocateTalk"
+        title="apyb.papers: Allocate Talk"
+      />
+    
     <!-- Grok the package to initialise schema interfaces and content classes -->
     <grok:grok package="." />
 
