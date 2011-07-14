@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from five import grok
+from Products.CMFCore.utils import getToolByName
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleVocabulary
 from zope.schema.vocabulary import SimpleTerm
@@ -65,3 +66,32 @@ class LevelVocabulary(object):
         return SimpleVocabulary(items)
 
 grok.global_utility(LevelVocabulary, name=u"apyb.papers.talk.level")
+
+class RoomVocabulary(object):
+    """Vocabulary factory for room options
+    """
+    grok.implements(IVocabularyFactory)
+    
+    def __call__(self, context):
+        rooms = [
+                 ('room1',_(u'Room 1')),
+                 ('room2',_(u'Room 2')),
+                 ]
+        items = [SimpleTerm(k,k,v) for k,v in rooms]
+        return SimpleVocabulary(items)
+
+grok.global_utility(RoomVocabulary, name=u"apyb.papers.talk.rooms")
+
+class SpeakersVocabulary(object):
+    """Vocabulary factory for speakers
+    """
+    grok.implements(IVocabularyFactory)
+    
+    def __call__(self, context):
+        ct = getToolByName(context,'portal_catalog')
+        speakers = ct.searchResults(portal_type='apyb.papers.speaker')
+        speakers = [SimpleTerm(b.uid,b.uid,b.Title) for b in speakers]
+        return SimpleVocabulary(speakers)
+
+grok.global_utility(SpeakersVocabulary, name=u"apyb.papers.speakers")
+
