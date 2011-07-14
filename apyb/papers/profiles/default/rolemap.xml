@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<rolemap>
+  <permissions>
+    <permission name="apyb.papers: Add Talk" acquire="False">
+      <role name="Manager"/>
+      <role name="Member"/>
+    </permission>
+    <permission name="apyb.papers: Add Speaker" acquire="False">
+      <role name="Manager"/>
+      <role name="Member"/>
+    </permission>
+    <permission name="apyb.papers: Add Track" acquire="False">
+      <role name="Manager"/>
+      <role name="Editor"/>
+      <role name="Contributor"/>
+    </permission>
+    <permission name="apyb.papers: Add Program" acquire="False">
+      <role name="Manager"/>
+      <role name="Editor"/>
+    </permission>
+  </permissions>
+</rolemap>

@@ -8,6 +8,22 @@
 
     <!-- Include configuration for dependencies listed in setup.py -->
     <includeDependencies package="." />
+    <permission
+        id="apyb.papers.AddProgram"
+        title="apyb.papers: Add Program"
+      />
+    <permission
+        id="apyb.papers.AddTrack"
+        title="apyb.papers: Add Track"
+      />
+    <permission
+        id="apyb.papers.AddTalk"
+        title="apyb.papers: Add Talk"
+      />
+    <permission
+        id="apyb.papers.AddSpeaker"
+        title="apyb.papers: Add Speaker"
+      />
     <!-- Grok the package to initialise schema interfaces and content classes -->
     <grok:grok package="." />
 
