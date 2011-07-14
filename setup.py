@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0'
+version = '0.5'
 
 setup(name='apyb.papers',
       version=version,
@@ -28,6 +28,8 @@ setup(name='apyb.papers',
           'plone.app.dexterity',
           'collective.autopermission',
           # -*- Extra requirements: -*-
+          'collective.behavior.contactinfo==0.8',
+          'collective.z3cform.datagridfield==0.7'
       ],
       entry_points="""
       # -*- Entry points: -*-
