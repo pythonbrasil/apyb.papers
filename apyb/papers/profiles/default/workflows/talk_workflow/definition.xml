@@ -10,6 +10,7 @@
  <permission>Access contents information</permission>
  <permission>Modify portal content</permission>
  <permission>View</permission>
+ <permission>apyb.papers: Allocate Talk</permission>
  <state state_id="created" title="Created" i18n:attributes="title">
   <description i18n:translate="">Talk was created and is available for selection.</description>
   <exit-transition transition_id="accept"/>
@@ -27,6 +28,8 @@
   <permission-map name="View" acquired="False">
    <permission-role>Anonymous</permission-role>
   </permission-map>
+  <permission-map name="apyb.papers: Allocate Talk" acquired="False" />
+
  </state>
  <state state_id="accepted" title="Accepted" i18n:attributes="title">
   <description i18n:translate="">Talk is accepted, waiting for speaker confirmation</description>
@@ -44,6 +47,11 @@
   <permission-map name="View" acquired="False">
    <permission-role>Anonymous</permission-role>
   </permission-map>
+  <permission-map name="apyb.papers: Allocate Talk" acquired="False">
+      <permission-role>Manager</permission-role>
+      <permission-role>Reviewer</permission-role>
+      <permission-role>Editor</permission-role>
+  </permission-map>
  </state>
  <state state_id="rejected" title="Rejected" i18n:attributes="title">
   <description i18n:translate="">Talk is rejected</description>
@@ -60,6 +68,7 @@
   <permission-map name="View" acquired="False">
    <permission-role>Anonymous</permission-role>
   </permission-map>
+  <permission-map name="apyb.papers: Allocate Talk" acquired="False" />
  </state>
  <state state_id="confirmed" title="Confirmed" i18n:attributes="title">
   <description i18n:translate="">Talk is confirmed by its speaker</description>
@@ -76,6 +85,11 @@
   <permission-map name="View" acquired="False">
    <permission-role>Anonymous</permission-role>
   </permission-map>
+  <permission-map name="apyb.papers: Allocate Talk" acquired="False">
+      <permission-role>Manager</permission-role>
+      <permission-role>Reviewer</permission-role>
+      <permission-role>Editor</permission-role>
+  </permission-map>
  </state>
  <state state_id="cancelled" title="Cancelled" i18n:attributes="title">
   <description i18n:translate="">Talk was cancelled</description>
@@ -91,6 +105,7 @@
   <permission-map name="View" acquired="False">
    <permission-role>Anonymous</permission-role>
   </permission-map>
+  <permission-map name="apyb.papers: Allocate Talk" acquired="False" />
  </state>
  <transition transition_id="accept"
              title="Reviewer accept talk"
