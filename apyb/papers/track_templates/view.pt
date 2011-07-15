@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="apyb.papers">
+<body>
+
+<metal:main fill-slot="content-core">
+  <metal:content-core define-macro="content-core"
+         tal:define="cfp view/can_submit">
+    <div class="stats">
+        <h2 i18n:translate="">Stats</h2>
+        <div class="stats_list">
+            <div class="stats_box">
+                <span class="stats_title" i18n:translate="">Talks</span><br />
+                <span class="stats_number" tal:content="python:len(view.talks())">12</span><br />
+            </div>
+        </div>
+    </div>
+    <div tal:condition="cfp">
+        <h2 i18n:translate="">Your talk here!</h2>
+        <div class="talk_submission" i18n:translate="">Know about this tracks's subject and is willing to share with others? </div>        
+        <div class="talk_submission"><a href="" tal:attributes="href string:${context/absolute_url}/@@new-talk" i18n:translate="">Submit your talk proposal!</a></div>        
+    </div>
+    <div class="talks">
+        <h2 i18n:translate="">Talks for this track</h2>
+        <div class="talks_details" i18n:translate="">Take a look at the talks already submitted here</div>        
+        <div tal:define="talks view/talks" class="talks_listing">
+            <tal:talks tal:repeat="talk talks">
+            <div tal:attributes="id talk/id" class="talk">
+                <span class="talk_title"><a href="" tal:attributes="href talk/getURL" tal:content="talk/Title">Plone is cool</a></span><br />
+                <span class="discreet" tal:content="python:view.speaker_name(talk.speakers)">Joe Doe</span><br />
+            </div>
+            </tal:talks>
+        </div>
+    </div>
+  </metal:content-core>
+</metal:main>
+</body>
+</html>
+
