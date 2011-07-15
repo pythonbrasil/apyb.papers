@@ -29,7 +29,6 @@
    <permission-role>Anonymous</permission-role>
   </permission-map>
   <permission-map name="apyb.papers: Allocate Talk" acquired="False" />
-
  </state>
  <state state_id="accepted" title="Accepted" i18n:attributes="title">
   <description i18n:translate="">Talk is accepted, waiting for speaker confirmation</description>
