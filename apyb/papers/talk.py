@@ -4,6 +4,7 @@ from plone.directives import dexterity, form
 from z3c.relationfield.schema import RelationChoice, RelationList
 
 from Acquisition import aq_inner, aq_parent
+from zope.component import getMultiAdapter
 
 from Products.CMFCore.utils import getToolByName
 
@@ -133,6 +134,7 @@ class ITalk(form.Schema):
     form.widget(speakers=SpeakerFieldWidget)
     speakers = schema.List(
         title=_(u'Speaker'),
+        description=_(u'Please fill in the name of the speaker. If no speaker profile was created for this name, click on Add new speaker'),
         default=[],
         value_type=schema.Choice(title=_(u"Speaker"),
                                  source=SpeakerSourceBinder()),
@@ -152,11 +154,20 @@ class ITalk(form.Schema):
         description=_(u"A description of this talk"),
     )
     #
+    dexterity.read_permission(talk_type='zope2.View')
+    dexterity.write_permission(talk_type='apyb.papers.AllocateTalk')
     talk_type = schema.Choice(
         title=_(u"Talk type"),
         required=True,
         description=_(u"Which type of talk best describes this one"),
         vocabulary='apyb.papers.talk.type',
+    )
+    #
+    language = schema.Choice(
+        title=_(u"Language"),
+        required=True,
+        description=_(u"Speaker's language"),
+        vocabulary='apyb.papers.languages',
     )
     #
     track = schema.Choice(
@@ -185,6 +196,7 @@ class ITalk(form.Schema):
     iul = schema.Bool(
         title=_(u"Do you allow your image to be used in post-conference videos?"),
         required=False,
+        default=True,
     )
     #
     form.fieldset('allocation',
@@ -192,6 +204,8 @@ class ITalk(form.Schema):
             fields=['startDate','endDate','location']
     )
     
+    dexterity.read_permission(location='zope2.View')
+    dexterity.write_permission(location='apyb.papers.AllocateTalk')    
     location = schema.Choice(
         title=_(u"Location"),
         required=False,
@@ -207,8 +221,8 @@ class ITalk(form.Schema):
         description=_(u"Talk start date"),
     )
     #
-    dexterity.read_permission(startDate='zope2.View')
-    dexterity.write_permission(startDate='apyb.papers.AllocateTalk')
+    dexterity.read_permission(endDate='zope2.View')
+    dexterity.write_permission(endDate='apyb.papers.AllocateTalk')
 #    form.widget(endDate='collective.z3cform.datetimewidget.DatetimeWidget')
     endDate = schema.Datetime(
         title=_(u"End date"),
@@ -221,24 +235,24 @@ class ITalk(form.Schema):
             fields=['presentation','video','files']
     )
     
-    dexterity.read_permission(startDate='zope2.View')
-    dexterity.write_permission(startDate='cmf.ModifyPortalContent')
+    dexterity.read_permission(presentation='zope2.View')
+    dexterity.write_permission(presentation='apyb.papers.AllocateTalk')
     presentation = schema.TextLine(
         title=_(u"Presentation file"),
         required=False,
         description=_(u"Link to the presentation file"),
     )
     #
-    dexterity.read_permission(startDate='zope2.View')
-    dexterity.write_permission(startDate='cmf.ModifyPortalContent')
+    dexterity.read_permission(video='zope2.View')
+    dexterity.write_permission(video='apyb.papers.AllocateTalk')
     video = schema.TextLine(
         title=_(u"Presentation video"),
         required=False,
         description=_(u"Link to the presentation video"),
     )
     #
-    dexterity.read_permission(startDate='zope2.View')
-    dexterity.write_permission(startDate='cmf.ModifyPortalContent')
+    dexterity.read_permission(files='zope2.View')
+    dexterity.write_permission(files='apyb.papers.AllocateTalk')
     files = schema.TextLine(
         title=_(u"Presentation files"),
         required=False,
@@ -261,8 +275,34 @@ class Talk(dexterity.Item):
         return intids.getId(self)
 
 
-class View(grok.View):
+class View(dexterity.DisplayForm):
     grok.context(ITalk)
     grok.require('zope2.View')
-
+    
+    def update(self):
+        super(View,self).update()
+        context = aq_inner(self.context)
+        self._path = '/'.join(context.getPhysicalPath())
+        self.state = getMultiAdapter((context, self.request), name=u'plone_context_state')
+        self.tools = getMultiAdapter((context, self.request), name=u'plone_tools')
+        self.portal = getMultiAdapter((context, self.request), name=u'plone_portal_state')
+        self._ct = self.tools.catalog()
+        self._mt = self.tools.membership()
+        self.member = self.portal.member()
+        roles_context = self.member.getRolesInContext(context)
+        if not self.show_border:
+            self.request['disable_border'] = True    
+    @property
+    def show_border(self):
+        ''' Is this user allowed to edit this content '''
+        return self.state.is_editable()
+        
+    def speaker_info(self):
+        ''' return information about speakers to this talk '''
+        speakers = self.context.speakers
+        ct = self._ct
+        results = ct.searchResults(portal_type='apyb.papers.speaker',UID=speakers)
+        
+        return results
+    
 
