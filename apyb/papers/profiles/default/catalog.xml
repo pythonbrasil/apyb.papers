@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<object name="portal_catalog">
+ <index name="language" meta_type="FieldIndex">
+  <indexed_attr value="language"/>
+ </index>
+ <index name="email" meta_type="FieldIndex">
+  <indexed_attr value="email"/>
+ </index>
+ <index name="level" meta_type="FieldIndex">
+  <indexed_attr value="level"/>
+ </index>
+ <index name="talk_type" meta_type="FieldIndex">
+  <indexed_attr value="talk_type"/>
+ </index>
+ <index name="speakers" meta_type="KeywordIndex">
+  <indexed_attr value="speakers"/>
+ </index>
+ <column value="organization"/>
+ <column value="language"/>
+ <column value="speakers"/>
+ <column value="level"/>
+ <column value="talk_type"/>
+ <column value="email"/>
+</object>
