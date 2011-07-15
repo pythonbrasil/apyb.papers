@@ -27,7 +27,7 @@
       />
     <!-- Manage talk permissions -->
     <permission
-        id="apyb.apers.AllocateTalk"
+        id="apyb.papers.AllocateTalk"
         title="apyb.papers: Allocate Talk"
       />
     
