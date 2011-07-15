@@ -5,6 +5,8 @@ from zope import schema
 from zope import component
 from zope.component import getMultiAdapter
 
+from Products.CMFCore.utils import getToolByName
+
 from zope.app.intid.interfaces import IIntIds
 from z3c.form import button, field, group
 from z3c.form.interfaces import DISPLAY_MODE, HIDDEN_MODE, IDataConverter, NO_VALUE
@@ -19,50 +21,26 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from collective.behavior.contactinfo.behavior.address import IAddress
 
 from apyb.papers.talk import ITalk
+from apyb.papers.talk import ITalkReference
+from apyb.papers.track import ITrack
 from apyb.papers.speaker import ISpeaker
 from apyb.papers.program import IProgram
 
 from apyb.papers import MessageFactory as _
 
-class ISpeakerForm(ISpeaker,IAddress):
-    form.fieldset('speaker',
-            label=_(u"About the speaker"),
-            fields=['fullname','description','organization','email','home_page','country','state','city', 'image']
-        )
-    form.omitted('address')
-    form.omitted('postcode')
-
-
-class SpeakerForm(form.SchemaAddForm):
-    ''' Speaker profile '''
-    grok.context(IProgram)
-    grok.require('apyb.papers.AddSpeaker')
-    grok.name('new-speaker')
-    
-    label = _(u"Speaker Profile")
-    
-    schema = ISpeakerForm
-    
-    enable_form_tabbing = False
-    
-    def create(self, data):
-        ''' Create objects '''
-        speaker = createContent('apyb.papers.speaker',checkConstraints=True, **data)
-        return speaker
-    
-    def add(self, object):
-        speaker = object
-        context = self.context
-        speakerObj = addContentToContainer(context,speaker)
-        self.immediate_view = "%s/%s" % (context.absolute_url(), speakerObj.id)
-
 class ITalkForm(ITalk):
     ''' An interface representing a talk submission form '''
     
+    form.fieldset('speaker',
+            label=_(u"About the speaker"),
+            fields=['speakers',]
+        )
+    
     form.fieldset('talk',
             label=_(u"About the talk"),
-            fields=['title','text','talk_type','track','level',]
-        )
+            fields=['title','text','talk_type','track','language','level',]
+    )
+    form.omitted('talk_type')
     form.omitted('location')
     form.omitted('startDate')
     form.omitted('endDate')
@@ -70,6 +48,7 @@ class ITalkForm(ITalk):
     form.omitted('video')
     form.omitted('files')
     
+    form.omitted('references')
     form.fieldset('metatalk',
         label=_(u"References for this talk"),
         fields=['references',]
@@ -79,7 +58,12 @@ class ITalkForm(ITalk):
         label=_(u"Legal information"),
         fields=['iul',]
     )
+
+class ITrackTalkForm(ITalkForm):
+    ''' An interface representing a talk submission form inside a track'''
     
+    form.omitted('track')
+
 
 class TalkForm(form.SchemaAddForm):
     ''' Talk submission form '''
@@ -90,44 +74,65 @@ class TalkForm(form.SchemaAddForm):
     template = ViewPageTemplateFile('templates/new_talk.pt')
     
     label = _(u"Talk submission")
+    description = _(u"")
     
     schema = ITalkForm
     
+    inside_track = False
     enable_form_tabbing = False
+    
+    def track_object(self,talk):
+        ''' Return Track which will host this talk '''
+        if self.inside_track:
+            track = self.context
+        else:
+            ct = getToolByName(self.context,'portal_catalog')
+            results = ct.searchResults(portal_type='apyb.papers.track',UID=UID)
+            if not results:
+                # oops
+                # something wrong happened, but let's be safe
+                track = self.context
+            else:
+                track = results[0].getObject()
+        
+        return track
     
     def create(self, data):
         ''' Create objects '''
-        talkfields = ['title','text','talk_type','track','level','references','iul',]
-        talkinfo = dict([(k,data.get(k)) for k in talkfields])
+        talkfields = ['speakers','title','text','talk_type','track','language','level','references','iul',]
+        talkinfo = dict([(k,data.get(k,'')) for k in talkfields])
+        if self.inside_track:
+            talkinfo['track'] = self.context.UID()
         talk = createContent('apyb.papers.talk',checkConstraints=True, **talkinfo)
-        
         return talk
     
     def add(self, object):
         talk = object
-        context = self.context
+        # We look for the right track to add the talk
+        context = self.track_object(talk)
         talkObj = addContentToContainer(context,talk)
         self.immediate_view = "%s/%s" % (context.absolute_url(), talkObj.id)
     
 
-@form.default_value(field=ISpeakerForm['country'])
-def default_country(data):
-    return u'br'
+class TrackTalkForm(TalkForm):
+    ''' Talk submission form '''
+    grok.context(ITrack)
+    
+    schema = ITrackTalkForm
+    
+    inside_track = True
 
-@form.default_value(field=ISpeakerForm['email'])
-def default_email(data):
-    state = getMultiAdapter((data.context, data.request), name=u'plone_portal_state')
-    member = state.member()
-    return member.getProperty('email')
 
-@form.default_value(field=ISpeakerForm['fullname'])
-def default_fullname(data):
+@form.default_value(field=ITalkForm['speakers'])
+def default_speakers(data):
+    tools = getMultiAdapter((data.context, data.request), name=u'plone_tools')
     state = getMultiAdapter((data.context, data.request), name=u'plone_portal_state')
+    ct = tools.catalog()
     member = state.member()
-    return member.getProperty('fullname')
-
-@form.default_value(field=ISpeakerForm['home_page'])
-def default_home_page(data):
-    state = getMultiAdapter((data.context, data.request), name=u'plone_portal_state')
-    member = state.member()
-    return member.getProperty('home_page')
+    email = member.getProperty('email')
+    results = ct.searchResults(portal_type='apyb.papers.speaker',email=email)
+    if results:
+        # We consider the first result as the most important one
+        brain = results[0]
+        UID = brain.UID
+        return [UID,]
