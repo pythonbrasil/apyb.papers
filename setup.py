@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from setuptools import setup, find_packages
 import os
 
@@ -27,6 +28,7 @@ setup(name='apyb.papers',
           'plone.app.dexterity',
           'collective.autopermission',
           # -*- Extra requirements: -*-
+          'sc.base.grokutils',
           'collective.behavior.contactinfo==0.8',
           'collective.z3cform.datagridfield==0.7',
           'collective.z3cform.datetimewidget==1.0.5',
