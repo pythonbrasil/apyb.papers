@@ -60,7 +60,7 @@ class SpeakerForm(form.SchemaAddForm):
         speakerObj = addContentToContainer(context,speaker)
         self.immediate_view = "%s/%s" % (context.absolute_url(), speakerObj.id)
 
-@form.default_value(field=ISpeakerForm['country'])
+@form.default_value(field=ISpeakerForm['country'], form=SpeakerForm)
 def default_country(data):
     return u'br'
 
