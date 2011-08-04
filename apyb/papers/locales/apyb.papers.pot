@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-07-15 05:48+0000\n"
+"POT-Creation-Date: 2011-08-04 22:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,15 +51,15 @@ msgstr ""
 msgid "About the talk"
 msgstr ""
 
-#: ../vocabularies.py:63
+#: ../vocabularies.py:46
 msgid "Advanced"
 msgstr ""
 
-#: ../vocabularies.py:17
+#: ../vocabularies.py:12
 msgid "Article / Post"
 msgstr ""
 
-#: ../vocabularies.py:61
+#: ../vocabularies.py:44
 msgid "Basic"
 msgstr ""
 
@@ -92,7 +92,7 @@ msgstr ""
 msgid "End date"
 msgstr ""
 
-#: ../vocabularies.py:106
+#: ../vocabularies.py:79
 msgid "English"
 msgstr ""
 
@@ -104,7 +104,7 @@ msgstr ""
 msgid "Inform a talk title"
 msgstr ""
 
-#: ../vocabularies.py:62
+#: ../vocabularies.py:45
 msgid "Intermediate"
 msgstr ""
 
@@ -169,7 +169,7 @@ msgstr ""
 msgid "Organization you represent"
 msgstr ""
 
-#: ../vocabularies.py:34
+#: ../vocabularies.py:23
 msgid "Panel"
 msgstr ""
 
@@ -197,11 +197,11 @@ msgstr ""
 msgid "Portrait"
 msgstr ""
 
-#: ../vocabularies.py:105
+#: ../vocabularies.py:78
 msgid "Portuguese"
 msgstr ""
 
-#: ../vocabularies.py:18
+#: ../vocabularies.py:13
 msgid "Presentation"
 msgstr ""
 
@@ -238,11 +238,11 @@ msgstr ""
 msgid "References for this talk"
 msgstr ""
 
-#: ../vocabularies.py:77
+#: ../vocabularies.py:54
 msgid "Room 1"
 msgstr ""
 
-#: ../vocabularies.py:78
+#: ../vocabularies.py:55
 msgid "Room 2"
 msgstr ""
 
@@ -254,7 +254,7 @@ msgstr ""
 msgid "Site"
 msgstr ""
 
-#: ../vocabularies.py:107
+#: ../vocabularies.py:80
 msgid "Spanish"
 msgstr ""
 
@@ -311,7 +311,7 @@ msgid "Take a look at the talks already submitted here"
 msgstr ""
 
 #: ../profiles/default/types/apyb.papers.talk.xml
-#: ../vocabularies.py:33
+#: ../vocabularies.py:22
 msgid "Talk"
 msgstr ""
 
@@ -394,7 +394,7 @@ msgstr ""
 msgid "Upload an image to be used as this track's logo."
 msgstr ""
 
-#: ../vocabularies.py:19
+#: ../vocabularies.py:14
 msgid "Video"
 msgstr ""
 

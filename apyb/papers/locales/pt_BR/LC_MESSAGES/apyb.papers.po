@@ -47,15 +47,15 @@ msgstr "Sobre o palestrante"
 msgid "About the talk"
 msgstr "Sobre a palestra"
 
-#: ../vocabularies.py:63
+#: ../vocabularies.py:46
 msgid "Advanced"
 msgstr "Avançado"
 
-#: ../vocabularies.py:17
+#: ../vocabularies.py:12
 msgid "Article / Post"
 msgstr "Artigo / Post"
 
-#: ../vocabularies.py:61
+#: ../vocabularies.py:44
 msgid "Basic"
 msgstr "Iniciante"
 
@@ -88,7 +88,7 @@ msgstr "E-mail"
 msgid "End date"
 msgstr "Término"
 
-#: ../vocabularies.py:106
+#: ../vocabularies.py:79
 msgid "English"
 msgstr "English"
 
@@ -100,7 +100,7 @@ msgstr "Nome completo"
 msgid "Inform a talk title"
 msgstr "Informe qual o título da palestra"
 
-#: ../vocabularies.py:62
+#: ../vocabularies.py:45
 msgid "Intermediate"
 msgstr "Intermediário"
 
@@ -165,7 +165,7 @@ msgstr "Instituição"
 msgid "Organization you represent"
 msgstr "Qual instituição você representa"
 
-#: ../vocabularies.py:34
+#: ../vocabularies.py:23
 msgid "Panel"
 msgstr "Painel"
 
@@ -193,11 +193,11 @@ msgstr "Link para a referência indicada"
 msgid "Portrait"
 msgstr "Foto"
 
-#: ../vocabularies.py:105
+#: ../vocabularies.py:78
 msgid "Portuguese"
 msgstr "Português"
 
-#: ../vocabularies.py:18
+#: ../vocabularies.py:13
 msgid "Presentation"
 msgstr "Apresentação"
 
@@ -234,11 +234,11 @@ msgstr "Referências"
 msgid "References for this talk"
 msgstr "Referências sobre esta palestra"
 
-#: ../vocabularies.py:77
+#: ../vocabularies.py:54
 msgid "Room 1"
 msgstr "Sala 1"
 
-#: ../vocabularies.py:78
+#: ../vocabularies.py:55
 msgid "Room 2"
 msgstr "Sala 2"
 
@@ -250,7 +250,7 @@ msgstr "Onde será realizada a palestra"
 msgid "Site"
 msgstr "Site / Blog/ Perfil"
 
-#: ../vocabularies.py:107
+#: ../vocabularies.py:80
 msgid "Spanish"
 msgstr "Español"
 
@@ -307,7 +307,7 @@ msgid "Take a look at the talks already submitted here"
 msgstr "Veja as palestras já enviadas"
 
 #: ../profiles/default/types/apyb.papers.talk.xml
-#: ../vocabularies.py:33
+#: ../vocabularies.py:22
 msgid "Talk"
 msgstr "Palestra"
 
@@ -390,7 +390,7 @@ msgstr "Faça o upload de uma imagem para ser usada como retrato do palestrante"
 msgid "Upload an image to be used as this track's logo."
 msgstr "Faça o upload de uma imagem para ser usada como logo desta trilha"
 
-#: ../vocabularies.py:19
+#: ../vocabularies.py:14
 msgid "Video"
 msgstr "Vídeo"
 
