@@ -42,6 +42,7 @@ class View(grok.View):
         self.portal = getMultiAdapter((context, self.request), name=u'plone_portal_state')
         self._ct = self.tools.catalog()
         self._mt = self.tools.membership()
+        self.is_anonymous = self.portal.anonymous()
         self.member = self.portal.member()
         roles_context = self.member.getRolesInContext(context)
         if not self.show_border:

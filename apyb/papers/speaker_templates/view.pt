@@ -6,19 +6,19 @@
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="apyb.papers">
 <body>
-
+<metal:content-description fill-slot="content-description">
+    <h2 class="speaker_org" tal:content="context/organization">APyB</h2><br />
+    <tal:image   tal:define="scale context/@@images;
+                       img python:scale.scale('image', width=75, height=75, direction='keep');">
+    <img tal:condition="img"
+         tal:replace="structure python:img.tag()" />
+     </tal:image>
+</metal:content-description>
 <metal:main fill-slot="content-core">
   <metal:content-core define-macro="content-core">
   <div class="speaker_details">
       <h2 i18n:translate="">Speaker details</h2>
       <div class="speaker_profile">
-          <tal:image   tal:define="scale context/@@images;
-                             img python:scale.scale('image', width=75, height=75, direction='keep');">
-          <img tal:condition="img"
-               tal:replace="structure python:img.tag()" />
-           </tal:image>
-          <span class="speaker_name" tal:content="context/Title">Dorneles Tremea</span><br />
-          <span class="speaker_org" tal:content="context/organization">APyB</span><br />
           <span class="speaker_bio" tal:content="context/Description">Been there, done that</span><br />
       </div>
   </div>
