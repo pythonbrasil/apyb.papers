@@ -71,9 +71,13 @@ msgstr "Curriculum"
 msgid "Cancelled"
 msgstr "Cancelada"
 
-#: ../program_templates/view.pt:32
+#: ../program_templates/view.pt:86
 msgid "Choose a track, submit a talk proposal!"
 msgstr "Escolha uma trilha, envie sua proposta de palestra!"
+
+#: ../program_templates/view.pt:41
+msgid "Click here to create an account."
+msgstr "Clique aqui para criar uma conta."
 
 #: ../profiles/default/types/apyb.papers.program.xml
 msgid "Conference Program"
@@ -112,6 +116,14 @@ msgstr "English"
 msgid "Fullname"
 msgstr "Nome completo"
 
+#: ../program_templates/view.pt:33
+msgid "If you already have an account, click here to login."
+msgstr "Caso já tenha uma conta, clique aqui para se logar."
+
+#: ../program_templates/view.pt:31
+msgid "In order to submit talk proposals to this conference you need to create an account on this site (so you can manage your talk details later on)."
+msgstr "Para enviar propostas de palestra para a PythonBrasil[7] você precisa criar uma conta neste site (para poder gerenciar suas palestras futuramente)."
+
 #: ../talk.py:146
 msgid "Inform a talk title"
 msgstr "Informe qual o título da palestra"
@@ -124,7 +136,7 @@ msgstr "Intermediário"
 msgid "Know about this tracks's subject and is willing to share with others?"
 msgstr "Conhece o assunto abordado nesta trilha? Se dispõe a compartilhar com outras pessoas?"
 
-#: ../program_templates/view.pt:33
+#: ../program_templates/view.pt:87
 msgid "Know more about our tracks"
 msgstr "Conheça as trilhas da conferência"
 
@@ -133,7 +145,7 @@ msgstr "Conheça as trilhas da conferência"
 msgid "Language"
 msgstr "Idioma"
 
-#: ../program_templates/view.pt:74
+#: ../program_templates/view.pt:128
 msgid "Last submitted talks"
 msgstr "Últimas palestras enviadas"
 
@@ -171,11 +183,11 @@ msgstr "Local"
 msgid "My Talks"
 msgstr "Minhas palestras"
 
-#: ../program_templates/view.pt:52
+#: ../program_templates/view.pt:106
 msgid "My profile"
 msgstr "Meu perfil"
 
-#: ../program_templates/view.pt:63
+#: ../program_templates/view.pt:117
 msgid "My talks"
 msgstr "Minhas palestras"
 
@@ -324,7 +336,7 @@ msgstr "Início"
 msgid "Stats"
 msgstr "Estatísticas"
 
-#: ../program_templates/view.pt:44
+#: ../program_templates/view.pt:98
 msgid "Submit talk proposal here"
 msgstr "Envie sua proposta de palestra aqui"
 
