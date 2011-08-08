@@ -1,79 +1,81 @@
+# Héctor Velarde <hector.velarde@gmail.com>, 2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: apyb.papers\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
-"Language-Code: en\n"
-"Language-Name: English\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
+"Language-Code: es\n"
+"Language-Name: Español\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: DOMAIN\n"
+"Domain: apyb.papers\n"
+"X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
 
 #: ../speaker.py:41
 msgid "A brief biografy"
-msgstr ""
+msgstr "Una breve biografía"
 
 #: ../track.py:39
 msgid "A brief description of this track."
-msgstr ""
+msgstr "Una breve descripción de este track."
 
 #: ../talk.py:154
 msgid "A description of this talk"
-msgstr ""
+msgstr "Una descripción de esta charla"
 
 #: ../profiles/default/types/apyb.papers.speaker.xml
 msgid "A speaker"
-msgstr ""
+msgstr "Un orador"
 
 #: ../profiles/default/types/apyb.papers.talk.xml
 msgid "A talk proposal"
-msgstr ""
+msgstr "Una propuesta de charla"
 
 #: ../profiles/default/types/apyb.papers.track.xml
 msgid "A track within a conference"
-msgstr ""
+msgstr "Un track dentro de una conferencia"
 
 #: ../browser/new_speaker.py:28
 #: ../browser/new_talk.py:35
 msgid "About the speaker"
-msgstr ""
+msgstr "Acerca del orador"
 
 #: ../browser/new_talk.py:40
 msgid "About the talk"
-msgstr ""
+msgstr "Acerca de la charla"
 
 #: ../portlets/my_talks.py:67
 msgid "Accepted"
-msgstr ""
+msgstr "Aceptado"
 
 #: ../vocabularies.py:46
 msgid "Advanced"
-msgstr ""
+msgstr "Avanzado"
 
 #: ../vocabularies.py:12
 msgid "Article / Post"
-msgstr ""
+msgstr "Artículo / Post"
 
 #: ../vocabularies.py:44
 msgid "Basic"
-msgstr ""
+msgstr "Básico"
 
 #: ../speaker.py:39
 msgid "Biografy"
-msgstr ""
+msgstr "Biografía"
 
 #: ../portlets/my_talks.py:70
 msgid "Cancelled"
-msgstr ""
+msgstr "Cancelada"
 
 #: ../program_templates/view.pt:86
 msgid "Choose a track, submit a talk proposal!"
-msgstr ""
+msgstr "¡Seleccione un track, envíe una propuesta de charla!"
 
 #: ../program_templates/view.pt:41
 msgid "Click here to create an account."
@@ -81,40 +83,40 @@ msgstr ""
 
 #: ../profiles/default/types/apyb.papers.program.xml
 msgid "Conference Program"
-msgstr ""
+msgstr "Programa de conferencias"
 
 #: ../portlets/my_talks.py:69
 msgid "Confirmed"
-msgstr ""
+msgstr "Confirmado"
 
 #: ../portlets/my_talks.py:66
 msgid "Created"
-msgstr ""
+msgstr "Creado"
 
 #: ../talk.py:117
 #: ../track.py:37
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #: ../talk.py:197
 msgid "Do you allow your image to be used in post-conference videos?"
-msgstr ""
+msgstr "¿Permite usted que su imagen sea utilizada en los videos post-conferencia?"
 
 #: ../speaker.py:51
 msgid "Email"
-msgstr ""
+msgstr "Correo electrónico"
 
 #: ../talk.py:228
 msgid "End date"
-msgstr ""
+msgstr "Fecha final"
 
 #: ../vocabularies.py:79
 msgid "English"
-msgstr ""
+msgstr "Inglés"
 
 #: ../speaker.py:33
 msgid "Fullname"
-msgstr ""
+msgstr "Nombre completo"
 
 #: ../program_templates/view.pt:33
 msgid "If you already have an account, click here to login."
@@ -126,331 +128,331 @@ msgstr ""
 
 #: ../talk.py:146
 msgid "Inform a talk title"
-msgstr ""
+msgstr "Título de la charla"
 
 #: ../vocabularies.py:45
 msgid "Intermediate"
-msgstr ""
+msgstr "Intermedio"
 
 #: ../track_templates/view.pt:28
 msgid "Know about this tracks's subject and is willing to share with others?"
-msgstr ""
+msgstr "¿Conoce acerca del tema de este track y está dispuesto a compartirlo con otros?"
 
 #: ../program_templates/view.pt:87
 msgid "Know more about our tracks"
-msgstr ""
+msgstr "Conozca más acerca de nuestros tracks"
 
 #: ../speaker.py:63
 #: ../talk.py:167
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
 #: ../program_templates/view.pt:128
 msgid "Last submitted talks"
-msgstr ""
+msgstr "ültima charla enviada"
 
 #: ../browser/new_talk.py:58
 msgid "Legal information"
-msgstr ""
+msgstr "Información legal"
 
 #: ../talk.py:181
 msgid "Level"
-msgstr ""
+msgstr "Nivel"
 
 #: ../talk.py:183
 msgid "Level of this talk"
-msgstr ""
+msgstr "Nivel de esta charla"
 
 #: ../talk.py:243
 msgid "Link to the presentation file"
-msgstr ""
+msgstr "Enlace al archivo de la presentación"
 
 #: ../talk.py:259
 msgid "Link to the presentation file downloads"
-msgstr ""
+msgstr "Enlace a la descarga del archivo de la presentación"
 
 #: ../talk.py:251
 msgid "Link to the presentation video"
-msgstr ""
+msgstr "Enlace al video de la presentación"
 
 #: ../talk.py:210
 msgid "Location"
-msgstr ""
+msgstr "Ubicación"
 
 #: ../portlets/my_talks.pt:10
 #: ../portlets/my_talks.py:27
 #: ../profiles/default/portlets.xml
 msgid "My Talks"
-msgstr ""
+msgstr "Mis charlas"
 
 #: ../program_templates/view.pt:106
 msgid "My profile"
-msgstr ""
+msgstr "Mi perfil"
 
 #: ../program_templates/view.pt:117
 msgid "My talks"
-msgstr ""
+msgstr "Mis charlas"
 
 #: ../speaker.py:45
 msgid "Organization"
-msgstr ""
+msgstr "Organización"
 
 #: ../speaker.py:47
 msgid "Organization you represent"
-msgstr ""
+msgstr "Organización que representa"
 
 #: ../vocabularies.py:23
 msgid "Panel"
-msgstr ""
+msgstr "Panel"
 
 #: ../talk.py:137
 msgid "Please fill in the name of the speaker. If no speaker profile was created for this name, click on Add new speaker"
-msgstr ""
+msgstr "Por favor escriba el nombre del orador. "
 
 #: ../track.py:32
 msgid "Please inform title for this track"
-msgstr ""
+msgstr "Por favor ingrese el título para este track"
 
 #: ../speaker.py:34
 msgid "Please inform your fullname"
-msgstr ""
+msgstr "Por favor ingrese su nombre completo"
 
 #: ../talk.py:118
 msgid "Please provide a brief description of this reference"
-msgstr ""
+msgstr "Por favor ingrese una breve descripción de esta referencia"
 
 #: ../talk.py:112
 msgid "Please provide a link to the reference"
-msgstr ""
+msgstr "Por favor proporcione un enlace a esta referencia"
 
 #: ../profiles/default/portlets.xml
 msgid "Portlet listing my talk submissions"
-msgstr ""
+msgstr "Listado de charlas enviadas"
 
 #: ../speaker.py:70
 msgid "Portrait"
-msgstr ""
+msgstr "Retrato"
 
 #: ../vocabularies.py:78
 msgid "Portuguese"
-msgstr ""
+msgstr "Portugués"
 
 #: ../vocabularies.py:13
 msgid "Presentation"
-msgstr ""
+msgstr "Presentación"
 
 #: ../talk.py:241
 msgid "Presentation file"
-msgstr ""
+msgstr "Archivo de la presentación"
 
 #: ../talk.py:257
 msgid "Presentation files"
-msgstr ""
+msgstr "Archivos de la presentación"
 
 #: ../talk.py:249
 msgid "Presentation video"
-msgstr ""
+msgstr "Video de la presentación"
 
 #: ../profiles/default/types/apyb.papers.program.xml
 msgid "Program"
-msgstr ""
+msgstr "Programa"
 
 #: ../talk.py:192
 msgid "Reference"
-msgstr ""
+msgstr "Referencia"
 
 #: ../talk.py:104
 msgid "Reference type"
-msgstr ""
+msgstr "Tipo de referencia"
 
 #: ../talk.py:189
 msgid "References"
-msgstr ""
+msgstr "Referencias"
 
 #: ../browser/new_talk.py:53
 #: ../talk.py:191
 msgid "References for this talk"
-msgstr ""
+msgstr "Referencias para esta charla"
 
 #: ../portlets/my_talks.py:68
 msgid "Rejected"
-msgstr ""
+msgstr "Rechazada"
 
 #: ../vocabularies.py:54
 msgid "Room 1"
-msgstr ""
+msgstr "Salón 1"
 
 #: ../vocabularies.py:55
 msgid "Room 2"
-msgstr ""
+msgstr "Salón 2"
 
 #: ../talk.py:212
 msgid "Room where this talk will be presented"
-msgstr ""
+msgstr "Salón donde se presentará la plática"
 
 #: ../speaker.py:57
 msgid "Site"
-msgstr ""
+msgstr "Sitio"
 
 #: ../vocabularies.py:80
 msgid "Spanish"
-msgstr ""
+msgstr "Español"
 
 #: ../profiles/default/types/apyb.papers.speaker.xml
 #: ../talk.py:136
 msgid "Speaker"
-msgstr ""
+msgstr "Orador"
 
 #: ../browser/new_speaker.py:41
 msgid "Speaker Profile"
-msgstr ""
+msgstr "Perfil del orador"
 
 #: ../speaker_templates/view.pt:13
 #: ../talk_templates/view.pt:36
 msgid "Speaker details"
-msgstr ""
+msgstr "Detalles del orador"
 
 #: ../speaker.py:53
 msgid "Speaker's email"
-msgstr ""
+msgstr "Correo electrónico del orador"
 
 #: ../speaker.py:65
 #: ../talk.py:169
 msgid "Speaker's language"
-msgstr ""
+msgstr "Idioma del orador"
 
 #: ../speaker.py:59
 msgid "Speaker's site"
-msgstr ""
+msgstr "Sitio web del orador"
 
 #: ../program_templates/view.pt:25
 msgid "Speakers"
-msgstr ""
+msgstr "Oradores"
 
 #: ../talk.py:219
 msgid "Start date"
-msgstr ""
+msgstr "Fecha inicial"
 
 #: ../program_templates/view.pt:14
 #: ../track_templates/view.pt:18
 msgid "Stats"
-msgstr ""
+msgstr "Estadísticas"
 
 #: ../program_templates/view.pt:98
 msgid "Submit talk proposal here"
-msgstr ""
+msgstr "Envíe una propuesta de charla aquí"
 
 #: ../track_templates/view.pt:29
 msgid "Submit your talk proposal!"
-msgstr ""
+msgstr "¡Envíe la propuesta de su charla!"
 
 #: ../track_templates/view.pt:33
 msgid "Take a look at the talks already submitted here"
-msgstr ""
+msgstr "De una ojeada a las charlas enviadas hasta ahora"
 
 #: ../profiles/default/types/apyb.papers.talk.xml
 #: ../vocabularies.py:22
 msgid "Talk"
-msgstr ""
+msgstr "Charla"
 
 #: ../talk.py:203
 msgid "Talk Allocation"
-msgstr ""
+msgstr "Asignación de la charla"
 
 #: ../talk.py:145
 msgid "Talk Title"
-msgstr ""
+msgstr "Título de la charla"
 
 #: ../talk.py:152
 #: ../talk_templates/view.pt:12
 msgid "Talk details"
-msgstr ""
+msgstr "Detalles de la charla"
 
 #: ../talk.py:230
 msgid "Talk end date"
-msgstr ""
+msgstr "Fecha final de la charla"
 
 #: ../talk.py:234
 msgid "Talk materials"
-msgstr ""
+msgstr "Materiales de la charla"
 
 #: ../talk.py:221
 msgid "Talk start date"
-msgstr ""
+msgstr "Fecha inicial de la charla"
 
 #: ../browser/new_talk.py:76
 msgid "Talk submission"
-msgstr ""
+msgstr "Charla enviada"
 
 #: ../talk.py:160
 msgid "Talk type"
-msgstr ""
+msgstr "Tipo de charla"
 
 #: ../program_templates/view.pt:21
 #: ../track_templates/view.pt:21
 msgid "Talks"
-msgstr ""
+msgstr "Charlas"
 
 #: ../speaker_templates/view.pt:26
 msgid "Talks by this speaker"
-msgstr ""
+msgstr "Charlas de este orador"
 
 #: ../track_templates/view.pt:32
 msgid "Talks for this track"
-msgstr ""
+msgstr "Charlas para este track"
 
 #: ../track.py:31
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #: ../profiles/default/types/apyb.papers.track.xml
 #: ../talk.py:174
 msgid "Track"
-msgstr ""
+msgstr "Track"
 
 #: ../track.py:43
 msgid "Track Logo"
-msgstr ""
+msgstr "Logo del track"
 
 #: ../program_templates/view.pt:17
 msgid "Tracks"
-msgstr ""
+msgstr "Tracks"
 
 #: ../talk.py:105
 msgid "Type of this reference"
-msgstr ""
+msgstr "Tipo de esta referencia"
 
 #: ../talk.py:111
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: ../speaker.py:72
 msgid "Upload an image to be used as speakers' portrait."
-msgstr ""
+msgstr "Cargue la imagen que será usada como retrato del orador."
 
 #: ../track.py:45
 msgid "Upload an image to be used as this track's logo."
-msgstr ""
+msgstr "Cargue la imagen que será usada como logo de este track."
 
 #: ../vocabularies.py:14
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 #: ../talk.py:176
 msgid "Which track this talk is"
-msgstr ""
+msgstr "A qué track pertenece la charla"
 
 #: ../talk.py:162
 msgid "Which type of talk best describes this one"
-msgstr ""
+msgstr "Qué tipo de charla describe mejor a esta"
 
 #: ../track_templates/view.pt:27
 msgid "Your talk here!"
-msgstr ""
+msgstr "¡Su charla aquí!"
 
 #: ../speaker.py:28
 #: ../talk.py:130
 #: ../track.py:26
 msgid "uid"
-msgstr ""
+msgstr "uid"
 
