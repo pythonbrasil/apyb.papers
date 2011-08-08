@@ -95,7 +95,7 @@
                      tal:replace="structure python:img.tag()"/></a>
                 <a href="" tal:attributes="href string:${track/getURL}"><span class="track_title" tal:content="track/Title">Plone</span></a><br />
                 <span class="discreet" tal:content="track/Description">Plone is a CMS written in Python</span><br />
-                <a href="" tal:condition="cfp" 
+                <a href="" tal:condition="python:('keynote' not in track.getId) and cfp" 
                    tal:attributes="href string:${track/getURL}/@@new-talk"
                    i18n:translate="">Submit talk proposal here</a>
             </div>
