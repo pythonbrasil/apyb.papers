@@ -60,6 +60,10 @@ class View(grok.View):
         ''' Is this user allowed to edit this content '''
         return self.state.is_editable()
     
+    @property
+    def login_url(self):
+        return '%s/login' % self.portal.portal_url()
+    
     def speaker_name(self,speaker_uids):
         ''' Given a list os uids, we return a string with speakers names '''
         ct = self._ct
