@@ -64,6 +64,10 @@ class View(grok.View):
     def login_url(self):
         return '%s/login' % self.portal.portal_url()
     
+    @property
+    def register_url(self):
+        return '%s/@@register' % self.portal.portal_url()
+    
     def speaker_name(self,speaker_uids):
         ''' Given a list os uids, we return a string with speakers names '''
         ct = self._ct
