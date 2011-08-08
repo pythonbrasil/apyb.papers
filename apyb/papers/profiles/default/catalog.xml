@@ -15,10 +15,14 @@
  <index name="speakers" meta_type="KeywordIndex">
   <indexed_attr value="speakers"/>
  </index>
+ <index name="track" meta_type="FieldIndex">
+  <indexed_attr value="track"/>
+ </index>
  <column value="organization"/>
  <column value="language"/>
  <column value="speakers"/>
  <column value="level"/>
  <column value="talk_type"/>
  <column value="email"/>
+ <column value="track"/>
 </object>
