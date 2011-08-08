@@ -38,7 +38,8 @@
 
     <!-- Register an extension profile to make the product installable -->
   <include package=".behavior" />
-
+  <include package=".portlets" />
+  
   <genericsetup:registerProfile
       name="default"
       title="Conference talks management"
