@@ -34,10 +34,10 @@ class Renderer(base.Renderer):
     def __init__(self, *args):
         base.Renderer.__init__(self, *args)
 
-        portal_state = getMultiAdapter((self.context, self.request), name=u'plone_portal_state')
-        self.navigation_root_url = portal_state.navigation_root_url()
-        self.portal = portal_state.portal()
-        self.navigation_root_path = portal_state.navigation_root_path()
+        self.portal_state = getMultiAdapter((self.context, self.request), name=u'plone_portal_state')
+        self.navigation_root_url = self.portal_state.navigation_root_url()
+        self.portal = self.portal_state.portal()
+        self.navigation_root_path = self.portal_state.navigation_root_path()
         self.navigation_root_object = getNavigationRootObject(self.context, self.portal)
     
     def render(self):
@@ -52,11 +52,13 @@ class Renderer(base.Renderer):
         return self._data()
     
     def _data(self):
+        member = self.portal_state.member()
         context = aq_inner(self.context)
         catalog = getToolByName(context, 'portal_catalog')
         path = self.navigation_root_path
         return catalog(portal_type='apyb.papers.talk',
                        path=path,
+                       Creator=member.getUserName(),
                        sort_on='sortable_title')
     
     def review_state(self,value):
