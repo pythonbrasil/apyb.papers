@@ -71,8 +71,12 @@ msgstr ""
 msgid "Cancelled"
 msgstr ""
 
-#: ../program_templates/view.pt:32
+#: ../program_templates/view.pt:86
 msgid "Choose a track, submit a talk proposal!"
+msgstr ""
+
+#: ../program_templates/view.pt:41
+msgid "Click here to create an account."
 msgstr ""
 
 #: ../profiles/default/types/apyb.papers.program.xml
@@ -112,6 +116,14 @@ msgstr ""
 msgid "Fullname"
 msgstr ""
 
+#: ../program_templates/view.pt:33
+msgid "If you already have an account, click here to login."
+msgstr ""
+
+#: ../program_templates/view.pt:31
+msgid "In order to submit talk proposals to this conference you need to create an account on this site (so you can manage your talk details later on)."
+msgstr ""
+
 #: ../talk.py:146
 msgid "Inform a talk title"
 msgstr ""
@@ -124,7 +136,7 @@ msgstr ""
 msgid "Know about this tracks's subject and is willing to share with others?"
 msgstr ""
 
-#: ../program_templates/view.pt:33
+#: ../program_templates/view.pt:87
 msgid "Know more about our tracks"
 msgstr ""
 
@@ -133,7 +145,7 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-#: ../program_templates/view.pt:74
+#: ../program_templates/view.pt:128
 msgid "Last submitted talks"
 msgstr ""
 
@@ -171,11 +183,11 @@ msgstr ""
 msgid "My Talks"
 msgstr ""
 
-#: ../program_templates/view.pt:52
+#: ../program_templates/view.pt:106
 msgid "My profile"
 msgstr ""
 
-#: ../program_templates/view.pt:63
+#: ../program_templates/view.pt:117
 msgid "My talks"
 msgstr ""
 
@@ -324,7 +336,7 @@ msgstr ""
 msgid "Stats"
 msgstr ""
 
-#: ../program_templates/view.pt:44
+#: ../program_templates/view.pt:98
 msgid "Submit talk proposal here"
 msgstr ""
 
