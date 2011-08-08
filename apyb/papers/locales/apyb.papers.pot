@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-08-04 22:13+0000\n"
+"POT-Creation-Date: 2011-08-08 19:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,6 +51,10 @@ msgstr ""
 msgid "About the talk"
 msgstr ""
 
+#: ../portlets/my_talks.py:67
+msgid "Accepted"
+msgstr ""
+
 #: ../vocabularies.py:46
 msgid "Advanced"
 msgstr ""
@@ -67,12 +71,24 @@ msgstr ""
 msgid "Biografy"
 msgstr ""
 
+#: ../portlets/my_talks.py:70
+msgid "Cancelled"
+msgstr ""
+
 #: ../program_templates/view.pt:32
 msgid "Choose a track, submit a talk proposal!"
 msgstr ""
 
 #: ../profiles/default/types/apyb.papers.program.xml
 msgid "Conference Program"
+msgstr ""
+
+#: ../portlets/my_talks.py:69
+msgid "Confirmed"
+msgstr ""
+
+#: ../portlets/my_talks.py:66
+msgid "Created"
 msgstr ""
 
 #: ../talk.py:117
@@ -108,7 +124,7 @@ msgstr ""
 msgid "Intermediate"
 msgstr ""
 
-#: ../track_templates/view.pt:24
+#: ../track_templates/view.pt:28
 msgid "Know about this tracks's subject and is willing to share with others?"
 msgstr ""
 
@@ -153,6 +169,12 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
+#: ../portlets/my_talks.pt:10
+#: ../portlets/my_talks.py:27
+#: ../profiles/default/portlets.xml
+msgid "My Talks"
+msgstr ""
+
 #: ../program_templates/view.pt:52
 msgid "My profile"
 msgstr ""
@@ -191,6 +213,10 @@ msgstr ""
 
 #: ../talk.py:112
 msgid "Please provide a link to the reference"
+msgstr ""
+
+#: ../profiles/default/portlets.xml
+msgid "Portlet listing my talk submissions"
 msgstr ""
 
 #: ../speaker.py:70
@@ -236,6 +262,10 @@ msgstr ""
 #: ../browser/new_talk.py:53
 #: ../talk.py:191
 msgid "References for this talk"
+msgstr ""
+
+#: ../portlets/my_talks.py:68
+msgid "Rejected"
 msgstr ""
 
 #: ../vocabularies.py:54
@@ -294,7 +324,7 @@ msgid "Start date"
 msgstr ""
 
 #: ../program_templates/view.pt:14
-#: ../track_templates/view.pt:14
+#: ../track_templates/view.pt:18
 msgid "Stats"
 msgstr ""
 
@@ -302,11 +332,11 @@ msgstr ""
 msgid "Submit talk proposal here"
 msgstr ""
 
-#: ../track_templates/view.pt:25
+#: ../track_templates/view.pt:29
 msgid "Submit your talk proposal!"
 msgstr ""
 
-#: ../track_templates/view.pt:29
+#: ../track_templates/view.pt:33
 msgid "Take a look at the talks already submitted here"
 msgstr ""
 
@@ -349,7 +379,7 @@ msgid "Talk type"
 msgstr ""
 
 #: ../program_templates/view.pt:21
-#: ../track_templates/view.pt:17
+#: ../track_templates/view.pt:21
 msgid "Talks"
 msgstr ""
 
@@ -357,7 +387,7 @@ msgstr ""
 msgid "Talks by this speaker"
 msgstr ""
 
-#: ../track_templates/view.pt:28
+#: ../track_templates/view.pt:32
 msgid "Talks for this track"
 msgstr ""
 
@@ -406,7 +436,7 @@ msgstr ""
 msgid "Which type of talk best describes this one"
 msgstr ""
 
-#: ../track_templates/view.pt:23
+#: ../track_templates/view.pt:27
 msgid "Your talk here!"
 msgstr ""
 

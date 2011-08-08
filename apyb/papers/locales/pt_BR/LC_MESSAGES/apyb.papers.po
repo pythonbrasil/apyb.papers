@@ -47,6 +47,10 @@ msgstr "Sobre o palestrante"
 msgid "About the talk"
 msgstr "Sobre a palestra"
 
+#: ../portlets/my_talks.py:67
+msgid "Accepted"
+msgstr "Aceita"
+
 #: ../vocabularies.py:46
 msgid "Advanced"
 msgstr "Avançado"
@@ -63,6 +67,10 @@ msgstr "Iniciante"
 msgid "Biografy"
 msgstr "Curriculum"
 
+#: ../portlets/my_talks.py:70
+msgid "Cancelled"
+msgstr "Cancelada"
+
 #: ../program_templates/view.pt:32
 msgid "Choose a track, submit a talk proposal!"
 msgstr "Escolha uma trilha, envie sua proposta de palestra!"
@@ -70,6 +78,14 @@ msgstr "Escolha uma trilha, envie sua proposta de palestra!"
 #: ../profiles/default/types/apyb.papers.program.xml
 msgid "Conference Program"
 msgstr "Programação da conferência"
+
+#: ../portlets/my_talks.py:69
+msgid "Confirmed"
+msgstr "Confirmado"
+
+#: ../portlets/my_talks.py:66
+msgid "Created"
+msgstr "Criada"
 
 #: ../talk.py:117
 #: ../track.py:37
@@ -104,7 +120,7 @@ msgstr "Informe qual o título da palestra"
 msgid "Intermediate"
 msgstr "Intermediário"
 
-#: ../track_templates/view.pt:24
+#: ../track_templates/view.pt:28
 msgid "Know about this tracks's subject and is willing to share with others?"
 msgstr "Conhece o assunto abordado nesta trilha? Se dispõe a compartilhar com outras pessoas?"
 
@@ -149,6 +165,12 @@ msgstr "Link para o vídeo da apresentação"
 msgid "Location"
 msgstr "Local"
 
+#: ../portlets/my_talks.pt:10
+#: ../portlets/my_talks.py:27
+#: ../profiles/default/portlets.xml
+msgid "My Talks"
+msgstr "Minhas palestras"
+
 #: ../program_templates/view.pt:52
 msgid "My profile"
 msgstr "Meu perfil"
@@ -188,6 +210,10 @@ msgstr "Sobre o que se trata esta referência?"
 #: ../talk.py:112
 msgid "Please provide a link to the reference"
 msgstr "Link para a referência indicada"
+
+#: ../profiles/default/portlets.xml
+msgid "Portlet listing my talk submissions"
+msgstr "Portlet listando minhas propostas de palestras"
 
 #: ../speaker.py:70
 msgid "Portrait"
@@ -233,6 +259,10 @@ msgstr "Referências"
 #: ../talk.py:191
 msgid "References for this talk"
 msgstr "Referências sobre esta palestra"
+
+#: ../portlets/my_talks.py:68
+msgid "Rejected"
+msgstr "Rejeitada"
 
 #: ../vocabularies.py:54
 msgid "Room 1"
@@ -290,7 +320,7 @@ msgid "Start date"
 msgstr "Início"
 
 #: ../program_templates/view.pt:14
-#: ../track_templates/view.pt:14
+#: ../track_templates/view.pt:18
 msgid "Stats"
 msgstr "Estatísticas"
 
@@ -298,11 +328,11 @@ msgstr "Estatísticas"
 msgid "Submit talk proposal here"
 msgstr "Envie sua proposta de palestra aqui"
 
-#: ../track_templates/view.pt:25
+#: ../track_templates/view.pt:29
 msgid "Submit your talk proposal!"
 msgstr "Envie sua proposta de palestra!"
 
-#: ../track_templates/view.pt:29
+#: ../track_templates/view.pt:33
 msgid "Take a look at the talks already submitted here"
 msgstr "Veja as palestras já enviadas"
 
@@ -345,7 +375,7 @@ msgid "Talk type"
 msgstr "Tipo de apresentação"
 
 #: ../program_templates/view.pt:21
-#: ../track_templates/view.pt:17
+#: ../track_templates/view.pt:21
 msgid "Talks"
 msgstr "Palestras"
 
@@ -353,7 +383,7 @@ msgstr "Palestras"
 msgid "Talks by this speaker"
 msgstr "Palestras desta pessoa"
 
-#: ../track_templates/view.pt:28
+#: ../track_templates/view.pt:32
 msgid "Talks for this track"
 msgstr "Palestras nesta trilha"
 
@@ -402,7 +432,7 @@ msgstr "A qual trilha esta palestra pertence"
 msgid "Which type of talk best describes this one"
 msgstr "Como esta apresentação pode ser melhor categorizada"
 
-#: ../track_templates/view.pt:23
+#: ../track_templates/view.pt:27
 msgid "Your talk here!"
 msgstr "Sua palestra aqui!"
 
