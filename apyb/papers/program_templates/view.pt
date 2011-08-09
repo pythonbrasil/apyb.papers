@@ -27,6 +27,7 @@
             </div>
         </div>
     </div>
+    <div class="clear"> </div>
      <div tal:condition="view/is_anonymous">
          <span i18n:translate="">In order to submit talk proposals to this conference you need to create an account on this site (so you can manage your talk details later on).</span><br/><br/>
          <span>
@@ -81,6 +82,7 @@
          });
          </script>
     </div>
+    <div class="clear"> </div>
     <div class="tracks">
         <h2 i18n:translate="">Tracks</h2>
         <div class="track_text" i18n:translate="" tal:condition="cfp">Choose a track, submit a talk proposal!</div>
@@ -102,6 +104,7 @@
             </tal:tracks>
         </div>
     </div>
+    <div class="clear"> </div>
     <div class="my-profile" tal:condition="view/my_profiles">
         <h2 i18n:translate="">My profile</h2>
         <div tal:define="speakers view/my_profiles" class="speakers_listing">
@@ -113,6 +116,7 @@
             </tal:speakers>
         </div>
     </div>
+    <div class="clear"> </div>
     <div class="my-talks" tal:condition="view/my_talks">
         <h2 i18n:translate="">My talks</h2>
         <div tal:define="talks view/my_talks" class="talks_listing">
@@ -124,6 +128,7 @@
             </tal:talks>
         </div>
     </div>
+    <div class="clear"> </div>
     <div class="talks">
         <h2 i18n:translate="">Last submitted talks</h2>
         <div tal:define="talks view/last_talks" class="talks_listing">
