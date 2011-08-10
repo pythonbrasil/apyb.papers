@@ -61,11 +61,24 @@ class SpeakerSource(object):
     implements(IQuerySource)
 
     def __init__(self, context):
-        self.context = context
-        catalog = getToolByName(context, 'portal_catalog')
-        self.speakers = catalog.searchResults(portal_type='apyb.papers.speaker')
-        self.vocab = SimpleVocabulary([SimpleTerm(b.UID,b.UID,b.Title) for b in self.speakers if hasattr(b,'UID')])
-
+        self.context = aq_inner(context)
+    
+    @property
+    def speakers(self):
+        mt = getToolByName(self.context,'portal_membership')
+        ct = getToolByName(self.context,'portal_catalog')
+        member = mt.getAuthenticatedMember()
+        rolesHere = member.getRolesInContext(self.context)
+        dictSearch = {'portal_type':'apyb.papers.speaker','sort_on':'sortable_title'}
+        if not [r for r in rolesHere if r in ['Manager','Reviewer']]:
+            # Only list profiles created by this user
+            dictSearch['Creator'] = member.getUserName()
+        return ct.searchResults(**dictSearch)
+        
+    @property
+    def vocab(self):
+        return SimpleVocabulary([SimpleTerm(b.UID,b.UID,b.Title) for b in self.speakers if hasattr(b,'UID')])
+    
     def __contains__(self, term):
         return self.vocab.__contains__(term)
 
@@ -282,6 +295,7 @@ class View(dexterity.DisplayForm):
     def update(self):
         super(View,self).update()
         context = aq_inner(self.context)
+        self.context = context
         self._path = '/'.join(context.getPhysicalPath())
         self.state = getMultiAdapter((context, self.request), name=u'plone_context_state')
         self.tools = getMultiAdapter((context, self.request), name=u'plone_tools')
@@ -296,7 +310,14 @@ class View(dexterity.DisplayForm):
     def show_border(self):
         ''' Is this user allowed to edit this content '''
         return self.state.is_editable()
-        
+    
+    @property
+    def show_references(self):
+        ''' If this talk has references, show it '''
+        context = self.context
+        references = context.references
+        return references.strip()
+    
     def speaker_info(self):
         ''' return information about speakers to this talk '''
         speakers = self.context.speakers

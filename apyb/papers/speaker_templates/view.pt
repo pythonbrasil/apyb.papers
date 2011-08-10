@@ -9,7 +9,7 @@
 <metal:content-description fill-slot="content-description">
     <h2 class="speaker_org" tal:content="context/organization">APyB</h2><br />
     <tal:image   tal:define="scale context/@@images;
-                       img python:scale.scale('image', width=75, height=75, direction='keep');">
+                       img python:scale.scale('image', width=200, height=200, direction='keep');">
     <img tal:condition="img"
          tal:replace="structure python:img.tag()" />
      </tal:image>
