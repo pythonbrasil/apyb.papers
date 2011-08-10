@@ -20,17 +20,20 @@
   <metal:content-core define-macro="content-core">
     <div class="talk_details">
         <h2 i18n:translate="">Talk details</h2>
-        <div>Language: 
+        <div>
+            <strong i18n:translate="">Language:</strong>
             <span tal:define="widget view/widgets/language;
                               token context/language;" 
                   tal:content="python:widget.terms.getTermByToken(token).title" />
         </div> 
-        <div>Level: 
+        <div>
+            <strong i18n:translate="">Level:</strong> 
             <span tal:define="widget view/widgets/level;
                               token context/level" 
                   tal:content="python:widget.terms.getTermByToken(token).title" />
         </div> 
-        <div>Description: 
+        <div>
+            <strong i18n:translate="">Summary:</strong>
             <div tal:replace="structure context/text" />
         </div> 
         <div tal:condition="view/show_references">Reference: 
@@ -48,6 +51,7 @@
              </tal:image>
             <span class="speaker_name" tal:content="speaker/Title">Dorneles Tremea</span><br />
             <span class="speaker_bio" tal:content="speaker/Description">Been there, done that</span><br />
+            <div class="clear"> </div>
         </div>
     </div>
   </metal:content-core>
