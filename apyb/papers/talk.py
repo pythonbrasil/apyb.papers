@@ -65,12 +65,19 @@ class SpeakerSource(object):
     
     @property
     def speakers(self):
+        return self.find_speakers()
+    
+    @property
+    def all_speakers(self):
+        return self.find_speakers(filter=False)
+    
+    def find_speakers(self, filter=True):
         mt = getToolByName(self.context,'portal_membership')
         ct = getToolByName(self.context,'portal_catalog')
         member = mt.getAuthenticatedMember()
         rolesHere = member.getRolesInContext(self.context)
         dictSearch = {'portal_type':'apyb.papers.speaker','sort_on':'sortable_title'}
-        if not [r for r in rolesHere if r in ['Manager','Reviewer']]:
+        if filter and not [r for r in rolesHere if r in ['Manager','Reviewer']]:
             # Only list profiles created by this user
             dictSearch['Creator'] = member.getUserName()
         return ct.searchResults(**dictSearch)
@@ -78,6 +85,10 @@ class SpeakerSource(object):
     @property
     def vocab(self):
         return SimpleVocabulary([SimpleTerm(b.UID,b.UID,b.Title) for b in self.speakers if hasattr(b,'UID')])
+    
+    @property
+    def unfiltered_vocab(self):
+        return SimpleVocabulary([SimpleTerm(b.UID,b.UID,b.Title) for b in self.all_speakers if hasattr(b,'UID')])
     
     def __contains__(self, term):
         return self.vocab.__contains__(term)
@@ -89,10 +100,18 @@ class SpeakerSource(object):
         return self.vocab.__len__()
 
     def getTerm(self, value):
-        return self.vocab.getTerm(value)
+        try:
+            term = self.vocab.getTerm(value)
+        except LookupError:
+            term = self.unfiltered_vocab.getTerm(value)
+        return term
 
     def getTermByToken(self, value):
-        return self.vocab.getTermByToken(value)
+        try:
+            term = self.vocab.getTermByToken(value)
+        except LookupError:
+            term = self.unfiltered_vocab.getTermByToken(value)
+        return term
     
     def normalizeString(self,value):
         context = self.context
