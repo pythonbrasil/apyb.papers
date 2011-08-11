@@ -335,7 +335,7 @@ class View(dexterity.DisplayForm):
         ''' If this talk has references, show it '''
         context = self.context
         references = context.references
-        return references.strip()
+        return references
     
     def speaker_info(self):
         ''' return information about speakers to this talk '''
