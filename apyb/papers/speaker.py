@@ -130,6 +130,6 @@ class View(grok.View):
     def my_talks(self):
         ''' Return a list of my talks '''
         results = self._ct.searchResults(portal_type='apyb.papers.talk', 
-                                         Creator=self.context.email,
+                                         speakers=[self.context.UID(),],
                                          sort_on='sortable_title')
         return results
