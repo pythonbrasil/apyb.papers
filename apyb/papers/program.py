@@ -126,7 +126,7 @@ class Speakers(grok.View):
     grok.name('speakers')
     
     def update(self):
-        super(View,self).update()
+        super(Speakers,self).update()
         context = aq_inner(self.context)
         self._path = '/'.join(context.getPhysicalPath())
         self.state = getMultiAdapter((context, self.request), name=u'plone_context_state')
@@ -135,7 +135,7 @@ class Speakers(grok.View):
         self._ct = self.tools.catalog()
         self.member = self.portal.member()
         roles_context = self.member.getRolesInContext(context)
-        if not show_border:
+        if not self.show_border:
             self.request['disable_border'] = True
     
     
