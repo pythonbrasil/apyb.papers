@@ -2,6 +2,8 @@
 from five import grok
 from plone.directives import dexterity, form
 
+from random import shuffle
+
 from Acquisition import aq_inner
 from zope.component import getMultiAdapter
 
@@ -83,7 +85,6 @@ class View(grok.View):
         if not self.show_border:
             self.request['disable_border'] = True
     
-    
     def speaker_name(self,speaker_uids):
         ''' Given a list os uids, we return a string with speakers names '''
         ct = self._ct
@@ -107,4 +108,17 @@ class View(grok.View):
                                          path=self._path,
                                          sort_on='sortable_title')
         return results
+    
+
+class OrganizeView(View):
+    grok.context(ITrack)
+    grok.name('order-talks')
+    grok.require('apyb.papers.OrganizeTalk')
+    
+    def talks(self):
+        ''' Return a randomized list of talks '''
+        talks = super(OrganizeView,self).talks()
+        talks = [talk for talk in talks]
+        shuffle(talks)
+        return talks
     
