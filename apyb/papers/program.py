@@ -122,7 +122,7 @@ class View(grok.View):
     
 class Speakers(grok.View):
     grok.context(IProgram)
-    grok.require('zope2.View')
+    grok.require('cmf.ReviewPortalContent')
     grok.name('speakers')
     
     def update(self):
@@ -138,6 +138,23 @@ class Speakers(grok.View):
         if not self.show_border:
             self.request['disable_border'] = True
     
+    
+    def talks_speakers(self):
+        ''' Return a dict of talks per speaker '''
+        results = self._ct.searchResults(portal_type='apyb.papers.talk', 
+                                         path=self._path,
+                                         sort_on='sortable_title')
+        talks_speakers = {}
+        for brain in results:
+            speakers = brain.speakers
+            talk = {'title':brain.Title,
+                    'url':brain.getURL(),
+                    'review_state':brain.review_state}
+            for speaker in speakers:
+                if not speaker in talks_speakers:
+                    talks_speakers[speaker] = []
+                talks_speakers[speaker].append(talk)
+        return talks_speakers
     
     def speakers(self):
         ''' Return a list of speakers in here '''
