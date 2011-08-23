@@ -30,6 +30,11 @@
         id="apyb.papers.AllocateTalk"
         title="apyb.papers: Allocate Talk"
       />
+    <!-- Organize talks inside a track -->
+    <permission
+        id="apyb.papers.OrganizeTalk"
+        title="apyb.papers: Organize Talk"
+      />
     
     <!-- Grok the package to initialise schema interfaces and content classes -->
     <grok:grok package="." />
