@@ -18,11 +18,11 @@ msgstr ""
 msgid "A brief biografy"
 msgstr "Curriculum do palestrante"
 
-#: ../track.py:39
+#: ../track.py:49
 msgid "A brief description of this track."
 msgstr "Uma descrição sobre esta trilha"
 
-#: ../talk.py:154
+#: ../talk.py:186
 msgid "A description of this talk"
 msgstr "Uma descrição sobre esta palestra"
 
@@ -71,11 +71,11 @@ msgstr "Curriculum"
 msgid "Cancelled"
 msgstr "Cancelada"
 
-#: ../program_templates/view.pt:86
+#: ../program_templates/view.pt:88
 msgid "Choose a track, submit a talk proposal!"
 msgstr "Escolha uma trilha, envie sua proposta de palestra!"
 
-#: ../program_templates/view.pt:41
+#: ../program_templates/view.pt:42
 msgid "Click here to create an account."
 msgstr "Clique aqui para criar uma conta."
 
@@ -91,20 +91,24 @@ msgstr "Confirmado"
 msgid "Created"
 msgstr "Criada"
 
-#: ../talk.py:117
-#: ../track.py:37
+#: ../talk.py:149
+#: ../track.py:47
 msgid "Description"
 msgstr "Descrição"
 
-#: ../talk.py:197
+#: ../talk.py:229
 msgid "Do you allow your image to be used in post-conference videos?"
 msgstr "Você permite que sua imagem seja utilizada nos vídeos da conferência?"
+
+#: ../program_templates/speakers.pt:22
+msgid "E-mail"
+msgstr "E-mail"
 
 #: ../speaker.py:51
 msgid "Email"
 msgstr "E-mail"
 
-#: ../talk.py:228
+#: ../talk.py:260
 msgid "End date"
 msgstr "Término"
 
@@ -116,15 +120,15 @@ msgstr "English"
 msgid "Fullname"
 msgstr "Nome completo"
 
-#: ../program_templates/view.pt:33
+#: ../program_templates/view.pt:34
 msgid "If you already have an account, click here to login."
 msgstr "Caso já tenha uma conta, clique aqui para se logar."
 
-#: ../program_templates/view.pt:31
+#: ../program_templates/view.pt:32
 msgid "In order to submit talk proposals to this conference you need to create an account on this site (so you can manage your talk details later on)."
 msgstr "Para enviar propostas de palestra para a PythonBrasil[7] você precisa criar uma conta neste site (para poder gerenciar suas palestras futuramente)."
 
-#: ../talk.py:146
+#: ../talk.py:178
 msgid "Inform a talk title"
 msgstr "Informe qual o título da palestra"
 
@@ -132,20 +136,25 @@ msgstr "Informe qual o título da palestra"
 msgid "Intermediate"
 msgstr "Intermediário"
 
-#: ../track_templates/view.pt:28
+#: ../track_templates/view.pt:30
 msgid "Know about this tracks's subject and is willing to share with others?"
 msgstr "Conhece o assunto abordado nesta trilha? Se dispõe a compartilhar com outras pessoas?"
 
-#: ../program_templates/view.pt:87
+#: ../program_templates/view.pt:89
 msgid "Know more about our tracks"
 msgstr "Conheça as trilhas da conferência"
 
+#: ../program_templates/speakers.pt:21
 #: ../speaker.py:63
-#: ../talk.py:167
+#: ../talk.py:199
 msgid "Language"
 msgstr "Idioma"
 
-#: ../program_templates/view.pt:128
+#: ../talk_templates/view.pt:24
+msgid "Language:"
+msgstr "Language"
+
+#: ../program_templates/view.pt:133
 msgid "Last submitted talks"
 msgstr "Últimas palestras enviadas"
 
@@ -153,27 +162,31 @@ msgstr "Últimas palestras enviadas"
 msgid "Legal information"
 msgstr "Informações legais"
 
-#: ../talk.py:181
+#: ../talk.py:213
 msgid "Level"
 msgstr "Nível"
 
-#: ../talk.py:183
+#: ../talk.py:215
 msgid "Level of this talk"
 msgstr "Nível técnico desta apresentação"
 
-#: ../talk.py:243
+#: ../talk_templates/view.pt:30
+msgid "Level:"
+msgstr "Level:"
+
+#: ../talk.py:275
 msgid "Link to the presentation file"
 msgstr "Link para o arquivo da apresentação"
 
-#: ../talk.py:259
+#: ../talk.py:291
 msgid "Link to the presentation file downloads"
 msgstr "Link para download de arquivos usados na apresentação"
 
-#: ../talk.py:251
+#: ../talk.py:283
 msgid "Link to the presentation video"
 msgstr "Link para o vídeo da apresentação"
 
-#: ../talk.py:210
+#: ../talk.py:242
 msgid "Location"
 msgstr "Local"
 
@@ -183,14 +196,19 @@ msgstr "Local"
 msgid "My Talks"
 msgstr "Minhas palestras"
 
-#: ../program_templates/view.pt:106
+#: ../program_templates/view.pt:109
 msgid "My profile"
 msgstr "Meu perfil"
 
-#: ../program_templates/view.pt:117
+#: ../program_templates/view.pt:121
 msgid "My talks"
 msgstr "Minhas palestras"
 
+#: ../program_templates/speakers.pt:19
+msgid "Name"
+msgstr "Nome"
+
+#: ../program_templates/speakers.pt:20
 #: ../speaker.py:45
 msgid "Organization"
 msgstr "Instituição"
@@ -199,15 +217,19 @@ msgstr "Instituição"
 msgid "Organization you represent"
 msgstr "Qual instituição você representa"
 
+#: ../track_templates/organizeview.pt:19
+msgid "Organize talks inside this track"
+msgstr "Ordene as palestras desta trilha"
+
 #: ../vocabularies.py:23
 msgid "Panel"
 msgstr "Painel"
 
-#: ../talk.py:137
+#: ../talk.py:169
 msgid "Please fill in the name of the speaker. If no speaker profile was created for this name, click on Add new speaker"
 msgstr "Por favor preencha o nome do palestrante -- para que o autocomplete encontre o perfil indicado. Caso este palestrante ainda não tenha criado um perfil, clque na opção Novo Palestrante"
 
-#: ../track.py:32
+#: ../track.py:42
 msgid "Please inform title for this track"
 msgstr "Por favor informe o título desta trilha"
 
@@ -215,11 +237,11 @@ msgstr "Por favor informe o título desta trilha"
 msgid "Please inform your fullname"
 msgstr "Qual o seu nome completo?"
 
-#: ../talk.py:118
+#: ../talk.py:150
 msgid "Please provide a brief description of this reference"
 msgstr "Sobre o que se trata esta referência?"
 
-#: ../talk.py:112
+#: ../talk.py:144
 msgid "Please provide a link to the reference"
 msgstr "Link para a referência indicada"
 
@@ -239,15 +261,15 @@ msgstr "Português"
 msgid "Presentation"
 msgstr "Apresentação"
 
-#: ../talk.py:241
+#: ../talk.py:273
 msgid "Presentation file"
 msgstr "Arquivo da apresentação"
 
-#: ../talk.py:257
+#: ../talk.py:289
 msgid "Presentation files"
 msgstr "Downloads desta apresentação"
 
-#: ../talk.py:249
+#: ../talk.py:281
 msgid "Presentation video"
 msgstr "Vídeo desta apresentação"
 
@@ -255,20 +277,20 @@ msgstr "Vídeo desta apresentação"
 msgid "Program"
 msgstr "Programação"
 
-#: ../talk.py:192
+#: ../talk.py:224
 msgid "Reference"
 msgstr "Referências"
 
-#: ../talk.py:104
+#: ../talk.py:136
 msgid "Reference type"
 msgstr "Tipo da referência"
 
-#: ../talk.py:189
+#: ../talk.py:221
 msgid "References"
 msgstr "Referências"
 
 #: ../browser/new_talk.py:53
-#: ../talk.py:191
+#: ../talk.py:223
 msgid "References for this talk"
 msgstr "Referências sobre esta palestra"
 
@@ -284,9 +306,13 @@ msgstr "Sala 1"
 msgid "Room 2"
 msgstr "Sala 2"
 
-#: ../talk.py:212
+#: ../talk.py:244
 msgid "Room where this talk will be presented"
 msgstr "Onde será realizada a palestra"
+
+#: ../track_templates/view.pt:35
+msgid "Select the talks you want to see at our conference!"
+msgstr "Selecione as palestras que você deseja ver em nossa conferência!"
 
 #: ../speaker.py:57
 msgid "Site"
@@ -297,7 +323,7 @@ msgid "Spanish"
 msgstr "Español"
 
 #: ../profiles/default/types/apyb.papers.speaker.xml
-#: ../talk.py:136
+#: ../talk.py:168
 msgid "Speaker"
 msgstr "Palestrante"
 
@@ -305,8 +331,8 @@ msgstr "Palestrante"
 msgid "Speaker Profile"
 msgstr "Perfil de palestrante"
 
-#: ../speaker_templates/view.pt:13
-#: ../talk_templates/view.pt:36
+#: ../speaker_templates/view.pt:15
+#: ../talk_templates/view.pt:44
 msgid "Speaker details"
 msgstr "Detalhes sobre o palestrante"
 
@@ -315,7 +341,7 @@ msgid "Speaker's email"
 msgstr "E-mail do palestrante"
 
 #: ../speaker.py:65
-#: ../talk.py:169
+#: ../talk.py:201
 msgid "Speaker's language"
 msgstr "Idioma falado (primariamente) pelo palestrante"
 
@@ -327,24 +353,32 @@ msgstr "Site do palestrante"
 msgid "Speakers"
 msgstr "Palestrantes"
 
-#: ../talk.py:219
+#: ../program_templates/speakers.pt:12
+msgid "Speakers list"
+msgstr "Lista de palestrantes"
+
+#: ../talk.py:251
 msgid "Start date"
 msgstr "Início"
 
 #: ../program_templates/view.pt:14
-#: ../track_templates/view.pt:18
+#: ../track_templates/view.pt:19
 msgid "Stats"
 msgstr "Estatísticas"
 
-#: ../program_templates/view.pt:98
+#: ../program_templates/view.pt:100
 msgid "Submit talk proposal here"
 msgstr "Envie sua proposta de palestra aqui"
 
-#: ../track_templates/view.pt:29
+#: ../track_templates/view.pt:31
 msgid "Submit your talk proposal!"
 msgstr "Envie sua proposta de palestra!"
 
-#: ../track_templates/view.pt:33
+#: ../talk_templates/view.pt:36
+msgid "Summary:"
+msgstr "Resumo:"
+
+#: ../track_templates/view.pt:41
 msgid "Take a look at the talks already submitted here"
 msgstr "Veja as palestras já enviadas"
 
@@ -353,28 +387,28 @@ msgstr "Veja as palestras já enviadas"
 msgid "Talk"
 msgstr "Palestra"
 
-#: ../talk.py:203
+#: ../talk.py:235
 msgid "Talk Allocation"
 msgstr "Alocação da palestra"
 
-#: ../talk.py:145
+#: ../talk.py:177
 msgid "Talk Title"
 msgstr "Título da palestra"
 
-#: ../talk.py:152
-#: ../talk_templates/view.pt:12
+#: ../talk.py:184
+#: ../talk_templates/view.pt:22
 msgid "Talk details"
 msgstr "Resumo"
 
-#: ../talk.py:230
+#: ../talk.py:262
 msgid "Talk end date"
 msgstr "Término da palestra"
 
-#: ../talk.py:234
+#: ../talk.py:266
 msgid "Talk materials"
 msgstr "Materiais"
 
-#: ../talk.py:221
+#: ../talk.py:253
 msgid "Talk start date"
 msgstr "Início"
 
@@ -382,12 +416,13 @@ msgstr "Início"
 msgid "Talk submission"
 msgstr "Envio de proposta de palestra"
 
-#: ../talk.py:160
+#: ../talk.py:192
 msgid "Talk type"
 msgstr "Tipo de apresentação"
 
+#: ../program_templates/speakers.pt:23
 #: ../program_templates/view.pt:21
-#: ../track_templates/view.pt:21
+#: ../track_templates/view.pt:22
 msgid "Talks"
 msgstr "Palestras"
 
@@ -395,20 +430,24 @@ msgstr "Palestras"
 msgid "Talks by this speaker"
 msgstr "Palestras desta pessoa"
 
-#: ../track_templates/view.pt:32
+#: ../track_templates/view.pt:40
 msgid "Talks for this track"
 msgstr "Palestras nesta trilha"
 
-#: ../track.py:31
+#: ../track.py:41
 msgid "Title"
 msgstr "Título"
 
+#: ../track_templates/organizeview.pt:25
+msgid "To vote, drag and drop the talks, ordering them as you wish. Talks on the top will receive more points than talks on the bottom. When you have the desired order, just click <strong>Vote</strong>."
+msgstr "Para votar, clique e arraste as palestras, ordernando-as conforme sua preferência. Palestras no topo da lista receberão mais pontos que palestras no rodapé. Quando estiver satisfeito com a ordenação, clique <strong>Votar</strong>."
+
 #: ../profiles/default/types/apyb.papers.track.xml
-#: ../talk.py:174
+#: ../talk.py:206
 msgid "Track"
 msgstr "Trilha"
 
-#: ../track.py:43
+#: ../track.py:53
 msgid "Track Logo"
 msgstr "Logo da Trilha"
 
@@ -416,11 +455,11 @@ msgstr "Logo da Trilha"
 msgid "Tracks"
 msgstr "Trilhas"
 
-#: ../talk.py:105
+#: ../talk.py:137
 msgid "Type of this reference"
 msgstr "Tipo da referência"
 
-#: ../talk.py:111
+#: ../talk.py:143
 msgid "URL"
 msgstr "Link"
 
@@ -428,7 +467,7 @@ msgstr "Link"
 msgid "Upload an image to be used as speakers' portrait."
 msgstr "Faça o upload de uma imagem para ser usada como retrato do palestrante"
 
-#: ../track.py:45
+#: ../track.py:55
 msgid "Upload an image to be used as this track's logo."
 msgstr "Faça o upload de uma imagem para ser usada como logo desta trilha"
 
@@ -436,21 +475,37 @@ msgstr "Faça o upload de uma imagem para ser usada como logo desta trilha"
 msgid "Video"
 msgstr "Vídeo"
 
-#: ../talk.py:176
+#: ../track_templates/view.pt:36
+msgid "Vote now!"
+msgstr "Vote agora!"
+
+#: ../track_templates/view.pt:34
+msgid "Vote on the talks!!"
+msgstr "Vote nas palestras!"
+
+#: ../talk.py:208
 msgid "Which track this talk is"
 msgstr "A qual trilha esta palestra pertence"
 
-#: ../talk.py:162
+#: ../talk.py:194
 msgid "Which type of talk best describes this one"
 msgstr "Como esta apresentação pode ser melhor categorizada"
 
-#: ../track_templates/view.pt:27
+#: ../track_templates/organizeview.pt:50
+msgid "You already voted in this track.<br />Thank you!"
+msgstr "Você já votou nesta trilha.<br />Obrigado!"
+
+#: ../track_templates/view.pt:29
 msgid "Your talk here!"
 msgstr "Sua palestra aqui!"
 
+#: ../track_templates/organizeview.pt:21
+msgid "Your vote will decide the talks that will be part of PythonBrasil[7]."
+msgstr "Seu voto define quais palestras farão parte da PythonBrasil[7]"
+
 #: ../speaker.py:28
-#: ../talk.py:130
-#: ../track.py:26
+#: ../talk.py:162
+#: ../track.py:36
 msgid "uid"
 msgstr "uid"
 
