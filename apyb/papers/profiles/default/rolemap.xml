@@ -19,6 +19,8 @@
       <role name="Editor"/>
     </permission>
     <permission name="apyb.papers: Organize Track" acquire="False">
+      <role name="Editor"/>
+      <role name="Reader"/>
     </permission>
     <permission name="apyb.papers: Allocate Talk" acquire="False">
     </permission>
