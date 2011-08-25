@@ -136,11 +136,12 @@ class View(grok.View):
         ''' Is this user allowed to edit this content '''
         return self.state.is_editable()
     
-    def talks(self):
+    def talks(self,**kw):
         ''' Return a list of talks in here '''
-        results = self._ct.searchResults(portal_type='apyb.papers.talk', 
-                                         path=self._path,
-                                         sort_on='sortable_title')
+        kw['portal_type'] ='apyb.papers.talk'
+        kw['path'] =self._path
+        kw['sort_on'] = 'sortable_title'
+        results = self._ct.searchResults(**kw)
         return results
     
 
@@ -179,9 +180,10 @@ class OrganizeView(View):
     grok.name('order-talks')
     grok.require('apyb.papers.OrganizeTalk')
     
-    def talks(self):
+    def talks(self,**kw):
         ''' Return a randomized list of talks '''
-        talks = super(OrganizeView,self).talks()
+        kw['review_state'] = 'created'
+        talks = super(OrganizeView,self).talks(**kw)
         talks = [talk for talk in talks]
         shuffle(talks)
         return talks
