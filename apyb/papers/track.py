@@ -1,11 +1,16 @@
 # -*- coding:utf-8 -*-
+import json
+from datetime import datetime 
+
 from five import grok
 from plone.directives import dexterity, form
 
 from random import shuffle
 
 from Acquisition import aq_inner
-from zope.component import getMultiAdapter
+
+from zope.schema.interfaces import IVocabularyFactory
+from zope.component import getMultiAdapter, queryUtility
 
 from plone.namedfile.field import NamedImage
 
@@ -16,6 +21,8 @@ from zope.app.intid.interfaces import IIntIds
 
 from z3c.form import group, field
 from plone.app.z3cform.wysiwyg import WysiwygFieldWidget
+
+from apyb.papers import ordering
 
 from apyb.papers import MessageFactory as _
 
@@ -81,21 +88,48 @@ class View(grok.View):
         self._ct = self.tools.catalog()
         self._mt = self.tools.membership()
         self.member = self.portal.member()
+        self.member_id = self.member.id
         roles_context = self.member.getRolesInContext(context)
         if not self.show_border:
             self.request['disable_border'] = True
     
+    @property
+    def vocabs(self):
+        if not hasattr(self, "_vocabs"):
+            vocabs = {}
+            vocabs['languages'] = queryUtility(IVocabularyFactory, 'apyb.papers.languages')
+            vocabs['level'] = queryUtility(IVocabularyFactory, 'apyb.papers.talk.level')
+            self._vocabs = dict((key,value(self)) for key, value in vocabs.items())
+        return self._vocabs
+    
+    def speakers(self,speaker_uids):
+        ''' Given a list os uids, we return a list of dicts with speakers data '''
+        ct = self._ct
+        brains = ct.searchResults(portal_type='apyb.papers.speaker',UID=speaker_uids)
+        speakers = [{'name':b.Title,
+                     'organization':b.organization,
+                     'bio':b.Description,
+                     'url':b.getURL(),
+                     } 
+                    for b in brains]
+        return speakers
+    
     def speaker_name(self,speaker_uids):
         ''' Given a list os uids, we return a string with speakers names '''
-        ct = self._ct
-        results = ct.searchResults(portal_type='apyb.papers.speaker',UID=speaker_uids)
-        return ', '.join([b.Title for b in results])
+        speakers = self.speakers(speaker_uids)
+        return ', '.join([b['name'] for b in speakers])
     
     @property
     def can_submit(self):
         ''' This user can submit a talk in here'''
         context = self.context
         return self._mt.checkPermission('apyb.papers: Add Talk',context)
+
+    @property
+    def can_organize(self):
+        ''' This user can organize talks in this track'''
+        context = self.context
+        return self._mt.checkPermission('apyb.papers: Organize Talk',context)
     
     @property
     def show_border(self):
@@ -110,6 +144,36 @@ class View(grok.View):
         return results
     
 
+class JSONView(View):
+    grok.name('json')
+    
+    template = None
+    
+    def talks(self):
+        ''' Return a list of talks in here '''
+        brains = super(JSONView,self).talks()
+        talks = []
+        for brain in brains:
+            talk = {}
+            talk['title'] = brain.Title
+            talk['description'] = brain.Description
+            talk['track'] = self.context.title
+            talk['speakers'] = self.speakers(brain.speakers)
+            talk['language'] = brain.language
+            talk['state'] = brain.review_state
+            talks.append(talk)
+        return talks
+    
+    def render(self):
+        request = self.request
+        data = {'talks':self.talks()}
+        data['url'] = self.context.absolute_url()
+        data['title'] = self.context.title
+        
+        self.request.response.setHeader('Content-Type', 'application/json')
+        
+        return json.dumps(data)
+
 class OrganizeView(View):
     grok.context(ITrack)
     grok.name('order-talks')
@@ -121,4 +185,41 @@ class OrganizeView(View):
         talks = [talk for talk in talks]
         shuffle(talks)
         return talks
+    
+    def talk_metadata(self,brain=None):
+        metadata = []
+        voc = self.vocabs
+        if brain:
+            metadata.append(voc['level'].getTerm(brain.level).title)
+            metadata.append(voc['languages'].getTerm(brain.language).title)
+        return ' / '.join(metadata)
+    
+    def process_form(self):
+        ''' Process data sent by the user '''
+        talk_uids = self.request.form.get('talk_uid',[])
+        vote_order = tuple([int(uid) for uid in talk_uids])
+        vote_username = self.member.getUserName()
+        vote_date = datetime.now()
+        vote = (vote_order,vote_date)
+        return vote
+    
+    def my_vote(self):
+        ''' Get my vote from annotation storage '''
+        member_id = self.member_id
+        vote = ordering.getMyVote(self.context, userid=member_id)
+        if vote:
+            vote_order, vote_date = vote
+            return {'order':vote_order,'date':vote_date}
+        else:
+            return None
+    
+    def update(self):
+        super(OrganizeView,self).update()
+        self.vote = None
+        self.annotations = ordering.setupAnnotations(self.context)
+        
+        if 'form.submitted' in self.request.form:
+            vote = self.process_form()
+            self.vote = vote
+            ordering.vote(self.context,self.member_id,vote)
     

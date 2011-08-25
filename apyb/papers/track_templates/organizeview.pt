@@ -9,42 +9,46 @@
 
 <metal:main fill-slot="content-core">
   <metal:content-core define-macro="content-core"
-         tal:define="cfp view/can_submit;
+         tal:define="my_vote view/my_vote;
                      scale context/@@images;
                      img python:scale.scale('image', width=80, height=80, direction='keep');">
    <img tal:condition="img"
         tal:replace="structure python:img.tag()"/>
     <div class="clear"> </div>
     <div class="talks">
-        <h2 i18n:translate="">Organize talks for this track</h2>
-        <div class="talks_details" i18n:translate="">Foo baar</div>
-        <form method="GET">
-        <div tal:define="talks view/talks" class="talks_listing">
-            <table class="listing">
-                <tr>
-                    <th>#</th>
-                    <th>Title</th>
-                </tr>
-            <tal:talks tal:repeat="talk talks">
-                <tr tal:define="oddrow repeat/talk/odd;"
-                    tal:attributes="class python:oddrow and 'even' or 'odd'">
-                    <td><span tal:content="repeat/talk/number">#</span>
-                        <input type="hidden" value="" name="talk_uid"
-                            tal:attributes="value talk/UID">
-                    </td>
-                    <td>
-                        <a href="" 
-                           class="talk_details_link"
-                           tal:attributes="href talk/getURL" 
-                           tal:content="talk/Title">Title</a><br/>
-                        <span tal:content="python:view.speaker_name(talk.speakers)">Speakers</span>
-                    </td>
-                </tr>
-            </tal:talks>
-            </table>
+        <h2 i18n:translate="">Organize talks inside this track</h2>
+        
+        <div class="talks_details" i18n:translate="">Your vote will decide the talks that will be part of PythonBrasil[7].</div>
+        
+        <div class="talk_ordering" tal:condition="not:my_vote">
+            <form method="POST">
+            <br/><div class="talks_details" i18n:translate="">To vote, drag and drop the talks, ordering them as you wish. Talks on the top will receive more points than talks on the bottom. When you have the desired order, just click <strong>Vote</strong>.</div><br/>
+            <div tal:define="talks view/talks" class="talks_listing">
+                <table class="listing" id="talks_ordering">
+                <tal:talks tal:repeat="talk talks">
+                    <tr tal:define="oddrow repeat/talk/odd;"
+                        tal:attributes="class python:oddrow and 'even' or 'odd'">
+                        <td class="talk_details">
+                            <input type="hidden" value="" name="talk_uid"
+                                tal:attributes="value talk/UID">
+                            <a href="" 
+                               class="talk_details_link"
+                               tal:attributes="href talk/getURL" 
+                               tal:content="talk/Title">Title</a><br/>
+                            <span class="talk_details_speaker" tal:content="python:view.speaker_name(talk.speakers)">Speakers</span><br/>
+                            <span class="talk_details_general" tal:content="python:view.talk_metadata(talk)">General info</span><br/>
+                        </td>
+                    </tr>
+                </tal:talks>
+                </table>
+            </div>
+            <input type="hidden" value="1" name="form.submitted" />
+            <p><input type="submit" value="Vote &rarr;"></p>
+            </form>
         </div>
-        <p><input type="submit" value="Vote &rarr;"></p>
-        </form>
+        <div class="talk_ordering" tal:condition="my_vote">
+            <br/><div class="talks_details" i18n:translate="">You already voted in this track.<br/>Thank you!</div><br/>
+        </div>
     </div>
     <script type="text/javascript" 
             tal:attributes="src string:${view/portal/portal_url}/++resource++apyb.papers/jquery.tablednd.js"></script>
