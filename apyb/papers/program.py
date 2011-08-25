@@ -119,7 +119,55 @@ class View(grok.View):
                                          sort_order='reverse',
                                          sort_limit=5,)
         return results[:5]
+
+class JSONView(View):
+    grok.name('json')
     
+    template = None
+    
+    def update(self):
+        super(JSONView,self).update()
+        self._tracks = dict([(b.UID,b) for b in super(JSONView,self).tracks()])
+        self._speakers = dict([(b.UID,b) for b in super(JSONView,self).tracks()])
+        self._talks = dict([(b.UID,b) for b in super(JSONView,self).tracks()])
+    
+    def talks(self):
+        ''' Return a list of talks in here '''
+        brains = super(JSONView,self).talks()
+        talks = []
+        for brain in brains:
+            talk = {}
+            talk['title'] = brain.Title
+            talk['description'] = brain.Description
+            talk['track'] = self.context.title
+            talk['speakers'] = self.speakers(brain.speakers)
+            talk['language'] = brain.language
+            talk['state'] = brain.review_state
+            talks.append(talk)
+        return talks
+    
+    def tracks(self):
+        ''' Return a list of tracks in here '''
+        brains = super(JSONView,self).tracks()
+        tracks = []
+        for brain in brains:
+            track = {}
+            track['title'] = brain.Title
+            track['description'] = brain.Description
+            track['talks'] = self.talks(brain.UID)
+            tracks.append(track)
+        return tracks
+    
+    def render(self):
+        request = self.request
+        data = {'tracks':self.tracks()}
+        data['url'] = self.context.absolute_url()
+        data['title'] = self.context.title
+        
+        self.request.response.setHeader('Content-Type', 'application/json')
+        
+        return json.dumps(data)
+
 class Speakers(grok.View):
     grok.context(IProgram)
     grok.require('cmf.ReviewPortalContent')
@@ -169,5 +217,3 @@ class Speakers(grok.View):
         return self.state.is_editable()
     
     
-
-  
