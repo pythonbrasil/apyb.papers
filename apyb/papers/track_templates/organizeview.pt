@@ -20,41 +20,52 @@
         
         <div class="talks_details" i18n:translate="">Your vote will decide the talks that will be part of PythonBrasil[7].</div>
         
-        <div class="talk_ordering" tal:condition="not:my_vote">
+        <div class="talk_ordering">
             <form method="POST">
             <br/><div class="talks_details" i18n:translate="">To vote, drag and drop the talks, ordering them as you wish. Talks on the top will receive more points than talks on the bottom. When you have the desired order, just click <strong>Vote</strong>.</div><br/>
             <div tal:define="talks view/talks" class="talks_listing">
-                <table class="listing" id="talks_ordering">
-                <tal:talks tal:repeat="talk talks">
-                    <tr tal:define="oddrow repeat/talk/odd;"
-                        tal:attributes="class python:oddrow and 'even' or 'odd'">
-                        <td class="talk_details">
-                            <input type="hidden" value="" name="talk_uid"
-                                tal:attributes="value talk/UID">
-                            <a href="" 
-                               class="talk_details_link"
-                               tal:attributes="href talk/getURL" 
-                               tal:content="talk/Title">Title</a><br/>
-                            <span class="talk_details_speaker" tal:content="python:view.speaker_name(talk.speakers)">Speakers</span><br/>
-                            <span class="talk_details_general" tal:content="python:view.talk_metadata(talk)">General info</span><br/>
-                        </td>
-                    </tr>
-                </tal:talks>
+                <table class="grid" id="talks_ordering">
+                    <thead>
+                        <tr>
+                            <th i18n:translate="">Order</th>
+                            <th i18n:translate="">Original</th>
+                            <th i18n:translate="">Talk</th>
+                        </tr>
+                    </thead>
+                    <tbody  class="listing_body">
+                    <tal:talks tal:repeat="talk talks">
+                        <tr>
+                            <td class="talk_ordering">
+                                <span class="number" tal:content="repeat/talk/number">1</span> 
+                            </td>
+                            <td class="talk_ordering">
+                                <span class="talk_ordering" tal:content="repeat/talk/number">1</span> 
+                            </td>
+                            <td class="talk_details">
+                                <input type="hidden" value="" name="talk_uid"
+                                    tal:attributes="value talk/UID">
+                                <a href="" 
+                                   class="talk_details_link"
+                                   tal:attributes="href talk/getURL" 
+                                   tal:content="talk/Title">Title</a><br/>
+                                <span class="talk_details_speaker" tal:content="python:view.speaker_name(talk.speakers)">Speakers</span><br/>
+                                <span class="talk_details_general" tal:content="python:view.talk_metadata(talk)">General info</span><br/>
+                            </td>
+                        </tr>
+                    </tal:talks>
+                    </tbody>
                 </table>
             </div>
             <input type="hidden" value="1" name="form.submitted" />
             <p><input type="submit" value="Vote &rarr;"></p>
             </form>
         </div>
-        <div class="talk_ordering" tal:condition="my_vote">
-            <br/><div class="talks_details" i18n:translate="">You already voted in this track.<br/>Thank you!</div><br/>
-        </div>
     </div>
     <script type="text/javascript" 
             tal:attributes="src string:${view/portal/portal_url}/++resource++apyb.papers/jquery.tablednd.js"></script>
     <script type="text/javascript">
     jQuery(function() {
-        jQuery(".listing").tableDnD({
+        jQuery(".listing_body").tableDnD({
                 onDragClass: "dragging",
                 onDrop: function(table, row) {
                     jQuery(table)
@@ -66,7 +77,7 @@
                       .find('span.number').each(function(index, el) {
                           jQuery(el).html(index+1);
                       });
-                    jQuery(row).css('background-color', '#cde2a7');
+                    jQuery(row).addClass('moved');
                 }
         });
 

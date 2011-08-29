@@ -22,6 +22,8 @@ from zope.app.intid.interfaces import IIntIds
 from z3c.form import group, field
 from plone.app.z3cform.wysiwyg import WysiwygFieldWidget
 
+from Products.statusmessages.interfaces import IStatusMessage
+
 from apyb.papers import ordering
 
 from apyb.papers import MessageFactory as _
@@ -81,6 +83,7 @@ class View(grok.View):
     def update(self):
         super(View,self).update()
         context = aq_inner(self.context)
+        self.annotations = ordering.setupAnnotations(self.context)
         self._path = '/'.join(context.getPhysicalPath())
         self.state = getMultiAdapter((context, self.request), name=u'plone_context_state')
         self.tools = getMultiAdapter((context, self.request), name=u'plone_tools')
@@ -136,6 +139,11 @@ class View(grok.View):
         ''' Is this user allowed to edit this content '''
         return self.state.is_editable()
     
+    def voters(self):
+        ''' Return a list of voters in here '''
+        voters = ordering.getVoters(self.context)
+        return voters
+    
     def talks(self,**kw):
         ''' Return a list of talks in here '''
         kw['portal_type'] ='apyb.papers.talk'
@@ -180,12 +188,23 @@ class OrganizeView(View):
     grok.name('order-talks')
     grok.require('apyb.papers.OrganizeTalk')
     
-    def talks(self,**kw):
+    def _talks(self,**kw):
         ''' Return a randomized list of talks '''
         kw['review_state'] = 'created'
         talks = super(OrganizeView,self).talks(**kw)
-        talks = [talk for talk in talks]
-        shuffle(talks)
+        talks = dict([(talk.UID,talk) for talk in talks])
+        return talks    
+    
+    def talks(self,**kw):
+        ''' Return a randomized list of talks '''
+        talks = self._talks(**kw)
+        vote = self.my_vote()
+        if vote:
+            order = vote.get('order')
+            talks = [talks[UID] for UID in order]
+        else:
+            talks = [talk for talk in talks.values()]
+            shuffle(talks)
         return talks
     
     def talk_metadata(self,brain=None):
@@ -217,11 +236,16 @@ class OrganizeView(View):
     
     def update(self):
         super(OrganizeView,self).update()
-        self.vote = None
-        self.annotations = ordering.setupAnnotations(self.context)
+        messages = IStatusMessage(self.request)
+        
+        # Remove Portlets
+        self.request['disable_plone.leftcolumn']=1
+        self.request['disable_plone.rightcolumn']=1
         
         if 'form.submitted' in self.request.form:
             vote = self.process_form()
-            self.vote = vote
             ordering.vote(self.context,self.member_id,vote)
+            messages.addStatusMessage(_(u"Your vote was computed"), type="info")
+        elif self.my_vote:
+            messages.addStatusMessage(_(u"You already voted in this track"), type="info")
     
