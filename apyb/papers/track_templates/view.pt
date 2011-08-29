@@ -30,6 +30,15 @@
         </div>
     </div>
 	<div class="clear"> </div>
+    <div tal:condition="view/can_view_voters">
+        <h2 i18n:translate="">Voters</h2>
+        <ul>
+            <li tal:repeat="voter voters">
+                <span tal:content="python:view.memberdata(voter)">Genesio</span>
+            </li>
+        </ul>
+    </div>
+	<div class="clear"> </div>
     <div tal:condition="cfp">
         <h2 i18n:translate="">Your talk here!</h2>
         <div class="talk_submission" i18n:translate="">Know about this tracks's subject and is willing to share with others? </div>        

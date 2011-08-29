@@ -135,9 +135,23 @@ class View(grok.View):
         return self._mt.checkPermission('apyb.papers: Organize Talk',context)
     
     @property
+    def can_view_voters(self):
+        ''' This user can view who voted here'''
+        context = self.context
+        return self._mt.checkPermission('Manage portal',context)    
+    
+    @property
     def show_border(self):
         ''' Is this user allowed to edit this content '''
         return self.state.is_editable()
+    
+    def memberdata(self,userid=None):
+        ''' Return memberdata for a userid '''
+        memberdata = self._mt.getMemberById(userid)
+        if memberdata:
+            return memberdata.getProperty('fullname',userid)
+        else:
+            return userid
     
     def voters(self):
         ''' Return a list of voters in here '''
