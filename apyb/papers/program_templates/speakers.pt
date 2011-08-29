@@ -20,6 +20,7 @@
                 <th i18n:translate="">Organization</th>
                 <th i18n:translate="">Language</th>
                 <th i18n:translate="">E-mail</th>
+                <th i18n:translate="">Registered</th>
                 <th i18n:translate="">Talks</th>
             </tr>
         </thead>
@@ -35,8 +36,9 @@
                 </td>
                 <td><a href="" tal:attributes="href speaker/getURL" tal:content="speaker/Title">Dorneles Tremea</a></td>
                 <td tal:content="speaker/organization">APyB</td>
-                <td tal:content="speaker/language">Gauches</td>
+                <td tal:content="python:view.voc.getTerm(speaker.language).title">Gauches</td>
                 <td tal:content="speaker/email">foo@bar.com</td>
+                <td tal:content="python:view.speaker_registered(speaker.email)">foo@bar.com</td>
                 <td tal:define="talks python:talks_speakers.get(speaker.UID,[])"
                     tal:content="python:len(talks)">2</td>
             </tr>
