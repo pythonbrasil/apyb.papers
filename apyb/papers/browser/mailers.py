@@ -98,7 +98,7 @@ class VotersView(Mailer):
         mt = getToolByName(self.context,'portal_membership')
         gt = getToolByName(self.context,'portal_groups')
         groupname = 'Associados'
-        users = [mtool.getMemberById(m).getProperty('email') for m in gt.getGroupMembers(groupname)]
+        users = [mt.getMemberById(m).getProperty('email') for m in gt.getGroupMembers(groupname)]
         for item in users:
             member = mt.getMemberById(item)
             if not member:
