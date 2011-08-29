@@ -2,7 +2,9 @@
 from five import grok
 
 from Acquisition import aq_inner
-from zope.component import getMultiAdapter
+
+from zope.schema.interfaces import IVocabularyFactory
+from zope.component import getMultiAdapter, queryUtility
 
 from plone.directives import dexterity, form
 
@@ -183,9 +185,13 @@ class Speakers(grok.View):
         self._ct = self.tools.catalog()
         self.member = self.portal.member()
         roles_context = self.member.getRolesInContext(context)
+        self.voc = queryUtility(IVocabularyFactory, 'apyb.papers.languages')(self.context)
+        # Remove Portlets
+        self.request['disable_plone.leftcolumn']=1
+        self.request['disable_plone.rightcolumn']=1
+        
         if not self.show_border:
             self.request['disable_border'] = True
-    
     
     def talks_speakers(self):
         ''' Return a dict of talks per speaker '''
@@ -204,6 +210,47 @@ class Speakers(grok.View):
                 talks_speakers[speaker].append(talk)
         return talks_speakers
     
+    def keynote_speakers(self):
+        ''' List uids of keynote speakers
+        '''
+        keynote_talks = self._ct.searchResults(portal_type='apyb.papers.talk',
+                                               path='%s/keynotes' % self._path,        
+                                               sort_on='sortable_title')
+        speakers = []
+        for talk in keynote_talks:
+            for speaker in talk.speakers:
+                if not speaker:
+                    speakers.append(speaker)
+        return speakers
+    
+    def speakers_info(self,keynotes=False):
+        ''' Return a tuple of names and emails of speakers with 
+            talks in here.
+        '''
+        speakers = self.speakers()
+        talks_speakers = self.talks_speakers()
+        speakers_info = []
+        exclude = []
+        if keynotes:
+            exclude = self.keynote_speakers()
+        for speaker in speakers:
+            uid = speaker.UID
+            talks = talks_speakers.get(speaker.UID,[])
+            if not talks or uid in exclude:
+                continue
+            speakers_info.append((speaker.email,speaker.Title,self.speaker_registered(speaker.email)))
+        return speakers_info
+    
+    def speaker_registered(self,email):
+        ''' Is this speaker registered to the conference '''
+        status = u'Não'
+        results = self._ct.searchResults(portal_type='apyb.registration.attendee',
+                                         email=email,
+                                         sort_on='sortable_title')
+        if results:
+            status = results[0].review_state
+        return status
+    
     def speakers(self):
         ''' Return a list of speakers in here '''
         results = self._ct.searchResults(portal_type='apyb.papers.speaker',
@@ -215,5 +262,4 @@ class Speakers(grok.View):
     def show_border(self):
         ''' Is this user allowed to edit this content '''
         return self.state.is_editable()
-    
     
