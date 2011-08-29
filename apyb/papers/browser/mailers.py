@@ -99,7 +99,6 @@ class VotersView(Mailer):
         gt = getToolByName(self.context,'portal_groups')
         groupname = 'Associados'
         users = [mtool.getMemberById(m).getProperty('email') for m in gt.getGroupMembers(groupname)]
-        users = ['ericof@gmail.com',]
         for item in users:
             member = mt.getMemberById(item)
             if not member:
