@@ -156,6 +156,8 @@ class View(grok.View):
     def voters(self):
         ''' Return a list of voters in here '''
         voters = ordering.getVoters(self.context)
+        voters = [self.memberdata(voter) for voter in voters]
+        voters.sort()
         return voters
     
     def talks(self,**kw):

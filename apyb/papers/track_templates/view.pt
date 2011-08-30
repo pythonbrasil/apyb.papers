@@ -34,7 +34,7 @@
         <h2 i18n:translate="">Voters</h2>
         <ul>
             <li tal:repeat="voter voters">
-                <span tal:content="python:view.memberdata(voter)">Genesio</span>
+                <span tal:content="voter">Genesio</span>
             </li>
         </ul>
     </div>
