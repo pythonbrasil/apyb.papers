@@ -32,16 +32,6 @@
 	<div class="clear"> </div>
     <div tal:condition="view/can_view_voters">
         <h2 i18n:translate="">Voters</h2>
-        <style type="text/css">
-            .voter {
-                border: 1px solid #E1E1E1;
-                float: left;
-                margin: 1% 2% 1% 0;
-                padding: 1%;
-                width: 25%;
-                min-height: 20px;
-            }
-        </style>
         <div class="voter" tal:repeat="voter voters">
             <a href="" 
                class="voter_details_link"
