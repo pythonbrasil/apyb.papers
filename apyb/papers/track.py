@@ -2,6 +2,8 @@
 import json
 from datetime import datetime 
 
+from zope.publisher.interfaces import IPublishTraverse
+
 from five import grok
 from plone.directives import dexterity, form
 
@@ -138,7 +140,7 @@ class View(grok.View):
     def can_view_voters(self):
         ''' This user can view who voted here'''
         context = self.context
-        return self._mt.checkPermission('Manage portal',context)    
+        return self._mt.checkPermission('apyb.papers: Organize Talk',context)    
     
     @property
     def show_border(self):
@@ -149,14 +151,14 @@ class View(grok.View):
         ''' Return memberdata for a userid '''
         memberdata = self._mt.getMemberById(userid)
         if memberdata:
-            return memberdata.getProperty('fullname',userid)
+            return memberdata.getProperty('fullname',userid) or userid
         else:
             return userid
     
     def voters(self):
         ''' Return a list of voters in here '''
         voters = ordering.getVoters(self.context)
-        voters = [self.memberdata(voter) for voter in voters]
+        voters = [(self.memberdata(voter),voter) for voter in voters]
         voters.sort()
         return voters
     
@@ -264,4 +266,26 @@ class OrganizeView(View):
             messages.addStatusMessage(_(u"Your vote was computed"), type="info")
         elif self.my_vote:
             messages.addStatusMessage(_(u"You already voted in this track"), type="info")
+    
+class VoteView(OrganizeView):
+    grok.context(ITrack)
+    grok.implements(IPublishTraverse)
+    grok.name('vote')
+    grok.require('apyb.papers.OrganizeTalk')
+
+    email = None
+
+    def publishTraverse(self, request, name):
+        self.email = name
+        return self
+
+    def my_vote(self):
+        ''' Get a vote from annotation storage '''
+        member_id = self.email
+        vote = ordering.getMyVote(self.context, userid=member_id)
+        if vote:
+            vote_order, vote_date = vote
+            return {'order':vote_order,'date':vote_date}
+        else:
+            return None
     
