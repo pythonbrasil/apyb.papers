@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="apyb.papers">
+<body>
+
+<metal:main fill-slot="content-core">
+  <metal:content-core define-macro="content-core">
+        <h2><span i18n:translate="">Vote cast by </span> <span tal:content="python:view.memberdata(view.email)"></span></h2>
+        <div class="talk_ordering">
+            <div tal:define="talks view/talks" class="talks_listing">
+                <table class="grid" id="talks_ordering">
+                    <thead>
+                        <tr>
+                            <th i18n:translate="">Order</th>
+                            <th i18n:translate="">Talk</th>
+                        </tr>
+                    </thead>
+                    <tbody  class="listing_body">
+                    <tal:talks tal:repeat="talk talks">
+                        <tr>
+                            <td class="talk_ordering">
+                                <span class="number" tal:content="repeat/talk/number">1</span> 
+                            </td>
+                            <td class="talk_details">
+                                <input type="hidden" value="" name="talk_uid"
+                                    tal:attributes="value talk/UID">
+                                <span  class="talk_details_link" tal:content="talk/Title">Title</span><br/>
+                                <span class="talk_details_speaker" tal:content="python:view.speaker_name(talk.speakers)">Speakers</span><br/>
+                                <span class="talk_details_general" tal:content="python:view.talk_metadata(talk)">General info</span><br/>
+                            </td>
+                        </tr>
+                    </tal:talks>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+  </metal:content-core>
+</metal:main>
+</body>
+</html>
+
