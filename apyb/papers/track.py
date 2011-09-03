@@ -274,7 +274,7 @@ class OrganizeView(View):
             vote = self.process_form()
             ordering.vote(self.context,self.member_id,vote)
             messages.addStatusMessage(_(u"Your vote was computed"), type="info")
-        elif self.my_vote:
+        elif self.my_vote():
             messages.addStatusMessage(_(u"You already voted in this track"), type="info")
     
 class VoteView(OrganizeView):
