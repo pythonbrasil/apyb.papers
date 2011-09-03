@@ -114,7 +114,11 @@ class View(grok.View):
         speakers = [{'name':b.Title,
                      'organization':b.organization,
                      'bio':b.Description,
+                     'country':b.country,
+                     'state':b.state,
+                     'city':b.city,
                      'url':b.getURL(),
+                     'json_url':'%s/json' % b.getURL(),
                      } 
                     for b in brains]
         return speakers
@@ -182,24 +186,30 @@ class JSONView(View):
         talks = []
         for brain in brains:
             talk = {}
+            talk['creation_date'] = brain.CreationDate
             talk['title'] = brain.Title
             talk['description'] = brain.Description
             talk['track'] = self.context.title
             talk['speakers'] = self.speakers(brain.speakers)
             talk['language'] = brain.language
             talk['state'] = brain.review_state
+            talk['url'] = '%s' % brain.getURL()
+            talk['json_url'] = '%s/json' % brain.getURL()
             talks.append(talk)
         return talks
     
     def render(self):
         request = self.request
-        data = {'talks':self.talks()}
+        talks = self.talks()
+        data = {'talks':talks}
         data['url'] = self.context.absolute_url()
         data['title'] = self.context.title
-        
-        self.request.response.setHeader('Content-Type', 'application/json')
-        
-        return json.dumps(data)
+        data['description'] = self.context.description
+        data['total_talks'] = len(talks)
+        data['total_votes'] = len(self.voters())
+                                
+        self.request.response.setHeader('Content-Type', 'application/json;charset=utf-8')
+        return json.dumps(data,encoding='utf-8',ensure_ascii=False)
 
 class OrganizeView(View):
     grok.context(ITrack)

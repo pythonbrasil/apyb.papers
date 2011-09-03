@@ -1,4 +1,6 @@
 # -*- coding:utf-8 -*-
+import json
+
 from five import grok
 
 from Acquisition import aq_inner
@@ -133,18 +135,45 @@ class JSONView(View):
         self._speakers = dict([(b.UID,b) for b in super(JSONView,self).tracks()])
         self._talks = dict([(b.UID,b) for b in super(JSONView,self).tracks()])
     
-    def talks(self):
+    def speakers_info(self,speakers):
+        ''' Return a list of speakers in here '''
+        brains = self._ct.searchResults(portal_type='apyb.papers.speaker',
+                                         path=self._path,
+                                         UID=speakers, 
+                                         sort_on='sortable_title')
+        speakers = []
+        for brain in brains:
+            speaker = {'name':brain.Title,
+                       'organization':brain.organization,
+                       'bio':brain.Description,
+                       'country':brain.country,
+                       'state':brain.state,
+                       'city':brain.city,
+                       'language':brain.language,
+                       'url':brain.getURL(),
+                       'json_url':'%s/json' % brain.getURL(),
+                       }
+            speakers.append(speaker)
+        return speakers
+    
+    def talks(self,track):
         ''' Return a list of talks in here '''
-        brains = super(JSONView,self).talks()
+        brains = self._ct.searchResults(portal_type='apyb.papers.talk',
+                                         track=track,
+                                         path=self._path,
+                                         sort_on='sortable_title')
         talks = []
         for brain in brains:
             talk = {}
+            talk['creation_date'] = brain.CreationDate
             talk['title'] = brain.Title
             talk['description'] = brain.Description
             talk['track'] = self.context.title
-            talk['speakers'] = self.speakers(brain.speakers)
+            talk['speakers'] = self.speakers_info(brain.speakers)
             talk['language'] = brain.language
             talk['state'] = brain.review_state
+            talk['url'] = '%s' % brain.getURL()
+            talk['json_url'] = '%s/json' % brain.getURL()
             talks.append(talk)
         return talks
     
@@ -157,6 +186,8 @@ class JSONView(View):
             track['title'] = brain.Title
             track['description'] = brain.Description
             track['talks'] = self.talks(brain.UID)
+            track['url'] = '%s' % brain.getURL()
+            track['json_url'] = '%s/json' % brain.getURL()
             tracks.append(track)
         return tracks
     
@@ -166,9 +197,8 @@ class JSONView(View):
         data['url'] = self.context.absolute_url()
         data['title'] = self.context.title
         
-        self.request.response.setHeader('Content-Type', 'application/json')
-        
-        return json.dumps(data)
+        self.request.response.setHeader('Content-Type', 'application/json;charset=utf-8')
+        return json.dumps(data,encoding='utf-8',ensure_ascii=False)
 
 class Speakers(grok.View):
     grok.context(IProgram)

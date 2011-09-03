@@ -1,4 +1,10 @@
-# -*- coding:utf-8 -*-
+# -*- coding:utf-8 -*
+
+import json
+from datetime import datetime
+
+from Acquisition import aq_parent
+
 from five import grok
 from plone.directives import dexterity, form
 from z3c.relationfield.schema import RelationChoice, RelationList
@@ -321,6 +327,7 @@ class View(dexterity.DisplayForm):
         self.portal = getMultiAdapter((context, self.request), name=u'plone_portal_state')
         self._ct = self.tools.catalog()
         self._mt = self.tools.membership()
+        self._wt = self.tools.workflow()
         self.member = self.portal.member()
         roles_context = self.member.getRolesInContext(context)
         if not self.show_border:
@@ -345,4 +352,44 @@ class View(dexterity.DisplayForm):
         
         return results
     
-
+class JSONView(View):
+    grok.context(ITalk)
+    grok.require('zope2.View')
+    grok.name('json')
+    
+    template = None
+    
+    def speakers(self):
+        ''' Return a list of speakers in here '''
+        brains = super(JSONView,self).speaker_info()
+        speakers = []
+        for brain in brains:
+            speaker = {'name':brain.Title,
+                       'organization':brain.organization,
+                       'bio':brain.Description,
+                       'country':brain.country,
+                       'state':brain.state,
+                       'city':brain.city,
+                       'language':brain.language,
+                       'url':brain.getURL(),
+                       'json_url':'%s/json' % brain.getURL(),
+                       }
+            speakers.append(speaker)
+        return speakers
+    
+    def render(self):
+        request = self.request
+        data = {'speakers':self.speakers()}
+        data['url'] = self.context.absolute_url()
+        data['title'] = self.context.title
+        data['creation_date'] = self.context.CreationDate()
+        data['track'] = aq_parent(self.context).Title()
+        data['language'] = self.context.language
+        data['talk_type'] = self.context.talk_type
+        data['text'] = self.context.talk_type
+        data['level'] = self.context.level
+        data['votes'] = []
+        data['state'] = self._wt.getInfoFor(self.context,'review_state')
+                                        
+        self.request.response.setHeader('Content-Type', 'application/json;charset=utf-8')
+        return json.dumps(data,encoding='utf-8',ensure_ascii=False)

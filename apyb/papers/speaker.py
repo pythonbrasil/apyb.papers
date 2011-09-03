@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+import json
 from five import grok
 from plone.directives import dexterity, form
 
@@ -120,7 +121,23 @@ class View(grok.View):
     def show_border(self):
         ''' Is this user allowed to edit this content '''
         return self.state.is_editable()
-        
+    
+    def speakers(self,speaker_uids):
+        ''' Given a list os uids, we return a list of dicts with speakers data '''
+        ct = self._ct
+        brains = ct.searchResults(portal_type='apyb.papers.speaker',UID=speaker_uids)
+        speakers = [{'name':b.Title,
+                     'organization':b.organization,
+                     'bio':b.Description,
+                     'country':b.country,
+                     'state':b.state,
+                     'city':b.city,
+                     'url':b.getURL(),
+                     'json_url':'%s/json' % b.getURL(),
+                     } 
+                    for b in brains]
+        return speakers
+    
     def speaker_name(self,speaker_uids):
         ''' Given a list os uids, we return a string with speakers names '''
         ct = self._ct
@@ -133,3 +150,43 @@ class View(grok.View):
                                          speakers=[self.context.UID(),],
                                          sort_on='sortable_title')
         return results
+
+class JSONView(View):
+    grok.name('json')
+
+    template = None
+
+    def talks(self):
+        ''' Return a list of talks in here '''
+        brains = super(JSONView,self).my_talks()
+        talks = []
+        for brain in brains:
+            talk = {}
+            talk['creation_date'] = brain.CreationDate
+            talk['title'] = brain.Title
+            talk['description'] = brain.Description
+            talk['track'] = self.context.title
+            talk['speakers'] = self.speakers(brain.speakers)
+            talk['language'] = brain.language
+            talk['state'] = brain.review_state
+            talk['url'] = '%s' % brain.getURL()
+            talk['json_url'] = '%s/json' % brain.getURL()
+            talks.append(talk)
+        return talks
+
+    def render(self):
+        request = self.request
+        talks = self.talks()
+        data = {'name':self.context.title,
+                'organization':self.context.organization,
+                'bio':self.context.description,
+                'country':self.context.country,
+                'state':self.context.state,
+                'city':self.context.city,
+                'language':self.context.language,
+                'url':self.context.absolute_url(),
+               }
+        data['talks'] = self.talks()
+
+        self.request.response.setHeader('Content-Type', 'application/json;charset=utf-8')
+        return json.dumps(data,encoding='utf-8',ensure_ascii=False)
