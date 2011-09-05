@@ -239,7 +239,24 @@ class ITalk(form.Schema):
     #
     form.fieldset('allocation',
             label=_(u"Talk Allocation"),
-            fields=['startDate','endDate','location']
+            fields=['points','startDate','endDate','location']
+    )
+    
+    dexterity.read_permission(points='zope2.View')
+    dexterity.write_permission(location='apyb.papers.AllocateTalk')
+    points = schema.Float(
+        title = _(u"Points"),
+        description = _(u""),
+        required = False,
+    )
+    
+    dexterity.read_permission(votes='zope2.View')
+    dexterity.write_permission(location='apyb.papers.AllocateTalk')
+    form.omitted('votes')
+    votes = schema.Dict(
+        title =_(u"Votes"),
+        description = _(u"Votes for this talk. Position is relative to track."),
+        required = False,
     )
     
     dexterity.read_permission(location='zope2.View')
