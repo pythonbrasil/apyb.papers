@@ -84,7 +84,7 @@ def rank_talks_in_track(context,close=True):
                 talks[talkId] = {}
                 talks[talkId]['pos'] = [0 for index in range(0,ntalks+1)]
                 talks[talkId]['votes'] = []
-            talks[talkId]['pos'][pos] = talks[talkId][pos] + 1
+            talks[talkId]['pos'][pos] = talks[talkId]['pos'][pos] + 1
             # Here we store the human readable position, not the index 
             # (1 instead of 0)
             talks[talkId]['votes'].append((voter,date,pos + 1))
