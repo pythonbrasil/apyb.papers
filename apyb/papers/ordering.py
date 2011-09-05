@@ -66,8 +66,8 @@ def rank_talks_in_track(context,close=True):
     path = '/'.join(context.getPhysicalPath())
     talks_here = dict([(b.UID,b.getId) for b in ct.searchResults(portal_type='apyb.papers.talk',review_state='created',path=path)])
     ntalks = len(talks_here)
-    index = 1.0 /  ntalks
-    scale = [((ntalks - i) * index)**5 for i in range(0,ntalks+1)]
+    index = 1.0 /  (ntalks - 1)
+    scale = [((ntalks - i) * index)**5 for i in range(1,ntalks +1)]
     
     anno = setupAnnotations(context)[order]
     votes = [(k,v[1],v[0]) for k,v in anno.items()]
