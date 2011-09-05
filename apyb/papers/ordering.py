@@ -54,3 +54,50 @@ def getMyVote(context, userid=None):
         return annotations[order][userid]
     
     return None
+
+def rank_talks_in_track(context,close=True):
+    ''' Rank all talks for a given track,
+        and close voting '''
+    wt = getToolByName(context, 'portal_workflow')
+    ct = getToolByName(context, 'portal_catalog')
+    if not(wt.getInfoFor(context,'review_state') == 'voting'):
+        return False
+    
+    path = '/'.join(context.getPhysicalPath())
+    nTalks = len(ct.searchResults(portal_type='apyb.papers.talk',review_state='created',path=path))
+    index = 1.0 /  ntalks
+    scale = [((ntalks - i) * index)**5 for i in range(0,ntalks+1)]
+    
+    anno = setupAnnotations(context)[order]
+    votes = [(k,v[1],v[0]) for k,v in anno.items()]
+    
+    talks = {}
+    for voter,date,vote in votes:
+        vote = list(vote)
+        # reverse list
+        vote.reverse()
+        pos = 0
+        while vote:
+            talkId = vote.pop()
+            if not talkId in talks:
+                talks[talkId]['pos'] = [0 for index in range(0,ntalks+1)]
+                talks[talkId]['votes'] = []
+            talks[talkId]['pos'][pos] = talks[talkId][pos] + 1
+            # Here we store the human readable position, not the index 
+            # (1 instead of 0)
+            talks[talkId]['votes'].append((voter,date,pos + 1))
+            pos +=1
+    
+    for talkId in talks:
+        oTalk = context[talkId]
+        oVoteAudit = talks[talkId]['votes']
+        oVotePos = talks[talkId]['pos']
+        talk_points= sum([scale[i] * oVotePos[i] for i in range(0,len(scale))]) / len(votes)
+        talk_votes = oVoteAudit
+        oTalk.points = talk_points
+        oTalk.votes = talk_votes
+        oTalk.reindexCatalog(idxs=['points',])
+    if close:
+        wt.doActionFor(context,'finish')
+    return True
+
