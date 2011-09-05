@@ -36,6 +36,11 @@
         title="apyb.papers: Organize Talk"
       />
     
+    <!-- View votes in a track -->
+    <permission
+        id="apyb.papers.ViewVotes"
+        title="apyb.papers: View Votes"
+      />
     <!-- Grok the package to initialise schema interfaces and content classes -->
     <grok:grok package="." />
 

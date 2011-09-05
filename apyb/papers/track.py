@@ -133,7 +133,7 @@ class View(grok.View):
         ''' This user can submit a talk in here'''
         context = self.context
         return self._mt.checkPermission('apyb.papers: Add Talk',context)
-
+    
     @property
     def can_organize(self):
         ''' This user can organize talks in this track'''
@@ -144,7 +144,7 @@ class View(grok.View):
     def can_view_voters(self):
         ''' This user can view who voted here'''
         context = self.context
-        return self._mt.checkPermission('apyb.papers: Organize Talk',context)    
+        return self._mt.checkPermission('apyb.papers: View Votes',context)  
     
     @property
     def show_border(self):
@@ -289,7 +289,7 @@ class VoteView(OrganizeView):
     grok.context(ITrack)
     grok.implements(IPublishTraverse)
     grok.name('vote')
-    grok.require('apyb.papers.OrganizeTalk')
+    grok.require('apyb.papers.ViewVotes')
 
     email = None
 

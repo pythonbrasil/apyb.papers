@@ -24,5 +24,11 @@
     </permission>
     <permission name="apyb.papers: Allocate Talk" acquire="False">
     </permission>
+    <permission name="apyb.papers: View Votes" acquire="False">
+      <role name="Manager"/>
+      <role name="Editor"/> 
+      <role name="Contributor"/>
+      <role name="Reader"/>
+    </permission>    
   </permissions>
 </rolemap>
