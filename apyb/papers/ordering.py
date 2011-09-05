@@ -64,7 +64,7 @@ def rank_talks_in_track(context,close=True):
         return False
     
     path = '/'.join(context.getPhysicalPath())
-    talks_here = ct.searchResults(portal_type='apyb.papers.talk',review_state='created',path=path)
+    talks_here = dict([(b.UID,b.getId) for b in ct.searchResults(portal_type='apyb.papers.talk',review_state='created',path=path)])
     ntalks = len(talks_here)
     index = 1.0 /  ntalks
     scale = [((ntalks - i) * index)**5 for i in range(0,ntalks+1)]
@@ -91,7 +91,7 @@ def rank_talks_in_track(context,close=True):
             pos +=1
     
     for talkId in talks:
-        oTalk = context[talkId]
+        oTalk = context[talks_here.get(talkId)]
         oVoteAudit = talks[talkId]['votes']
         oVotePos = talks[talkId]['pos']
         talk_points= sum([scale[i] * oVotePos[i] for i in range(0,len(scale))]) / len(votes)
