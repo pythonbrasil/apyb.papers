@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <object name="portal_workflow">
  <object name="talk_workflow" meta_type="Workflow"/>
+ <object name="track_workflow" meta_type="Workflow"/>
  <object name="program_workflow" meta_type="Workflow"/>
  <bindings>
   <type type_id="apyb.papers.talk">
@@ -10,7 +11,7 @@
    <bound-workflow workflow_id="program_workflow"/>
   </type>
   <type type_id="apyb.papers.track">
-   <bound-workflow workflow_id="one_state_workflow"/>
+   <bound-workflow workflow_id="track_workflow"/>
   </type>
   <type type_id="apyb.papers.speaker">
    <bound-workflow workflow_id="one_state_workflow"/>
