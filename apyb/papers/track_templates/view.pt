@@ -61,17 +61,33 @@
         <div class="talk_submission"><a href="" tal:attributes="href string:${context/absolute_url}/@@order-talks" i18n:translate="">Vote now!</a></div>        
     </div>
     <div class="clear"> </div>
-    <div class="talks">
-        <h2 i18n:translate="">Talks for this track</h2>
-        <div class="talks_details" i18n:translate="">Take a look at the talks already submitted here</div>        
-        <div tal:define="talks view/talks" class="talks_listing">
-            <tal:talks tal:repeat="talk talks">
-            <div tal:attributes="id talk/id" class="talk">
-                <span class="talk_title"><a href="" tal:attributes="href talk/getURL" tal:content="talk/Title">Plone is cool</a></span><br />
-                <span class="discreet" tal:content="python:view.speaker_name(talk.speakers)">Joe Doe</span><br />
-            </div>
-            </tal:talks>
-        </div>
+    <div class="talks" tal:define="ranked view/ordered_talks;
+                                   talks view/talks">
+        <dl class="enableFormTabbing">
+            <dt id="fieldsetlegend-ranked-talks" tal:condition="ranked"><h2 i18n:translate="">Ordered talks</h2></dt>
+            <dd id="fieldset-ranked-talks"  tal:condition="ranked"> 
+                <div tal:define="talks view/ranked" class="talks_listing">
+                    <tal:talks tal:repeat="talk talks">
+                    <div tal:attributes="id talk/id" class="talk">
+                        <span class="talk_title"><a href="" tal:attributes="href talk/getURL" tal:content="talk/Title">Plone is cool</a></span><br />
+                        <span class="discreet" tal:content="python:view.speaker_name(talk.speakers)">Joe Doe</span><br />
+                    </div>
+                    </tal:talks>
+                </div>
+            </dd>
+            <dt id="fieldsetlegend-all-talks"><h2 i18n:translate="">Talks for this track</h2></dt>
+            <dd id="fieldset-all-talks">
+                <div class="talks_details" i18n:translate="">Take a look at the talks already submitted here</div>        
+                <div tal:define="talks view/talks" class="talks_listing">
+                    <tal:talks tal:repeat="talk talks">
+                    <div tal:attributes="id talk/id" class="talk">
+                        <span class="talk_title"><a href="" tal:attributes="href talk/getURL" tal:content="talk/Title">Plone is cool</a></span><br />
+                        <span class="discreet" tal:content="python:view.speaker_name(talk.speakers)">Joe Doe</span><br />
+                    </div>
+                    </tal:talks>
+                </div>
+            </dd>
+        </dl>
     </div>
   </metal:content-core>
 </metal:main>
