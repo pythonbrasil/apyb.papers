@@ -81,6 +81,7 @@ def rank_talks_in_track(context,close=True):
         while vote:
             talkId = vote.pop()
             if not talkId in talks:
+                talks[talkId] = {}
                 talks[talkId]['pos'] = [0 for index in range(0,ntalks+1)]
                 talks[talkId]['votes'] = []
             talks[talkId]['pos'][pos] = talks[talkId][pos] + 1
