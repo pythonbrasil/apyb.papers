@@ -98,7 +98,7 @@ def rank_talks_in_track(context,close=True):
         talk_votes = oVoteAudit
         oTalk.points = talk_points
         oTalk.votes = talk_votes
-        oTalk.reindexCatalog(idxs=['points',])
+        oTalk.reindexObject(idxs=['points',])
     if close:
         wt.doActionFor(context,'finish')
     return True
