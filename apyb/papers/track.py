@@ -166,11 +166,19 @@ class View(grok.View):
         voters.sort()
         return voters
     
+    def ordered_talks(self,**kw):
+        ''' Return a list of talks in here '''
+        kw['sort_on'] = 'points'
+        kw['sort_order'] = 'reverse'
+        results = self.talks(**kw)
+        return results
+    
     def talks(self,**kw):
         ''' Return a list of talks in here '''
         kw['portal_type'] ='apyb.papers.talk'
         kw['path'] =self._path
-        kw['sort_on'] = 'sortable_title'
+        if not 'sort_on' in kw:
+            kw['sort_on'] = 'sortable_title'
         results = self._ct.searchResults(**kw)
         return results
     
