@@ -64,7 +64,8 @@ def rank_talks_in_track(context,close=True):
         return False
     
     path = '/'.join(context.getPhysicalPath())
-    nTalks = len(ct.searchResults(portal_type='apyb.papers.talk',review_state='created',path=path))
+    talks_here = ct.searchResults(portal_type='apyb.papers.talk',review_state='created',path=path)
+    ntalks = len(talks_here)
     index = 1.0 /  ntalks
     scale = [((ntalks - i) * index)**5 for i in range(0,ntalks+1)]
     
