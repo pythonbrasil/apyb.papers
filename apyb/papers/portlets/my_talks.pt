@@ -27,12 +27,20 @@
              Some Talk
             </span>
         </a>    
-            <span class="portletItemDetails">
-                <span tal:condition="obj/review_state"> &nbsp;
-                    <tal:desc content="python:view.review_state(obj.review_state)">Approved</tal:desc>
-                </span>
+        <span class="portletItemDetails">
+            <span tal:condition="obj/review_state"> &nbsp;
+                <tal:desc content="python:view.review_state(obj.review_state)">Approved</tal:desc>
             </span>
+        </span>
     </dd>
     </tal:talks>
+    <dd class="portletFooter">
+        <span class="portletBottomLeft"></span>
+        <a href="http://www.pythonbrasil.org.br/2011/programacao/grade-do-evento/"
+           i18n:translate="">
+          Conference program.
+        </a>
+        <span class="portletBottomRight"></span>
+    </dd>
 </dl>
 </html>
