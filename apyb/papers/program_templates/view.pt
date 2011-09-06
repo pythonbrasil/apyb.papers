@@ -119,27 +119,63 @@
     <div class="clear"> </div>
     <div class="my-talks" tal:condition="view/my_talks">
         <h2 i18n:translate="">My talks</h2>
+        <form action="" tal:condition="view/my_talks_accepted"
+              method="POST"
+              tal:attributes="action string:${context/absolute_url}/confirm-talks">
+            <h3 i18n:translate="">Talks waiting for your confirmation</h3>
+            <table class="grid" id="talks_ordering">
+                <thead>
+                    <tr>
+                        <th i18n:translate="">Confirm</th>
+                        <th i18n:translate="">Cancel</th>
+                        <th i18n:translate="">Track</th>
+                        <th i18n:translate="">Information</th>
+                        <th i18n:translate="">Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr tal:repeat="talk view/my_talks_accepted">
+                        <td><input type="radio" value='confirm' tal:attributes="name talk/UID;" /></td>
+                        <td><input type="radio" value='cancel' tal:attributes="name talk/UID;" /></td>
+                        <td><span tal:content="python:view.helper.track_info(talk.track).get('title')">Django</span></td>
+                        <td>
+                            <span class="talk_title"><a href="" tal:attributes="href talk/getURL" tal:content="talk/Title">Plone is cool</a></span><br />
+                            <span class="discreet" tal:content="python:view.speaker_name(talk.speakers)">Joe Doe</span>
+                        </td>
+                        <td><span tal:condition='talk/points' tal:content="python:'%.2f' % talk.points">0.32</span></td>
+                    </tr>
+                </tbody>
+                </table>
+                <div>
+                    <input type="hidden" name="submitted" value="1" />
+                    <input type="submit" name="confirm_button" value="Send" id="confirm_button" />
+                </div>
+                <br/>
+        </form>
         <div tal:define="talks view/my_talks" class="talks_listing">
-            <tal:talks tal:repeat="talk talks">
-            <div tal:attributes="id talk/id" class="talk">
-                <span class="talk_title"><a href="" tal:attributes="href talk/getURL" tal:content="talk/Title">Plone is cool</a></span><br />
-                <span class="discreet" tal:content="python:view.speaker_name(talk.speakers)">Joe Doe</span><br />
-            </div>
-            </tal:talks>
+            <h3 i18n:translate="">Submited talks</h3>
+            <table class="grid" id="talks_ordering">
+                <thead>
+                    <tr>
+                        <th i18n:translate="">Track</th>
+                        <th i18n:translate="">Information</th>
+                        <th i18n:translate="">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr tal:repeat="talk view/my_talks">
+                        <td><span tal:content="python:view.helper.track_info(talk.track).get('title')">Django</span></td>
+                        <td>
+                            <span class="talk_title"><a href="" tal:attributes="href talk/getURL" tal:content="talk/Title">Plone is cool</a></span><br />
+                            <span class="discreet" tal:content="python:view.speaker_name(talk.speakers)">Joe Doe</span>
+                        </td>
+                        <td><span tal:content="talk/review_state">Created</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="clear"> </div>
-    <div class="talks">
-        <h2 i18n:translate="">Last submitted talks</h2>
-        <div tal:define="talks view/last_talks" class="talks_listing">
-            <tal:talks tal:repeat="talk talks">
-            <div tal:attributes="id talk/id" class="talk">
-                <span class="talk_title"><a href="" tal:attributes="href talk/getURL" tal:content="talk/Title">Plone is cool</a></span><br />
-                <span class="discreet" tal:content="python:view.speaker_name(talk.speakers)">Joe Doe</span><br />
-            </div>
-            </tal:talks>
-        </div>
-    </div>
   </metal:content-core>
 </metal:main>
 
