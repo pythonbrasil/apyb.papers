@@ -405,7 +405,7 @@ class JSONView(View):
         data['talk_type'] = self.context.talk_type
         data['text'] = self.context.talk_type
         data['level'] = self.context.level
-        data['points'] = []
+        data['points'] = self.context.points or 0.0
         data['state'] = self._wt.getInfoFor(self.context,'review_state')
                                         
         self.request.response.setHeader('Content-Type', 'application/json;charset=utf-8')

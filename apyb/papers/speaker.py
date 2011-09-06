@@ -168,7 +168,7 @@ class JSONView(View):
             talk['track'] = self.context.title
             talk['speakers'] = self.speakers(brain.speakers)
             talk['language'] = brain.language
-            talk['points'] = brain.points
+            talk['points'] = brain.points or 0.0
             talk['state'] = brain.review_state
             talk['url'] = '%s' % brain.getURL()
             talk['json_url'] = '%s/json' % brain.getURL()
