@@ -4,6 +4,7 @@ import json
 from five import grok
 
 from Acquisition import aq_inner
+from Acquisition import aq_parent
 
 from zope.schema.interfaces import IVocabularyFactory
 from zope.component import getMultiAdapter, queryUtility
@@ -44,6 +45,7 @@ class View(grok.View):
         self.state = getMultiAdapter((context, self.request), name=u'plone_context_state')
         self.tools = getMultiAdapter((context, self.request), name=u'plone_tools')
         self.portal = getMultiAdapter((context, self.request), name=u'plone_portal_state')
+        self.helper = getMultiAdapter((context, self.request), name=u'helper')
         self._ct = self.tools.catalog()
         self._mt = self.tools.membership()
         self.is_anonymous = self.portal.anonymous()
@@ -52,12 +54,10 @@ class View(grok.View):
         if not self.show_border:
             self.request['disable_border'] = True
     
-    
     @property
     def can_submit(self):
         ''' This user can submit a talk in here'''
-        context = self.context
-        return self._mt.checkPermission('apyb.papers: Add Talk',context)
+        return self._mt.checkPermission('apyb.papers: Add Talk',self.context)
     
     @property
     def show_border(self):
@@ -74,54 +74,53 @@ class View(grok.View):
     
     def speaker_name(self,speaker_uids):
         ''' Given a list os uids, we return a string with speakers names '''
-        ct = self._ct
-        results = ct.searchResults(portal_type='apyb.papers.speaker',UID=speaker_uids)
-        return ', '.join([b.Title for b in results])
+        helper = self.helper
+        speakers_dict = helper.speakers_dict
+        results = [speaker for uid,speaker in speakers_dict.items() if uid in speaker_uids]
+        return ', '.join([b['name'] for b in results])
     
     def tracks(self):
         ''' Return a list of tracks in here '''
-        results = self._ct.searchResults(portal_type='apyb.papers.track', 
-                                         path=self._path,
-                                         sort_on='getObjPositionInParent')
+        helper = self.helper
+        results = helper.tracks(sort_on='getObjPositionInParent')
         return results
     
     def speakers(self):
         ''' Return a list of speakers in here '''
-        results = self._ct.searchResults(portal_type='apyb.papers.speaker',
-                                         path=self._path,        
-                                         sort_on='sortable_title')
+        helper = self.helper
+        results = helper.speakers(sort_on='sortable_title')
         return results
     
     def talks(self):
         ''' Return a list of talks in here '''
-        results = self._ct.searchResults(portal_type='apyb.papers.talk', 
-                                         path=self._path,
-                                         sort_on='sortable_title')
+        helper = self.helper
+        results = helper.talks(sort_on='sortable_title')
         return results
     
     def my_talks(self):
         ''' Return a list of my talks '''
-        results = self._ct.searchResults(portal_type='apyb.papers.talk', 
-                                         path=self._path,
-                                         Creator=self.member.getUserName(),
-                                         sort_on='sortable_title')
+        helper = self.helper
+        results = helper.talks_username(username=self.member.getUserName(),sort_on='sortable_title',)
+        return results
+    
+    def my_talks_accepted(self):
+        ''' Return a list of my talks waiting for confirmation '''
+        helper = self.helper
+        results = helper.talks_username(username=self.member.getUserName(),review_state='accepted',sort_on='sortable_title',)
         return results
     
     def my_profiles(self):
         ''' Return a list of my speaker profiles '''
-        results = self._ct.searchResults(portal_type='apyb.papers.speaker', 
-                                         path=self._path,
-                                         Creator=self.member.getUserName(),
-                                         sort_on='sortable_title')
+        helper = self.helper
+        results = helper.speakers_username(username=self.member.getUserName(),sort_on='sortable_title')
         return results
     
     def last_talks(self):
         ''' Return a list of the last 5 talks in here '''
-        results = self._ct.searchResults(portal_type='apyb.papers.talk', 
-                                         path=self._path,
-                                         sort_on='created',
-                                         sort_order='reverse',
-                                         sort_limit=5,)
+        helper = self.helper
+        results = helper.talks(sort_on='created',
+                               sort_order='reverse',
+                               sort_limit=5,)
         return results[:5]
 
 class JSONView(View):
@@ -200,6 +199,7 @@ class JSONView(View):
         self.request.response.setHeader('Content-Type', 'application/json;charset=utf-8')
         return json.dumps(data,encoding='utf-8',ensure_ascii=False)
 
+
 class Speakers(grok.View):
     grok.context(IProgram)
     grok.require('cmf.ReviewPortalContent')
@@ -223,11 +223,13 @@ class Speakers(grok.View):
         if not self.show_border:
             self.request['disable_border'] = True
     
-    def talks_speakers(self):
+    def talks_speakers(self,**kw):
         ''' Return a dict of talks per speaker '''
-        results = self._ct.searchResults(portal_type='apyb.papers.talk', 
-                                         path=self._path,
-                                         sort_on='sortable_title')
+        kw['portal_type'] = 'apyb.papers.talk'
+        kw['papers'] = self._path
+        kw['sort_on'] = 'sortable_title'        
+        results = self._ct.searchResults(**kw)
+        
         talks_speakers = {}
         for brain in results:
             speakers = brain.speakers
@@ -239,6 +241,10 @@ class Speakers(grok.View):
                     talks_speakers[speaker] = []
                 talks_speakers[speaker].append(talk)
         return talks_speakers
+    
+    def talks_speakers_approved(self):
+        kw = {'review_state':['confirmed','accepted',]}
+        return self.talks_speakers(**kw)
     
     def keynote_speakers(self):
         ''' List uids of keynote speakers
@@ -292,4 +298,43 @@ class Speakers(grok.View):
     def show_border(self):
         ''' Is this user allowed to edit this content '''
         return self.state.is_editable()
+    
+
+    
+class ConfirmView(grok.View):
+    grok.context(IProgram)
+    grok.require('zope2.View')
+    grok.name('confirm-talks')
+    
+    template = None
+    
+    def update(self):
+        super(ConfirmView,self).update()
+        context = aq_inner(self.context)
+        self.state = getMultiAdapter((context, self.request), name=u'plone_context_state')
+        self.tools = getMultiAdapter((context, self.request), name=u'plone_tools')
+        self.portal = getMultiAdapter((context, self.request), name=u'plone_portal_state')
+        self.helper = getMultiAdapter((context, self.request), name=u'helper')
+        self._ct = self.tools.catalog()
+        self._wt = self.tools.workflow()
+        self.member = self.portal.member()
+        
+    
+    def my_talks_accepted(self):
+        ''' Return a list of my talks waiting for confirmation '''
+        helper = self.helper
+        results = helper.talks_username(username=self.member.getUserName(),review_state='accepted',sort_on='sortable_title',)
+        return results
+    
+    def render(self):
+        talks = self.my_talks_accepted()
+        talks = dict([(str(b.UID),b) for b in talks])
+        for talk_uid,brain in talks.items():
+            action = self.request.form.get(talk_uid,'')
+            if not action in ['confirm','cancel']:
+                continue
+            o = brain.getObject()
+            self._wt.doActionFor(o,action)
+        return self.request.response.redirect(self.context.absolute_url())
+        
     
