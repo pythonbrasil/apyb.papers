@@ -22,7 +22,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr tal:repeat="talk view/ordered_talks">
+                <tal:talks tal:repeat="talk view/ordered_talks">
+                <tr tal:attributes="class string:${talk/review_state}">
                     <td><span tal:content="repeat/talk/number">1</span></td>
                     <td><span tal:content="python:view.helper.track_info(talk.track).get('title')">Django</span></td>
                     <td>
@@ -32,6 +33,7 @@
                     <td><span tal:condition='talk/points' tal:content="python:'%.2f' % talk.points">0.32</span></td>
                     <td><span tal:content="talk/review_state">Created</span></td>
                 </tr>
+                </tal:talks>
             </tbody>
         </table>
     </div>
