@@ -108,6 +108,12 @@ class View(grok.View):
         helper = self.helper
         results = helper.talks_username(username=self.member.getUserName(),review_state='accepted',sort_on='sortable_title',)
         return results
+        
+    def my_talks_confirmed(self):
+        ''' Return a list of my talks waiting for confirmation '''
+        helper = self.helper
+        results = helper.talks_username(username=self.member.getUserName(),review_state='confirmed',sort_on='sortable_title',)
+        return results
     
     def my_profiles(self):
         ''' Return a list of my speaker profiles '''
@@ -170,6 +176,7 @@ class JSONView(View):
             talk['track'] = self.context.title
             talk['speakers'] = self.speakers_info(brain.speakers)
             talk['language'] = brain.language
+            talk['points'] = brain.points
             talk['state'] = brain.review_state
             talk['url'] = '%s' % brain.getURL()
             talk['json_url'] = '%s/json' % brain.getURL()
@@ -242,8 +249,12 @@ class Speakers(grok.View):
                 talks_speakers[speaker].append(talk)
         return talks_speakers
     
-    def talks_speakers_approved(self):
-        kw = {'review_state':['confirmed','accepted',]}
+    def talks_speakers_accepted(self):
+        kw = {'review_state':['accepted',]}
+        return self.talks_speakers(**kw)
+    
+    def talks_speakers_confirmed(self):
+        kw = {'review_state':['confirmed',]}
         return self.talks_speakers(**kw)
     
     def keynote_speakers(self):
