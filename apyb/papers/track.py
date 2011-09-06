@@ -229,7 +229,7 @@ class OrganizeView(View):
         kw['review_state'] = 'created'
         talks = super(OrganizeView,self).talks(**kw)
         talks = dict([(talk.UID,talk) for talk in talks])
-        return talks    
+        return talks
     
     def talks(self,**kw):
         ''' Return a randomized list of talks '''
@@ -296,7 +296,13 @@ class VoteView(OrganizeView):
     def publishTraverse(self, request, name):
         self.email = name
         return self
-
+    
+    def _talks(self,**kw):
+        ''' Return a randomized list of talks '''
+        talks = super(OrganizeView,self).talks(**kw)
+        talks = dict([(talk.UID,talk) for talk in talks])
+        return talks
+        
     def my_vote(self):
         ''' Get a vote from annotation storage '''
         member_id = self.email
