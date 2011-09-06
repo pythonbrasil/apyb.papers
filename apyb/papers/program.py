@@ -338,3 +338,22 @@ class ConfirmView(grok.View):
         return self.request.response.redirect(self.context.absolute_url())
         
     
+
+class Ranking(View):
+    grok.context(IProgram)
+    grok.require('zope2.View')
+    grok.name('ranking')
+    
+    def tracks_uids(self):
+        ''' List of track uids excluding keynotes and pssa '''
+        return [b.UID for b in self.tracks() if not b.getId in ['plone-symposium-south-america','keynotes']]
+    
+    def ordered_talks(self):
+        helper = self.helper
+        kw = {}
+        kw['track'] = self.tracks_uids()
+        kw['sort_on'] = 'points'
+        kw['sort_order'] = 'reverse'
+        results = helper.talks(**kw)
+        return results
+    
