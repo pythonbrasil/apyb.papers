@@ -50,6 +50,7 @@ class View(grok.View):
         self._mt = self.tools.membership()
         self.is_anonymous = self.portal.anonymous()
         self.member = self.portal.member()
+        self.stats = self.helper.program_stats()
         roles_context = self.member.getRolesInContext(context)
         if not self.show_border:
             self.request['disable_border'] = True

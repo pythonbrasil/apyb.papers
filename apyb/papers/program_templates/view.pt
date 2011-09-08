@@ -12,18 +12,18 @@
          tal:define="cfp view/can_submit">
     <div class="stats">
         <h2 i18n:translate="">Stats</h2>
-        <div class="stats_list">
+        <div class="stats_list" tal:define="stats view/stats">
             <div class="stats_box">
                 <span class="stats_title" i18n:translate="">Tracks</span><br />
-                <span class="stats_number" tal:content="python:len(view.tracks())">12</span><br />
+                <span class="stats_number" tal:content="stats/tracks">12</span><br />
             </div>
             <div class="stats_box">
                 <span class="stats_title" i18n:translate="">Talks</span><br />
-                <span class="stats_number" tal:content="python:len(view.talks())">12</span><br />
+                <span class="stats_number" tal:content="stats/talks">12</span><br />
             </div>
             <div class="stats_box">
                 <span class="stats_title" i18n:translate="">Speakers</span><br />
-                <span class="stats_number" tal:content="python:len(view.speakers())">12</span><br />
+                <span class="stats_number" tal:content="stats/speakers">12</span><br />
             </div>
         </div>
     </div>
