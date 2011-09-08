@@ -166,6 +166,14 @@ class View(grok.View):
         voters.sort()
         return voters
     
+    def confirmed_talks(self,**kw):
+        ''' Return a list of talks in here '''
+        kw['sort_on'] = 'points'
+        kw['sort_order'] = 'reverse'
+        kw['review_state'] = 'confirmed'
+        results = self.talks(**kw)
+        return results
+    
     def ordered_talks(self,**kw):
         ''' Return a list of talks in here '''
         kw['sort_on'] = 'points'
@@ -182,6 +190,11 @@ class View(grok.View):
         results = self._ct.searchResults(**kw)
         return results
     
+
+class TalksView(View):
+    grok.name('talks')
+    
+
 
 class JSONView(View):
     grok.name('json')

@@ -61,33 +61,42 @@
         <div class="talk_submission"><a href="" tal:attributes="href string:${context/absolute_url}/@@order-talks" i18n:translate="">Vote now!</a></div>        
     </div>
     <div class="clear"> </div>
-    <div class="talks" tal:define="ranked view/ordered_talks;
-                                   talks view/talks">
-        <dl class="enableFormTabbing">
-            <dt id="fieldsetlegend-ranked-talks" tal:condition="ranked"><h2 i18n:translate="">Ordered talks</h2></dt>
-            <dd id="fieldset-ranked-talks"  tal:condition="ranked"> 
-                <div tal:define="talks ranked" class="talks_listing">
-                    <tal:talks tal:repeat="talk talks">
-                    <div tal:attributes="id talk/id" class="talk">
-                        <span class="talk_title"><a href="" tal:attributes="href talk/getURL" tal:content="talk/Title">Plone is cool</a></span><br />
-                        <span class="discreet" tal:content="python:view.speaker_name(talk.speakers)">Joe Doe</span><br />
-                    </div>
-                    </tal:talks>
-                </div>
-            </dd>
-            <dt id="fieldsetlegend-all-talks"><h2 i18n:translate="">Talks for this track</h2></dt>
-            <dd id="fieldset-all-talks">
-                <div class="talks_details" i18n:translate="">Take a look at the talks already submitted here</div>        
-                <div tal:define="talks view/talks" class="talks_listing">
-                    <tal:talks tal:repeat="talk talks">
-                    <div tal:attributes="id talk/id" class="talk">
-                        <span class="talk_title"><a href="" tal:attributes="href talk/getURL" tal:content="talk/Title">Plone is cool</a></span><br />
-                        <span class="discreet" tal:content="python:view.speaker_name(talk.speakers)">Joe Doe</span><br />
-                    </div>
-                    </tal:talks>
-                </div>
-            </dd>
-        </dl>
+    <h2 i18n:translate="">Selected talks</h2>
+    <div tal:define="talks view/confirmed_talks" class="talks_listing">
+        <div class="talks" tal:define="talks talks">
+            <table class="grid" id="talks_ordering">
+                <thead>
+                    <tr>
+                        <th i18n:translate="">Talk</th>
+                    </tr>
+                </thead>
+                <tbody  class="listing_body">
+                <tal:talks tal:repeat="talk talks">
+                    <tr>
+                        <td class="talk_details_">
+                            <input type="hidden" value="" name="talk_uid"
+                                tal:attributes="value talk/UID">
+                            <a href="" 
+                               class="talk_details_link"
+                               tal:attributes="href talk/getURL" 
+                               tal:content="talk/Title">Title</a><br/>
+                            <span class="talk_details_speaker" tal:content="python:view.speaker_name(talk.speakers)">Speakers</span><br/>
+                        </td>
+                    </tr>
+                </tal:talks>
+                </tbody>
+            </table>
+            <script type="text/javascript">
+            jQuery(function(){
+              foo ='';
+              jQuery('a.talk_details_link').prepOverlay({
+                  subtype: 'ajax',
+                  filter: '#content>*',
+                  });
+
+            });
+            </script>
+        </div>
     </div>
   </metal:content-core>
 </metal:main>
