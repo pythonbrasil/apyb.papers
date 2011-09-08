@@ -119,4 +119,21 @@ class View(grok.View):
         kw['speakers'] = speakers_profiles
         return self.talks(**kw)
     
-    
+    def talks_speaker(self):
+        talks = self.talks_dict
+        talks_speaker = {}
+        for talk_uid, talk in talks.items():
+            speakers = talk['speakers']
+            for speaker in speakers:
+                if not speaker in talks_speaker:
+                    talks_speaker[speaker] = {'all': [],
+                                              'confirmed': [],
+                                              'submitted': [],
+                                              'created': [],
+                                              'accepted': [],
+                                              'rejected': [],
+                                              'cancelled': []}
+                talks_speaker[speaker][talk['review_state']].append(talk_uid)
+                talks_speaker[speaker]['all'].append(talk_uid)
+        return talks_speaker
+

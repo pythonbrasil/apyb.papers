@@ -12,9 +12,7 @@
     <h2 i18n:translate="">Speakers list</h2>
     <table class="listing" 
            tal:define="speakers view/speakers;
-                       talks_speakers view/talks_speakers;
-                       talks_speakers_accepted view/talks_speakers_accepted;
-                       talks_speakers_confirmed view/talks_speakers_confirmed;">
+                       talks_speakers view/talks_speakers;">
         <thead>
             <tr>
                 <th i18n:translate=""></th>
@@ -24,7 +22,6 @@
                 <th i18n:translate="">E-mail</th>
                 <th i18n:translate="">Registered</th>
                 <th i18n:translate="">Sent</th>
-                <th i18n:translate="">Accp</th>
                 <th i18n:translate="">Conf</th>
             </tr>
         </thead>
@@ -43,11 +40,9 @@
                 <td tal:content="python:view.voc.getTerm(speaker.language).title">Gauches</td>
                 <td tal:content="speaker/email">foo@bar.com</td>
                 <td tal:content="python:view.speaker_registered(speaker.email)">foo@bar.com</td>
-                <td tal:define="talks python:talks_speakers.get(speaker.UID,[])"
+                <td tal:define="talks python:talks_speakers.get(speaker.UID,{}).get('all',[])"
                     tal:content="python:len(talks)">2</td>
-                <td tal:define="talks python:talks_speakers_accepted.get(speaker.UID,[])"
-                    tal:content="python:len(talks)">2</td>
-                <td tal:define="talks python:talks_speakers_confirmed.get(speaker.UID,[])"
+                <td tal:define="talks python:talks_speakers.get(speaker.UID,{}).get('confirmed',[])"
                     tal:content="python:len(talks)">2</td>
             </tr>
         </tbody>

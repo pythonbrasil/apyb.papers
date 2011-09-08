@@ -233,6 +233,7 @@ class Speakers(grok.View):
         self.state = getMultiAdapter((context, self.request), name=u'plone_context_state')
         self.tools = getMultiAdapter((context, self.request), name=u'plone_tools')
         self.portal = getMultiAdapter((context, self.request), name=u'plone_portal_state')
+        self.helper = getMultiAdapter((context, self.request), name=u'helper')
         self._ct = self.tools.catalog()
         self.member = self.portal.member()
         roles_context = self.member.getRolesInContext(context)
@@ -246,30 +247,8 @@ class Speakers(grok.View):
     
     def talks_speakers(self,**kw):
         ''' Return a dict of talks per speaker '''
-        kw['portal_type'] = 'apyb.papers.talk'
-        kw['papers'] = self._path
-        kw['sort_on'] = 'sortable_title'        
-        results = self._ct.searchResults(**kw)
-        
-        talks_speakers = {}
-        for brain in results:
-            speakers = brain.speakers
-            talk = {'title':brain.Title,
-                    'url':brain.getURL(),
-                    'review_state':brain.review_state}
-            for speaker in speakers:
-                if not speaker in talks_speakers:
-                    talks_speakers[speaker] = []
-                talks_speakers[speaker].append(talk)
-        return talks_speakers
-    
-    def talks_speakers_accepted(self):
-        kw = {'review_state':['accepted',]}
-        return self.talks_speakers(**kw)
-    
-    def talks_speakers_confirmed(self):
-        kw = {'review_state':['confirmed',]}
-        return self.talks_speakers(**kw)
+        helper = self.helper
+        return helper.talks_speaker()
     
     def keynote_speakers(self):
         ''' List uids of keynote speakers
