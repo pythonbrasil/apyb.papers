@@ -4,6 +4,8 @@ from five import grok
 from plone.directives import dexterity, form
 
 from Acquisition import aq_inner
+from Acquisition import aq_parent
+
 from zope.component import getMultiAdapter
 
 from plone.namedfile.field import NamedImage
@@ -13,9 +15,6 @@ from zope import schema
 from zope.component import getUtility
 from zope.app.intid.interfaces import IIntIds
 
-from z3c.form import group, field
-from plone.app.z3cform.wysiwyg import WysiwygFieldWidget
-
 from apyb.papers import MessageFactory as _
 
 
@@ -23,7 +22,7 @@ class ISpeaker(form.Schema):
     """
     A speaker
     """
-    
+
     form.omitted('uid')
     uid = schema.Int(
         title=_(u"uid"),
@@ -72,60 +71,69 @@ class ISpeaker(form.Schema):
         required=False,
         description=_(u"Upload an image to be used as speakers' portrait."),
     )
-    
 
 
 class Speaker(dexterity.Item):
     grok.implements(ISpeaker)
-    
+
     def _get_title(self):
         return self.fullname
+
     def _set_title(self, value):
         pass
     title = property(_get_title, _set_title)
-    
+
     def Title(self):
         return self.title
-    
+
     def Description(self):
         return self.description
-    
+
     def UID(self):
         return self.uid
-    
+
     @property
     def uid(self):
         intids = getUtility(IIntIds)
         return intids.getId(self)
-    
-    
+
+
 class View(grok.View):
     grok.context(ISpeaker)
     grok.require('zope2.View')
-    
+
     def update(self):
-        super(View,self).update()
+        super(View, self).update()
         context = aq_inner(self.context)
+        program = aq_parent(context)
         self._path = '/'.join(context.getPhysicalPath())
-        self.state = getMultiAdapter((context, self.request), name=u'plone_context_state')
-        self.tools = getMultiAdapter((context, self.request), name=u'plone_tools')
-        self.portal = getMultiAdapter((context, self.request), name=u'plone_portal_state')
+        self.state = getMultiAdapter((context, self.request),
+                                      name=u'plone_context_state')
+        self.tools = getMultiAdapter((context, self.request),
+                                      name=u'plone_tools')
+        self.portal = getMultiAdapter((context, self.request),
+                                      name=u'plone_portal_state')
+        self.helper = getMultiAdapter((program, self.request),
+                                      name=u'helper')
         self._ct = self.tools.catalog()
         self._mt = self.tools.membership()
+        self.speaker_uid =  self.context.UID()
         self.member = self.portal.member()
-        roles_context = self.member.getRolesInContext(context)
+        self.roles_context = self.member.getRolesInContext(context)
         if not self.show_border:
             self.request['disable_border'] = True
-    
+
     @property
     def show_border(self):
         ''' Is this user allowed to edit this content '''
         return self.state.is_editable()
-    
-    def speakers(self,speaker_uids):
-        ''' Given a list os uids, we return a list of dicts with speakers data '''
+
+    def speakers(self, speaker_uids):
+        ''' Given a list os uids, we return a list of
+            dicts with speakers data '''
         ct = self._ct
-        brains = ct.searchResults(portal_type='apyb.papers.speaker',UID=speaker_uids)
+        brains = ct.searchResults(portal_type='apyb.papers.speaker',
+                                  UID=speaker_uids)
         speakers = [{'name':b.Title,
                      'organization':b.organization,
                      'bio':b.Description,
@@ -134,22 +142,51 @@ class View(grok.View):
                      'city':b.city,
                      'url':b.getURL(),
                      'json_url':'%s/json' % b.getURL(),
-                     } 
+                     }
                     for b in brains]
         return speakers
-    
-    def speaker_name(self,speaker_uids):
+    #
+    def track_info(self,track_uid):
+        helper = self.helper
+        return helper.track_info(track_uid)
+    #
+    def speaker_name(self, speaker_uids):
         ''' Given a list os uids, we return a string with speakers names '''
-        ct = self._ct
-        results = ct.searchResults(portal_type='apyb.papers.speaker',UID=speaker_uids)
-        return ', '.join([b.Title for b in results])
-     
+        helper = self.helper
+        speakers_dict = helper.speakers_dict
+        results = [speaker for uid,speaker in speakers_dict.items() 
+                   if uid in speaker_uids]
+        return ', '.join([b['name'] for b in results])
+    #
     def my_talks(self):
         ''' Return a list of my talks '''
-        results = self._ct.searchResults(portal_type='apyb.papers.talk', 
-                                         speakers=[self.context.UID(),],
-                                         sort_on='sortable_title')
+        helper = self.helper
+        kw = {'speakers': [self.speaker_uid, ],
+              'sort_on': 'sortable_title',
+             }
+        results = helper.talks(**kw)
         return results
+    #
+    def my_talks_accepted(self):
+        ''' Return a list of my talks waiting for confirmation '''
+        helper = self.helper
+        kw = {'speakers': [self.speaker_uid, ],
+              'review_state': 'accepted',
+              'sort_on': 'sortable_title',
+             }
+        results = helper.talks(**kw)
+        return results
+    #
+    def my_talks_confirmed(self):
+        ''' Return a list of my talks waiting for confirmation '''
+        helper = self.helper
+        kw = {'speakers': [self.speaker_uid, ],
+              'review_state': 'confirmed',
+              'sort_on': 'sortable_title',
+             }
+        results = helper.talks(**kw)
+        return results
+
 
 class JSONView(View):
     grok.name('json')
@@ -158,7 +195,7 @@ class JSONView(View):
 
     def talks(self):
         ''' Return a list of talks in here '''
-        brains = super(JSONView,self).my_talks()
+        brains = super(JSONView, self).my_talks()
         talks = []
         for brain in brains:
             talk = {}
@@ -174,20 +211,20 @@ class JSONView(View):
             talk['json_url'] = '%s/json' % brain.getURL()
             talks.append(talk)
         return talks
-
+    #
     def render(self):
-        request = self.request
         talks = self.talks()
-        data = {'name':self.context.title,
-                'organization':self.context.organization,
-                'bio':self.context.description,
-                'country':self.context.country,
-                'state':self.context.state,
-                'city':self.context.city,
-                'language':self.context.language,
-                'url':self.context.absolute_url(),
+        data = {'name': self.context.title,
+                'organization': self.context.organization,
+                'bio': self.context.description,
+                'country': self.context.country,
+                'state': self.context.state,
+                'city': self.context.city,
+                'language': self.context.language,
+                'url': self.context.absolute_url(),
                }
-        data['talks'] = self.talks()
+        data['talks'] = talks
 
-        self.request.response.setHeader('Content-Type', 'application/json;charset=utf-8')
-        return json.dumps(data,encoding='utf-8',ensure_ascii=False)
+        self.request.response.setHeader('Content-Type',
+                                        'application/json;charset=utf-8')
+        return json.dumps(data, encoding='utf-8', ensure_ascii=False)
