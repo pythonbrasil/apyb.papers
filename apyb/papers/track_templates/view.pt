@@ -7,49 +7,26 @@
       i18n:domain="apyb.papers">
 <body>
 
+<metal:title fill-slot="content-title" tal:define="scale context/@@images;
+                                                  img python:scale.scale('image', width=120, height=120, direction='keep');">
+        <img tal:condition="img" tal:replace="structure python:img.tag(css_class='logo_track')"/>
+        <h1 metal:use-macro="context/kss_generic_macros/macros/generic_title_view">Track</h1>            
+        <div class="clear"> </div>
+        <div metal:use-macro="context/kss_generic_macros/macros/generic_description_view">
+            Generic KSS Description. Is rendered with class="documentDescription".
+        </div>
+</metal:title>
+<metal:description fill-slot="content-description">
+
+</metal:description>
 <metal:main fill-slot="content-core">
   <metal:content-core define-macro="content-core"
          tal:define="cfp view/can_submit;
                      cot view/can_organize;
                      voters view/voters;
-                     scale context/@@images;
-                     img python:scale.scale('image', width=80, height=80, direction='keep');">
-   <img tal:condition="img"
-        tal:replace="structure python:img.tag()"/>
-    <div class="stats">
-        <h2 i18n:translate="">Stats</h2>
-        <div class="stats_list">
-            <div class="stats_box">
-                <span class="stats_title" i18n:translate="">Talks</span><br />
-                <span class="stats_number" tal:content="python:len(view.talks())">12</span><br />
-            </div>
-            <div class="stats_box" tal:condition="voters">
-                <span class="stats_title" i18n:translate="">Votes</span><br />
-                <span class="stats_number" tal:content="python:len(voters)">12</span><br />
-            </div>
-        </div>
-    </div>
-	<div class="clear"> </div>
-    <div tal:condition="view/can_view_voters">
-        <h2 i18n:translate="">Voters</h2>
-        <div class="voter" tal:repeat="voter voters">
-            <a href="" 
-               class="voter_details_link"
-               tal:define="fullname python:voter[0];
-                           email python:voter[1];"
-                tal:attributes="href string:${context/absolute_url}/@@vote/${email};" tal:content="fullname">Genesio</a>
-            
-        </div>
-        <script type="text/javascript">
-        jQuery(function(){
-          jQuery('a.voter_details_link').prepOverlay({
-              subtype: 'ajax',
-              filter: '#content>*',
-              });
-        });
-        </script>
-    </div>
-	<div class="clear"> </div>
+                     talks view/talks;
+                     confirmed view/confirmed_talks;">
+
     <div tal:condition="cfp">
         <h2 i18n:translate="">Your talk here!</h2>
         <div class="talk_submission" i18n:translate="">Know about this tracks's subject and is willing to share with others? </div>        
@@ -62,7 +39,8 @@
     </div>
     <div class="clear"> </div>
     <h2 i18n:translate="">Selected talks</h2>
-    <div tal:define="talks view/confirmed_talks" class="talks_listing">
+        <div class="talks_selected" i18n:translate="">Here is a list of talks in this track that will be presented at our conference.</div>        
+    <div tal:define="talks confirmed" class="talks_listing">
         <div class="talks" tal:define="talks talks">
             <table class="grid" id="talks_ordering">
                 <thead>
@@ -98,6 +76,41 @@
             </script>
         </div>
     </div>
+    <div class="clear"> </div>
+    <div tal:condition="view/can_view_voters">
+        <h2 i18n:translate="">Voters</h2>
+        <div class="voter" tal:repeat="voter voters">
+            <a href="" 
+               class="voter_details_link"
+               tal:define="fullname python:voter[0];
+                           email python:voter[1];"
+                tal:attributes="href string:${context/absolute_url}/@@vote/${email};" tal:content="fullname">Genesio</a>
+            
+        </div>
+        <script type="text/javascript">
+        jQuery(function(){
+          jQuery('a.voter_details_link').prepOverlay({
+              subtype: 'ajax',
+              filter: '#content>*',
+              });
+        });
+        </script>
+    </div>
+    <div class="clear"> </div>
+    <div class="stats">
+        <h2 i18n:translate="">Stats</h2>
+        <div class="stats_list">
+            <div class="stats_box" tal:condition="talks">
+                <span class="stats_title" i18n:translate="">Submitted</span><br />
+                <span class="stats_number" tal:content="python:len(talks)">12</span><br />
+            </div>
+            <div class="stats_box" tal:condition="voters">
+                <span class="stats_title" i18n:translate="">Votes</span><br />
+                <span class="stats_number" tal:content="python:len(voters)">12</span><br />
+            </div>
+        </div>
+    </div>
+    <div class="clear"> </div>
   </metal:content-core>
 </metal:main>
 </body>
