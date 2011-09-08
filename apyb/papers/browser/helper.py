@@ -55,7 +55,6 @@ class View(grok.View):
         brains = self._ct.searchResults(**kw)
         return brains
     #
-    @memoize
     @property
     def tracks_dict(self):
         brains = self.tracks()
@@ -67,7 +66,6 @@ class View(grok.View):
                     for b in brains])
         return tracks
     #
-    @memoize
     @property
     def talks_dict(self):
         brains = self.talks()
@@ -83,7 +81,6 @@ class View(grok.View):
                     for b in brains])
         return talks
     #
-    @memoize
     @property
     def speakers_dict(self):
         brains = self.speakers()
@@ -127,7 +124,7 @@ class View(grok.View):
     def talks_username(self, username, **kw):
         # HACK: username is an email
         speakers_profiles = [b.UID for b in self.speakers_username(username)]
-        kw['speakers'] = speakers_profiles
+        kw['speakers'] = tuple(speakers_profiles)
         return self.talks(**kw)
     #
     @memoize

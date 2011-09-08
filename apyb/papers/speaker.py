@@ -161,7 +161,7 @@ class View(grok.View):
     def my_talks(self):
         ''' Return a list of my talks '''
         helper = self.helper
-        kw = {'speakers': [self.speaker_uid, ],
+        kw = {'speakers': (self.speaker_uid, ),
               'sort_on': 'sortable_title',
              }
         results = helper.talks(**kw)
@@ -170,7 +170,7 @@ class View(grok.View):
     def my_talks_accepted(self):
         ''' Return a list of my talks waiting for confirmation '''
         helper = self.helper
-        kw = {'speakers': [self.speaker_uid, ],
+        kw = {'speakers': (self.speaker_uid, ),
               'review_state': 'accepted',
               'sort_on': 'sortable_title',
              }
@@ -180,7 +180,7 @@ class View(grok.View):
     def my_talks_confirmed(self):
         ''' Return a list of my talks waiting for confirmation '''
         helper = self.helper
-        kw = {'speakers': [self.speaker_uid, ],
+        kw = {'speakers': (self.speaker_uid, ),
               'review_state': 'confirmed',
               'sort_on': 'sortable_title',
              }
