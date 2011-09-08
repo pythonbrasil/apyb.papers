@@ -129,6 +129,20 @@ class View(grok.View):
                                sort_limit=5,)
         return results[:5]
 
+
+class TalksView(View):
+    grok.name('talks')
+
+    def track_info(self,track_uid):
+        helper = self.helper
+        return helper.track_info(track_uid)
+    
+    def talks_confirmed(self):
+        ''' Return a list of confirmed talks '''
+        helper = self.helper
+        results = helper.talks(review_state='confirmed',sort_on='sortable_title',)
+        return results 
+
 class JSONView(View):
     grok.name('json')
     
