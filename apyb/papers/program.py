@@ -356,7 +356,7 @@ class Ranking(View):
     def ordered_talks(self):
         helper = self.helper
         kw = {}
-        kw['track'] = self.tracks_uids()
+        kw['track'] = tuple(self.tracks_uids())
         kw['sort_on'] = 'points'
         kw['sort_order'] = 'reverse'
         results = helper.talks(**kw)
