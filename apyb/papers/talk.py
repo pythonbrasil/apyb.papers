@@ -399,6 +399,7 @@ class JSONView(View):
         data = {'speakers':self.speakers()}
         data['url'] = self.context.absolute_url()
         data['title'] = self.context.title
+        data['summary'] = self.context.text
         data['creation_date'] = self.context.CreationDate()
         data['track'] = aq_parent(self.context).Title()
         data['language'] = self.context.language
