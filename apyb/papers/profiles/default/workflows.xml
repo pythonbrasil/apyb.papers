@@ -7,6 +7,9 @@
   <type type_id="apyb.papers.talk">
    <bound-workflow workflow_id="talk_workflow"/>
   </type>
+  <type type_id="apyb.papers.training">
+   <bound-workflow workflow_id="talk_workflow"/>
+  </type>
   <type type_id="apyb.papers.program">
    <bound-workflow workflow_id="program_workflow"/>
   </type>

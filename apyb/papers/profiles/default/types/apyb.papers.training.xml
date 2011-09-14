@@ -1,28 +1,28 @@
 <?xml version="1.0"?>
-<object name="apyb.papers.track"
+<object name="apyb.papers.training"
    meta_type="Dexterity FTI"
    i18n:domain="apyb.papers" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 
   <!-- Basic metadata -->
-  <property name="title" i18n:translate="">Track</property>
+  <property name="title" i18n:translate="">Training</property>
   <property name="description"
-    i18n:translate="">A track within a conference</property>
-  <property name="icon_expr">string:${portal_url}/++resource++apyb.papers/track-icon.png</property>
-  <property name="factory">apyb.papers.track</property>
+    i18n:translate="">Training in the conference</property>
+  <property name="icon_expr">string:${portal_url}/++resource++apyb.papers/program-icon.png</property>
+  <property name="factory">apyb.papers.program</property>
   <property name="global_allow">False</property>
   <property name="filter_content_types">True</property>  
   <property name="allowed_content_types">
-     <element value="apyb.papers.talk"/>
-     <element value="apyb.papers.training"/>
+      <element value="apyb.registration.training"/>
   </property>
   <property name="allow_discussion">False</property>
 
   <!-- schema and class used for content items -->
-  <property name="schema">apyb.papers.track.ITrack</property> 
-  <property name="klass">apyb.papers.track.Track</property>
+  <property name="schema">apyb.papers.training.ITraining</property> 
+  <property name="klass">apyb.papers.training.Training</property>
 
   <property name="behaviors">
      <element value="plone.app.content.interfaces.INameFromTitle" />
+     <element value="plone.app.dexterity.behaviors.metadata.IBasic"/>
    </property>
 
   <!-- View information -->
@@ -33,7 +33,7 @@
    <element value="view"/>
   </property>
   <property name="default_view_fallback">False</property>
-  <property name="add_permission">apyb.papers.AddTrack</property>
+  <property name="add_permission">apyb.papers.AddTraining</property>
 
 
   <!-- Method aliases -->

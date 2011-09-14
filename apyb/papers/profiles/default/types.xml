@@ -2,6 +2,7 @@
 <object name="portal_types" meta_type="Plone Types Tool">
   <!-- -*- extra stuff goes here -*- -->
   <object name="apyb.papers.speaker" meta_type="Dexterity FTI" />
+  <object name="apyb.papers.training" meta_type="Dexterity FTI" />
   <object name="apyb.papers.talk" meta_type="Dexterity FTI" />
   <object name="apyb.papers.track" meta_type="Dexterity FTI" />
   <object name="apyb.papers.program" meta_type="Dexterity FTI" />
