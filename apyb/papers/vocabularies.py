@@ -63,6 +63,7 @@ def speakersVocabulary(context):
     """
     ct = getToolByName(context,'portal_catalog')
     dictSearch = {'portal_type':'apyb.papers.speaker','sort_on':'sortable_title'}
+    speakers = ct.searchResults(**dictSearch)
     speakers = [SimpleTerm(b.UID,b.UID,b.Title) for b in speakers]
     return SimpleVocabulary(speakers)
 
