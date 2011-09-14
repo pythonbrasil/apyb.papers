@@ -29,7 +29,7 @@ setup(name='apyb.papers',
           'collective.autopermission',
           # -*- Extra requirements: -*-
           'sc.base.grokutils',
-          'collective.behavior.contactinfo==0.8',
+          'collective.behavior.contactinfo>0.8',
           'collective.z3cform.datagridfield==0.7',
           'collective.z3cform.datetimewidget==1.0.5',
           'plone.formwidget.autocomplete',
