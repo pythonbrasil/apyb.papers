@@ -83,3 +83,19 @@ registerSimpleVocabulary(
     globals()
 )
  
+def trainingsVocabulary(context):
+    """Vocabulary factory for speakers
+    """
+    ct = getToolByName(context,'portal_catalog')
+    dictSearch = {'portal_type':'apyb.papers.training',
+                  'sort_on':'sortable_title',
+                  'review_state':'confirmed'}
+    trainings = ct.searchResults(**dictSearch)
+    trainings = [SimpleTerm(b.UID,b.UID,b.Title) for b in trainings]
+    return SimpleVocabulary(trainings)
+
+registerSimpleVocabulary(
+    "Trainings", u"apyb.papers",
+    trainingsVocabulary,
+    globals()
+)
