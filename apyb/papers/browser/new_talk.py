@@ -40,6 +40,8 @@ class ITalkForm(ITalk):
             label=_(u"About the talk"),
             fields=['title','text','talk_type','track','language','level',]
     )
+    form.omitted('points')
+    form.omitted('votes')
     form.omitted('talk_type')
     form.omitted('location')
     form.omitted('startDate')
