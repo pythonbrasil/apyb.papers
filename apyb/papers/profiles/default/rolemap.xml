@@ -5,6 +5,10 @@
       <role name="Manager"/>
       <role name="Member"/>
     </permission>
+    <permission name="apyb.papers: Add Training" acquire="False">
+      <role name="Manager"/>
+      <role name="Editor"/>
+    </permission>
     <permission name="apyb.papers: Add Speaker" acquire="False">
       <role name="Manager"/>
       <role name="Member"/>
@@ -18,7 +22,7 @@
       <role name="Manager"/>
       <role name="Editor"/>
     </permission>
-    <permission name="apyb.papers: Organize Track" acquire="False">
+    <permission name="apyb.papers: Organize Talk" acquire="False">
       <role name="Editor"/>
       <role name="Reader"/>
     </permission>
