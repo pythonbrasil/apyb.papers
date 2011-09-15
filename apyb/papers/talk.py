@@ -341,7 +341,8 @@ class Talk(dexterity.Item):
 def startIndexer(obj):
     if obj.startDate is None:
         return None
-    return DateTime(obj.startDate.isoformat())
+    #HACK: Should look into tzinfo
+    return DateTime('%s-03:00' % obj.startDate.isoformat())
 grok.global_adapter(startIndexer, name="start")
 
 
@@ -349,7 +350,8 @@ grok.global_adapter(startIndexer, name="start")
 def endIndexer(obj):
     if obj.endDate is None:
         return None
-    return DateTime(obj.endDate.isoformat())
+    #HACK: Should look into tzinfo
+    return DateTime('%s-03:00' % obj.endDate.isoformat())
 grok.global_adapter(endIndexer, name="end")
 
 
