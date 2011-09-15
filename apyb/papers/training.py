@@ -1,20 +1,19 @@
 # -*- coding:utf-8 -*
+from five import grok
+from DateTime import DateTime
 from Acquisition import aq_inner
 
-from five import grok
-from plone.directives import dexterity, form
-
-from zope.component import getMultiAdapter
-
-from zope.component import getUtility
-from zope.app.intid.interfaces import IIntIds
-
 from zope import schema
+from zope.app.intid.interfaces import IIntIds
+from zope.component import getMultiAdapter
+from zope.component import getUtility
 
-from apyb.papers.talk import SpeakerSourceBinder
-from apyb.papers.talk import SpeakerFieldWidget
+from plone.directives import dexterity, form
+from plone.indexer import indexer
 
 from apyb.papers import MessageFactory as _
+from apyb.papers.talk import SpeakerSourceBinder
+from apyb.papers.talk import SpeakerFieldWidget
 
 
 class ITraining(form.Schema):
@@ -184,6 +183,22 @@ class Training(dexterity.Container):
     def uid(self):
         intids = getUtility(IIntIds)
         return intids.getId(self)
+
+
+@indexer(ITraining)
+def startIndexer(obj):
+    if obj.startDate is None:
+        return None
+    return DateTime(obj.startDate.isoformat())
+grok.global_adapter(startIndexer, name="start")
+
+
+@indexer(ITraining)
+def endIndexer(obj):
+    if obj.endDate is None:
+        return None
+    return DateTime(obj.endDate.isoformat())
+grok.global_adapter(endIndexer, name="end")
 
 
 class View(dexterity.DisplayForm):
