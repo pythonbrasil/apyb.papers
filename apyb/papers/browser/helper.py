@@ -49,6 +49,14 @@ class View(grok.View):
         return brains
     #
     @memoize
+    def trainings(self, **kw):
+        kw['portal_type'] = 'apyb.papers.training'
+        if not 'path' in kw:
+            kw['path'] = self._path
+        brains = self._ct.searchResults(**kw)
+        return brains
+    #
+    @memoize
     def speakers(self, **kw):
         kw['portal_type'] = 'apyb.papers.speaker'
         kw['path'] = self._path
@@ -80,6 +88,21 @@ class View(grok.View):
                                'json_url': '%s/json' % b.getURL(), })
                     for b in brains])
         return talks
+    #
+    @property
+    def trainings_dict(self):
+        brains = self.trainings()
+        trainings = dict([(b.UID, {'title': b.Title,
+                                   'description': b.Description,
+                                   'track': b.track,
+                                   'speakers': b.speakers,
+                                   'language': b.language,
+                                   'level': b.level,
+                                   'review_state': b.review_state,
+                                   'url': b.getURL(),
+                                   'json_url': '%s/json' % b.getURL(), })
+                    for b in brains])
+        return trainings
     #
     @property
     def speakers_dict(self):
