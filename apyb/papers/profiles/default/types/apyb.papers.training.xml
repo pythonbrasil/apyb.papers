@@ -7,8 +7,8 @@
   <property name="title" i18n:translate="">Training</property>
   <property name="description"
     i18n:translate="">Training in the conference</property>
-  <property name="icon_expr">string:${portal_url}/++resource++apyb.papers/program-icon.png</property>
-  <property name="factory">apyb.papers.program</property>
+  <property name="icon_expr">string:${portal_url}/++resource++apyb.papers/talk-icon.png</property>
+  <property name="factory">apyb.papers.training</property>
   <property name="global_allow">False</property>
   <property name="filter_content_types">True</property>  
   <property name="allowed_content_types">
