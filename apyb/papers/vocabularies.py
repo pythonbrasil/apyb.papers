@@ -51,8 +51,10 @@ registerSimpleVocabulary(
 registerSimpleVocabulary(
     "Rooms", u"apyb.papers.talk",
     [
-     ('room1',_(u'Room 1')),
-     ('room2',_(u'Room 2')),
+     ('dorneles-tremea',_(u'Auditório Dorneles Treméa')),
+     ('cleese',_(u'Sala John Cleese')),
+     ('idle',_(u'Sala Eric Idle')),
+     ('gillian',_(u'Sala Terry Gillian')),
     ],
     globals()
 )
