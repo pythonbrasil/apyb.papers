@@ -420,8 +420,8 @@ class View(dexterity.DisplayForm):
 
     @property
     def date(self):
-        start = self.context.start
-        return start.strftime('%d/%m')
+        date = self.context.start
+        return date.strftime('%d/%m')
 
     @property
     def start(self):
