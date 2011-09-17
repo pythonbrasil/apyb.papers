@@ -1,0 +1,31 @@
+/*Registration*/
+
+.talk_schedule {
+    color:#444;
+    font-family:"Helvetica Neue", Arial, FreeSans, sans-serif;
+    float:right;
+    background: none repeat scroll 0 0 #F1F1F1;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    width: 140px;
+    text-align:center;
+    padding:10px;
+}
+.talk_room {
+    font-size: 1.0em;
+    font-weight: normal;
+    padding-bottom:15px;
+}
+.talk_date {
+    font-size: 1.5em;
+    font-weight: bold;
+    padding-bottom:15px;
+}
+
+.talk_hour {
+    font-size: 1.5em;
+    font-weight: bold;
+    padding-bottom:10px;
+}

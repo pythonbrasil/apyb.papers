@@ -10,12 +10,14 @@ from zope.app.intid.interfaces import IIntIds
 
 from zope.component import getMultiAdapter
 from zope.component import getUtility
+from zope.component import queryUtility
 
 from zope.interface import Interface
 from zope.interface import implements
 from zope.interface import  implementer
 
 from zope import schema
+from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleTerm
 from zope.schema.vocabulary import SimpleVocabulary
@@ -374,9 +376,20 @@ class View(dexterity.DisplayForm):
         self._mt = self.tools.membership()
         self._wt = self.tools.workflow()
         self.member = self.portal.member()
+        voc_factory = queryUtility(IVocabularyFactory, 
+                                   'apyb.papers.talk.rooms')
+        self.rooms = voc_factory(self.context)
         self.roles_context = self.member.getRolesInContext(context)
         if not self.show_border:
             self.request['disable_border'] = True
+
+    @property
+    def show_calendar(self):
+        review_state = self._wt.getInfoFor(self.context,'review_state')
+        location = self.context.location
+        start = self.context.startDate
+        end = self.context.endDate
+        return (review_state == 'confirmed') and location and start and end
 
     @property
     def show_border(self):
@@ -397,6 +410,28 @@ class View(dexterity.DisplayForm):
         results = ct.searchResults(portal_type='apyb.papers.speaker',
                                    UID=speakers)
         return results
+
+    @property
+    def location(self):
+        rooms = self.rooms
+        location = self.context.location
+        term = rooms.getTerm(location)
+        return term.title
+
+    @property
+    def date(self):
+        start = self.context.start
+        return start.strftime('%d/%m')
+
+    @property
+    def start(self):
+        start = self.context.startDate
+        return start.strftime('%H:%M')
+
+    @property
+    def end(self):
+        end = self.context.endDate
+        return end.strftime('%H:%M')
 
 
 class JSONView(View):
