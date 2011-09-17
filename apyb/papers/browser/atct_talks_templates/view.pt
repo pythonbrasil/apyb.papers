@@ -42,17 +42,17 @@
                 </div>
               </metal:entry>
           </metal:block>
-        </metal:entries>
-            <script type="text/javascript">
-            jQuery(function(){
-              foo ='';
-              jQuery('a.talk_details_link').prepOverlay({
-                  subtype: 'ajax',
-                  filter: '#content>*',
-                  });
+          <script type="text/javascript">
+          jQuery(function(){
+            foo ='';
+            jQuery('a.talk_details_link').prepOverlay({
+                subtype: 'ajax',
+                filter: '#content>*',
+                });
 
-            });
-            </script>
+          });
+          </script>
+        </metal:entries>
       </metal:block>
   </metal:content-core>
 </metal:main>

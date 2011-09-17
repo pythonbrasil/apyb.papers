@@ -63,6 +63,12 @@ span.talk_track {
     padding:2px 0 0 0;
     vertical-align: middle;
 }
+
+a.talk_details_link {
+    background: url("lupa-detalhes.png") no-repeat right center !important;
+    padding-right: 20px !important;
+}
+
 .talk_listing_schedule .talk_room {
     font-size: 0.5em;
     font-weight: normal;
