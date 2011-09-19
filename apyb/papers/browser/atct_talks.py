@@ -30,16 +30,20 @@ class View(grok.View):
         program = portal.restrictedTraverse('2011/programacao/grade-do-evento')
         self.helper = getMultiAdapter((program, self.request), name=u'helper')
     
-    def speaker_name(self,speaker_uids):
+    def speaker_name(self, speaker_uids):
         ''' Given a list os uids, we return a string with speakers names '''
         helper = self.helper
         speakers_dict = helper.speakers_dict
         results = [speaker for uid,speaker in speakers_dict.items() if uid in speaker_uids]
         return ', '.join([b['name'] for b in results])
     
-    def track_info(self,track_uid):
-        helper = self.helper
-        return helper.track_info(track_uid)
+    def track_info(self, track_uid):
+        if track_uid:
+            helper = self.helper
+            info = helper.track_info(track_uid)
+        else:
+            info = {'title': 'PythonBrasil[7]',}
+        return info
 
     def show_calendar(self, item):
         location = item.location
