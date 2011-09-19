@@ -54,7 +54,9 @@ registerSimpleVocabulary(
      ('dorneles-tremea',_(u'Auditório Dorneles Treméa')),
      ('cleese',_(u'Sala John Cleese')),
      ('idle',_(u'Sala Eric Idle')),
-     ('gillian',_(u'Sala Terry Gillian')),
+     ('gillian',_(u'Sala Terry Gilliam')),
+     ('amcham',_(u'AMCHAM Business Center')),
+     ('outro',_(u'---')),
     ],
     globals()
 )
