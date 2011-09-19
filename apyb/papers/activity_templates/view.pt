@@ -30,7 +30,7 @@
       </div>
   </div>
     <div class="talk_details">
-        <h2 i18n:translate="">Talk details</h2>
+        <h2 i18n:translate="">Activity details</h2>
         <div>
             <strong i18n:translate="">Summary:</strong>
             <div tal:replace="structure context/text" />
