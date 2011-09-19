@@ -5,6 +5,10 @@
       <role name="Manager"/>
       <role name="Member"/>
     </permission>
+    <permission name="apyb.papers: Add Activity" acquire="False">
+      <role name="Manager"/>
+      <role name="Editor"/>
+    </permission>
     <permission name="apyb.papers: Add Training" acquire="False">
       <role name="Manager"/>
       <role name="Editor"/>

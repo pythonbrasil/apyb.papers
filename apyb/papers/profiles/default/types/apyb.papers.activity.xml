@@ -1,32 +1,24 @@
 <?xml version="1.0"?>
-<object name="apyb.papers.program"
+<object name="apyb.papers.activity"
    meta_type="Dexterity FTI"
    i18n:domain="apyb.papers" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 
   <!-- Basic metadata -->
-  <property name="title" i18n:translate="">Program</property>
+  <property name="title" i18n:translate="">Activity</property>
   <property name="description"
-    i18n:translate="">Conference Program</property>
-  <property name="icon_expr">string:${portal_url}/++resource++apyb.papers/program-icon.png</property>
-  <property name="factory">apyb.papers.program</property>
-  <property name="global_allow">True</property>
-  <property name="filter_content_types">True</property>  
-  <property name="allowed_content_types">
-     <element value="Folder"/>
-     <element value="apyb.papers.speaker"/>
-     <element value="apyb.papers.activity"/>
-     <element value="apyb.papers.talk"/>
-     <element value="apyb.papers.track"/>
-  </property>
+    i18n:translate="">An activity in the conference</property>
+  <property name="icon_expr">string:${portal_url}/++resource++apyb.papers/talk-icon.png</property>
+  <property name="factory">apyb.papers.activity</property>
+  <property name="global_allow">False</property>
+  <property name="filter_content_types">False</property>  
+  <property name="allowed_content_types" />
   <property name="allow_discussion">False</property>
-
   <!-- schema and class used for content items -->
-  <property name="schema">apyb.papers.program.IProgram</property> 
-  <property name="klass">apyb.papers.program.Program</property>
+  <property name="schema">apyb.papers.activity.IActivity</property> 
+  <property name="klass">apyb.papers.activity.Activity</property>
 
   <property name="behaviors">
      <element value="plone.app.content.interfaces.INameFromTitle" />
-     <element value="plone.app.dexterity.behaviors.metadata.IBasic"/>
    </property>
 
   <!-- View information -->
@@ -37,7 +29,7 @@
    <element value="view"/>
   </property>
   <property name="default_view_fallback">False</property>
-  <property name="add_permission">apyb.papers.AddProgram</property>
+  <property name="add_permission">apyb.papers.AddActivity</property>
 
 
   <!-- Method aliases -->

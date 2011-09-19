@@ -22,6 +22,10 @@
         title="apyb.papers: Add Talk"
       />
     <permission
+        id="apyb.papers.AddActivity"
+        title="apyb.papers: Add Activity"
+      />
+    <permission
         id="apyb.papers.AddTraining"
         title="apyb.papers: Add Training"
       />
