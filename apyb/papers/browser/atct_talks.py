@@ -32,10 +32,14 @@ class View(grok.View):
     
     def speaker_name(self, speaker_uids):
         ''' Given a list os uids, we return a string with speakers names '''
-        helper = self.helper
-        speakers_dict = helper.speakers_dict
-        results = [speaker for uid,speaker in speakers_dict.items() if uid in speaker_uids]
-        return ', '.join([b['name'] for b in results])
+        if speaker_uids:
+            helper = self.helper
+            speakers_dict = helper.speakers_dict
+            results = [speaker for uid,speaker in speakers_dict.items() if uid in speaker_uids]
+            speakers = ', '.join([b['name'] for b in results])
+        else:
+            speakers = 'PythonBrasil[7]'
+        return speakers
     
     def track_info(self, track_uid):
         if track_uid:
