@@ -56,6 +56,7 @@ registerSimpleVocabulary(
      ('idle',_(u'Sala Eric Idle')),
      ('gillian',_(u'Sala Terry Gilliam')),
      ('amcham',_(u'AMCHAM Business Center')),
+     ('globalcode',_(u'GlobalCode')),
      ('outro',_(u'---')),
     ],
     globals()
