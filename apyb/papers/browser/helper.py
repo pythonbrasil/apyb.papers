@@ -83,6 +83,9 @@ class View(grok.View):
                                'speakers': b.speakers,
                                'language': b.language,
                                'level': b.level,
+                               'location': b.location,
+                               'start': b.start,
+                               'end': b.end,
                                'review_state': b.review_state,
                                'url': b.getURL(),
                                'json_url': '%s/json' % b.getURL(), })
@@ -99,6 +102,9 @@ class View(grok.View):
                                    'language': b.language,
                                    'level': b.level,
                                    'review_state': b.review_state,
+                                   'location': b.location,
+                                   'start': b.start,
+                                   'end': b.end,
                                    'url': b.getURL(),
                                    'json_url': '%s/json' % b.getURL(), })
                     for b in brains])
