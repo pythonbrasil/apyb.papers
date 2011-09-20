@@ -9,7 +9,6 @@ from zope.component import getMultiAdapter, queryUtility
 from Products.ATContentTypes.interfaces import IATTopic
 
 
-
 class View(grok.View):
     grok.context(IATTopic)
     grok.require('zope2.View')
