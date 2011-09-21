@@ -29,4 +29,5 @@
  <column value="email"/>
  <column value="track"/>
  <column value="points"/>
+ <column value="seats"/>
 </object>
