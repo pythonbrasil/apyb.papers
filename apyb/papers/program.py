@@ -279,15 +279,23 @@ class Speakers(grok.View):
             talks = talks_speakers.get(speaker.UID,[])
             if not talks or uid in exclude:
                 continue
-            speakers_info.append((speaker.email,speaker.Title,self.speaker_registered(speaker.email)))
+            speakers_info.append((speaker.email,speaker.Title,self.speaker_registered(speaker)))
         return speakers_info
     
-    def speaker_registered(self,email):
+    def speaker_registered(self, speaker):
         ''' Is this speaker registered to the conference '''
+        kw = {'portal_type': 'apyb.registration.attendee',
+              'sort_on':'sortable_title'}
         status = u'Não'
-        results = self._ct.searchResults(portal_type='apyb.registration.attendee',
-                                         email=email,
-                                         sort_on='sortable_title')
+        email = speaker.email
+        name = speaker.fullname
+        kw_email = kw.copy()
+        kw_email['email'] = email
+        results = self._ct.searchResults(**kw_email)
+        if not results:
+            kw_name = kw.copy()
+            kw_name['title'] = name
+            results = self._ct.searchResults(**kw_name)
         if results:
             status = results[0].review_state
         return status
