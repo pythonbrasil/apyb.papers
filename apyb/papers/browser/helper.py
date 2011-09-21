@@ -95,7 +95,8 @@ class View(grok.View):
     @property
     def trainings_dict(self):
         brains = self.trainings()
-        trainings = dict([(b.UID, {'title': b.Title,
+        trainings = dict([(b.UID, {'uid': b.UID,
+                                   'title': b.Title,
                                    'description': b.Description,
                                    'track': b.track,
                                    'speakers': b.speakers,
