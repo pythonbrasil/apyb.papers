@@ -298,7 +298,6 @@ class Speakers(grok.View):
             results = self._ct.searchResults(**kw_name)
         if results:
             status = results[0].review_state
-        print name, status
         return status
     
     def speakers(self):
