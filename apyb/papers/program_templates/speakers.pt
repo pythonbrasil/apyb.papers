@@ -39,7 +39,7 @@
                 <td tal:content="speaker/organization">APyB</td>
                 <td tal:content="python:view.voc.getTerm(speaker.language).title">Gauches</td>
                 <td tal:content="speaker/email">foo@bar.com</td>
-                <td tal:content="python:view.speaker_registered(speaker.email)">foo@bar.com</td>
+                <td tal:content="python:view.speaker_registered(speaker)">foo@bar.com</td>
                 <td tal:define="talks python:talks_speakers.get(speaker.UID,{}).get('all',[])"
                     tal:content="python:len(talks)">2</td>
                 <td tal:define="talks python:talks_speakers.get(speaker.UID,{}).get('confirmed',[])"
