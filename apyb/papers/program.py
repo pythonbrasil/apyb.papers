@@ -4,22 +4,12 @@ import json
 from five import grok
 
 from Acquisition import aq_inner
-from Acquisition import aq_parent
 
 from zope.schema.interfaces import IVocabularyFactory
 from zope.component import getMultiAdapter, queryUtility
 
 from plone.directives import dexterity, form
 
-from zope import schema
-
-from z3c.form import group, field
-from plone.app.z3cform.wysiwyg import WysiwygFieldWidget
-
-from apyb.papers import MessageFactory as _
-
-
-# Interface class; used to define content-type schema.
 
 class IProgram(form.Schema):
     """
@@ -46,12 +36,14 @@ class View(grok.View):
         self.tools = getMultiAdapter((context, self.request), name=u'plone_tools')
         self.portal = getMultiAdapter((context, self.request), name=u'plone_portal_state')
         self.helper = getMultiAdapter((context, self.request), name=u'helper')
+        voc_factory = queryUtility(IVocabularyFactory, 
+                                   'apyb.papers.talk.rooms')
+        self.rooms = voc_factory(self.context)
         self._ct = self.tools.catalog()
         self._mt = self.tools.membership()
         self.is_anonymous = self.portal.anonymous()
         self.member = self.portal.member()
         self.stats = self.helper.program_stats()
-        roles_context = self.member.getRolesInContext(context)
         if not self.show_border:
             self.request['disable_border'] = True
     
@@ -142,7 +134,30 @@ class TalksView(View):
         ''' Return a list of confirmed talks '''
         helper = self.helper
         results = helper.talks(review_state='confirmed',sort_on='sortable_title',)
-        return results 
+        return results
+
+    def show_calendar(self, item):
+        location = item.location
+        start = item.start
+        end = item.end
+        return location and start and end
+
+    def location(self, item):
+        rooms = self.rooms
+        location = item.location
+        try:
+            term = rooms.getTerm(location)
+        except LookupError:
+            return 'PythonBrasil[7]'
+        return term.title
+
+    def date(self, item):
+        date = item.start
+        return date.strftime('%d/%m')
+
+    def start(self, item):
+        start = item.start
+        return start.strftime('%H:%M')
 
 class JSONView(View):
     grok.name('json')
@@ -213,7 +228,6 @@ class JSONView(View):
         return tracks
     
     def render(self):
-        request = self.request
         data = {'tracks':self.tracks()}
         data['url'] = self.context.absolute_url()
         data['title'] = self.context.title
@@ -237,7 +251,6 @@ class Speakers(grok.View):
         self.helper = getMultiAdapter((context, self.request), name=u'helper')
         self._ct = self.tools.catalog()
         self.member = self.portal.member()
-        roles_context = self.member.getRolesInContext(context)
         self.voc = queryUtility(IVocabularyFactory, 'apyb.papers.languages')(self.context)
         # Remove Portlets
         self.request['disable_plone.leftcolumn']=1
