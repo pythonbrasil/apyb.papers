@@ -239,3 +239,14 @@ class View(dexterity.DisplayForm):
                                    UID=speakers)
         #
         return results
+    #
+    def attendees(self):
+        ''' return a list of attendees '''
+        training_uid = self.context.uid
+        ct = self._ct
+        results = ct.searchResults(portal_type='apyb.registration.attendee',
+                                   trainings=training_uid,
+                                   review_state='confirmed',
+                                   sort_on='modified')
+        return results
+

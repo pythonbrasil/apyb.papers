@@ -51,6 +51,30 @@
             <div class="clear"> </div>
         </div>
     </div>
+    <div class="attendee_details">
+        <h2 i18n:translate="">Attendees details</h2>
+        <div id="attendees">
+            <table  class="listing">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th i18n:translate="">Name</th>
+                        <th i18n:translate="">Organization</th>
+                        <th i18n:translate="" tal:condition="view/show_border">E-mail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr tal:repeat="attendee view/attendees">
+                        <td tal:content="repeat/attendee/number">12</td>
+                        <td tal:condition="view/show_border"><a href="" tal:attributes="href attendee/getURL" tal:content="attendee/Title">Name</a></td>
+                        <td tal:condition="not:view/show_border" tal:content="attendee/Title">Name</td>
+                        <td tal:content="attendee/organization">Organization</td>
+                        <td  tal:condition="view/show_border" tal:content="attendee/email">Organization</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
   </metal:content-core>
 </metal:main>
 
