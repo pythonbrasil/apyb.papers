@@ -33,6 +33,22 @@ class View(grok.View):
     def render(self):
         return ''
     #
+    def speaker_image_from_brain(self, brain):
+        speaker = brain.getObject()
+        return self.speaker_image(speaker)
+    #
+    def speaker_image(self, speaker):
+        if not speaker.image:
+            return ''
+        images_view = getMultiAdapter((speaker, self.request),
+                                     name=u'images')
+        scale = images_view.scale('image',
+                                   width=150,
+                                   height=150,
+                                   direction='keep')
+        url = scale.absolute_url()
+        return url
+    #
     @memoize
     def tracks(self, **kw):
         kw['portal_type'] = 'apyb.papers.track'
@@ -114,6 +130,7 @@ class View(grok.View):
     #
     @property
     def speakers_dict(self):
+        spk_img = self.speaker_image_from_brain
         brains = self.speakers()
         speakers = dict([(b.UID, {'name': b.Title,
                      'organization': b.organization,
@@ -123,6 +140,7 @@ class View(grok.View):
                      'country': b.country,
                      'state': b.state,
                      'city': b.city,
+                     'image_url': spk_img(b),
                      'url': b.getURL(),
                      'json_url': '%s/json' % b.getURL(),
                      })

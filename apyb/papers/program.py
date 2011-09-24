@@ -172,6 +172,7 @@ class JSONView(View):
     
     def speakers_info(self,speakers):
         ''' Return a list of speakers in here '''
+        speaker_image = self.helper.speaker_image_from_brain
         brains = self._ct.searchResults(portal_type='apyb.papers.speaker',
                                          path=self._path,
                                          UID=speakers, 
@@ -185,6 +186,7 @@ class JSONView(View):
                        'state':brain.state,
                        'city':brain.city,
                        'language':brain.language,
+                       'image_url':speaker_image(brain),
                        'url':brain.getURL(),
                        'json_url':'%s/json' % brain.getURL(),
                        }

@@ -364,6 +364,12 @@ class View(dexterity.DisplayForm):
     def update(self):
         super(View, self).update()
         context = aq_inner(self.context)
+        parent = aq_parent(context)
+        if parent.portal_type=='apyb.papers.track':
+            track = parent
+            program = aq_parent(track)
+        else:
+            program = parent
         self.context = context
         self._path = '/'.join(context.getPhysicalPath())
         self.state = getMultiAdapter((context, self.request),
@@ -372,6 +378,8 @@ class View(dexterity.DisplayForm):
                                      name=u'plone_tools')
         self.portal = getMultiAdapter((context, self.request),
                                      name=u'plone_portal_state')
+        self.helper = getMultiAdapter((program, self.request),
+                                      name=u'helper')
         self._ct = self.tools.catalog()
         self._mt = self.tools.membership()
         self._wt = self.tools.workflow()
@@ -443,6 +451,7 @@ class JSONView(View):
 
     def speakers(self):
         ''' Return a list of speakers in here '''
+        speaker_image = self.helper.speaker_image_from_brain
         brains = super(JSONView, self).speaker_info()
         speakers = []
         for brain in brains:
@@ -453,6 +462,7 @@ class JSONView(View):
                        'state': brain.state,
                        'city': brain.city,
                        'language': brain.language,
+                       'image_url':speaker_image(brain),
                        'url': brain.getURL(),
                        'json_url': '%s/json' % brain.getURL(),
                        }

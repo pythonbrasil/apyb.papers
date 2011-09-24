@@ -214,6 +214,7 @@ class JSONView(View):
     #
     def render(self):
         talks = self.talks()
+        speaker_image = self.helper.speaker_image
         data = {'name': self.context.title,
                 'organization': self.context.organization,
                 'bio': self.context.description,
@@ -221,6 +222,7 @@ class JSONView(View):
                 'state': self.context.state,
                 'city': self.context.city,
                 'language': self.context.language,
+                'image_url': speaker_image(self.context),
                 'url': self.context.absolute_url(),
                }
         data['talks'] = talks

@@ -10,6 +10,7 @@ from plone.directives import dexterity, form
 from random import shuffle
 
 from Acquisition import aq_inner
+from Acquisition import aq_parent
 
 from zope.schema.interfaces import IVocabularyFactory
 from zope.component import getMultiAdapter, queryUtility
@@ -85,11 +86,17 @@ class View(grok.View):
     def update(self):
         super(View,self).update()
         context = aq_inner(self.context)
+        program = aq_paren(context)
         self.annotations = ordering.setupAnnotations(self.context)
         self._path = '/'.join(context.getPhysicalPath())
-        self.state = getMultiAdapter((context, self.request), name=u'plone_context_state')
-        self.tools = getMultiAdapter((context, self.request), name=u'plone_tools')
-        self.portal = getMultiAdapter((context, self.request), name=u'plone_portal_state')
+        self.state = getMultiAdapter((context, self.request),
+                                      name=u'plone_context_state')
+        self.tools = getMultiAdapter((context, self.request),
+                                      name=u'plone_tools')
+        self.portal = getMultiAdapter((context, self.request),
+                                      name=u'plone_portal_state')
+        self.helper = getMultiAdapter((program, self.request),
+                                      name=u'helper')
         self._ct = self.tools.catalog()
         self._mt = self.tools.membership()
         self.member = self.portal.member()
@@ -109,6 +116,7 @@ class View(grok.View):
     
     def speakers(self,speaker_uids):
         ''' Given a list os uids, we return a list of dicts with speakers data '''
+        speaker_image = self.helper.speaker_image_from_brain
         ct = self._ct
         brains = ct.searchResults(portal_type='apyb.papers.speaker',UID=speaker_uids)
         speakers = [{'name':b.Title,
@@ -117,6 +125,7 @@ class View(grok.View):
                      'country':b.country,
                      'state':b.state,
                      'city':b.city,
+                     'image_url':speaker_image(brain),
                      'url':b.getURL(),
                      'json_url':'%s/json' % b.getURL(),
                      } 
