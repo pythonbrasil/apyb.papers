@@ -86,7 +86,7 @@ class View(grok.View):
     def update(self):
         super(View,self).update()
         context = aq_inner(self.context)
-        program = aq_paren(context)
+        program = aq_parent(context)
         self.annotations = ordering.setupAnnotations(self.context)
         self._path = '/'.join(context.getPhysicalPath())
         self.state = getMultiAdapter((context, self.request),
