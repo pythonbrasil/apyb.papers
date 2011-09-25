@@ -9,11 +9,15 @@ from Acquisition import aq_parent
 from zope.component import getMultiAdapter
 
 from plone.namedfile.field import NamedImage
+from plone.formwidget.contenttree import ObjPathSourceBinder
 
 from zope import schema
 
 from zope.component import getUtility
 from zope.app.intid.interfaces import IIntIds
+from z3c.relationfield.schema import RelationChoice
+
+from apyb.registration.registration import IRegistration
 
 from apyb.papers import MessageFactory as _
 
@@ -71,6 +75,18 @@ class ISpeaker(form.Schema):
         required=False,
         description=_(u"Upload an image to be used as speakers' portrait."),
     )
+    #
+    form.fieldset('registration',
+            label=_(u"Registering Information"),
+            fields=['registration', ],
+    )
+    dexterity.read_permission(registration='cmf.ReviewPortalContent')
+    dexterity.write_permission(registration='cmf.ReviewPortalContent')
+    registration = RelationChoice(
+     title=_(u"Registration"),
+     source=ObjPathSourceBinder(object_provides=IRegistration.__identifier__),
+     required=False,
+    )
 
 
 class Speaker(dexterity.Item):
@@ -117,7 +133,7 @@ class View(grok.View):
                                       name=u'helper')
         self._ct = self.tools.catalog()
         self._mt = self.tools.membership()
-        self.speaker_uid =  self.context.UID()
+        self.speaker_uid = self.context.UID()
         self.member = self.portal.member()
         self.roles_context = self.member.getRolesInContext(context)
         if not self.show_border:
@@ -146,7 +162,7 @@ class View(grok.View):
                     for b in brains]
         return speakers
     #
-    def track_info(self,track_uid):
+    def track_info(self, track_uid):
         helper = self.helper
         return helper.track_info(track_uid)
     #
@@ -154,7 +170,7 @@ class View(grok.View):
         ''' Given a list os uids, we return a string with speakers names '''
         helper = self.helper
         speakers_dict = helper.speakers_dict
-        results = [speaker for uid,speaker in speakers_dict.items() 
+        results = [speaker for uid, speaker in speakers_dict.items()
                    if uid in speaker_uids]
         return ', '.join([b['name'] for b in results])
     #
