@@ -251,7 +251,7 @@ class ITalk(form.Schema):
     )
 
     dexterity.read_permission(points='zope2.View')
-    dexterity.write_permission(location='apyb.papers.AllocateTalk')
+    dexterity.write_permission(points='apyb.papers.AllocateTalk')
     points = schema.Float(
         title = _(u"Points"),
         description = _(u""),
@@ -259,7 +259,7 @@ class ITalk(form.Schema):
     )
 
     dexterity.read_permission(votes='zope2.View')
-    dexterity.write_permission(location='apyb.papers.AllocateTalk')
+    dexterity.write_permission(votes='apyb.papers.AllocateTalk')
     form.omitted('votes')
     votes = schema.Dict(
         title =_(u"Votes"),
