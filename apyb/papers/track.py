@@ -125,7 +125,7 @@ class View(grok.View):
                      'country':b.country,
                      'state':b.state,
                      'city':b.city,
-                     'image_url':speaker_image(brain),
+                     'image_url':speaker_image(b),
                      'url':b.getURL(),
                      'json_url':'%s/json' % b.getURL(),
                      } 
