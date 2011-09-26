@@ -384,7 +384,7 @@ class View(dexterity.DisplayForm):
         self._mt = self.tools.membership()
         self._wt = self.tools.workflow()
         self.member = self.portal.member()
-        voc_factory = queryUtility(IVocabularyFactory, 
+        voc_factory = queryUtility(IVocabularyFactory,
                                    'apyb.papers.talk.rooms')
         self.rooms = voc_factory(self.context)
         self.roles_context = self.member.getRolesInContext(context)
@@ -393,7 +393,7 @@ class View(dexterity.DisplayForm):
 
     @property
     def show_calendar(self):
-        review_state = self._wt.getInfoFor(self.context,'review_state')
+        review_state = self._wt.getInfoFor(self.context, 'review_state')
         location = self.context.location
         start = self.context.startDate
         end = self.context.endDate
@@ -462,12 +462,21 @@ class JSONView(View):
                        'state': brain.state,
                        'city': brain.city,
                        'language': brain.language,
-                       'image_url':speaker_image(brain),
+                       'image_url': speaker_image(brain),
                        'url': brain.getURL(),
                        'json_url': '%s/json' % brain.getURL(),
                        }
             speakers.append(speaker)
         return speakers
+
+    def location(self, value):
+        rooms = self.rooms
+        location = value
+        try:
+            term = rooms.getTerm(location)
+        except LookupError:
+            return 'PythonBrasil[7]'
+        return term.title
 
     def render(self):
         data = {'speakers': self.speakers()}
@@ -482,6 +491,10 @@ class JSONView(View):
         data['level'] = self.context.level
         data['points'] = self.context.points or 0.0
         data['state'] = self._wt.getInfoFor(self.context, 'review_state')
+        if data['state'] == 'confirmed':
+            data['talk_location'] = self.location(self.context.location)
+            data['talk_start'] = self.context.startDate
+            data['talk_end'] = self.context.endDate
         self.request.response.setHeader('Content-Type',
                                         'application/json;charset=utf-8')
         return json.dumps(data, encoding='utf-8', ensure_ascii=False)
