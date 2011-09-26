@@ -6,7 +6,8 @@ from plone.directives import dexterity, form
 from Acquisition import aq_inner
 from Acquisition import aq_parent
 
-from zope.component import getMultiAdapter
+from zope.schema.interfaces import IVocabularyFactory
+from zope.component import getMultiAdapter, queryUtility
 
 from plone.namedfile.field import NamedImage
 from plone.formwidget.contenttree import ObjPathSourceBinder
@@ -131,6 +132,9 @@ class View(grok.View):
                                       name=u'plone_portal_state')
         self.helper = getMultiAdapter((program, self.request),
                                       name=u'helper')
+        voc_factory = queryUtility(IVocabularyFactory,
+                                   'apyb.papers.talk.rooms')
+        self.rooms = voc_factory(self.context)
         self._ct = self.tools.catalog()
         self._mt = self.tools.membership()
         self.speaker_uid = self.context.UID()
@@ -209,6 +213,15 @@ class JSONView(View):
 
     template = None
 
+    def location(self, value):
+        rooms = self.rooms
+        location = value
+        try:
+            term = rooms.getTerm(location)
+        except LookupError:
+            return 'PythonBrasil[7]'
+        return term.title
+
     def talks(self):
         ''' Return a list of talks in here '''
         brains = super(JSONView, self).my_talks()
@@ -223,6 +236,10 @@ class JSONView(View):
             talk['language'] = brain.language
             talk['points'] = brain.points or 0.0
             talk['state'] = brain.review_state
+            if talk['state'] == 'confirmed':
+                talk['talk_location'] = self.location(brain.location)
+                talk['talk_start'] = brain.start
+                talk['talk_end'] = brain.end
             talk['url'] = '%s' % brain.getURL()
             talk['json_url'] = '%s/json' % brain.getURL()
             talks.append(talk)
