@@ -493,8 +493,8 @@ class JSONView(View):
         data['state'] = self._wt.getInfoFor(self.context, 'review_state')
         if data['state'] == 'confirmed':
             data['talk_location'] = self.location(self.context.location)
-            data['talk_start'] = self.context.startDate
-            data['talk_end'] = self.context.endDate
+            data['talk_start'] = self.context.startDate.asdatetime()
+            data['talk_end'] = self.context.endDate.asdatetime()
         self.request.response.setHeader('Content-Type',
                                         'application/json;charset=utf-8')
         return json.dumps(data, encoding='utf-8', ensure_ascii=False)
