@@ -492,8 +492,8 @@ class JSONView(View):
         data['points'] = self.context.points or 0.0
         data['state'] = self._wt.getInfoFor(self.context, 'review_state')
         if data['state'] == 'confirmed':
-            start = self.context.startDate.asdatetime()
-            end = self.context.endDate.asdatetime()
+            start = self.context.startDate
+            end = self.context.endDate
             data['talk_location'] = self.location(self.context.location)
             data['talk_start'] = start.isoformat()
             data['talk_end'] = end.isoformat()
