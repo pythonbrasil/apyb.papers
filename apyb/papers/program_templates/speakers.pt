@@ -20,16 +20,16 @@
                 <th i18n:translate="">Organization</th>
                 <th i18n:translate="">Language</th>
                 <th i18n:translate="">E-mail</th>
-                <th i18n:translate="">Registered</th>
+                <th i18n:translate="">Registration</th>
                 <th i18n:translate="">Sent</th>
                 <th i18n:translate="">Conf</th>
             </tr>
         </thead>
         <tbody>
             <tr tal:repeat="speaker view/speakers">
+                <tal:block tal:define="speaker_obj speaker/getObject;">
                 <td> 
-                    <tal:image   tal:define="speaker_obj speaker/getObject;
-                                       scale speaker_obj/@@images;
+                    <tal:image   tal:define="scale speaker_obj/@@images;
                                        img python:scale.scale('image', width=40, height=40, direction='keep');">
                     <img tal:condition="img"
                          tal:replace="structure python:img.tag()" />
@@ -39,11 +39,13 @@
                 <td tal:content="speaker/organization">APyB</td>
                 <td tal:content="python:view.voc.getTerm(speaker.language).title">Gauches</td>
                 <td tal:content="speaker/email">foo@bar.com</td>
-                <td tal:content="python:view.speaker_registered(speaker)">foo@bar.com</td>
+                <td><a href="" tal:content="python:view.registration_state(speaker_obj)"
+                               tal:attributes="href python:view.registration_url(speaker_obj)">foo@bar.com</a></td>
                 <td tal:define="talks python:talks_speakers.get(speaker.UID,{}).get('all',[])"
                     tal:content="python:len(talks)">2</td>
                 <td tal:define="talks python:talks_speakers.get(speaker.UID,{}).get('confirmed',[])"
                     tal:content="python:len(talks)">2</td>
+                </tal:block>
             </tr>
         </tbody>
     </table>

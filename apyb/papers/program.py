@@ -286,6 +286,7 @@ class Speakers(grok.View):
         self.helper = getMultiAdapter((context, self.request),
                                      name=u'helper')
         self._ct = self.tools.catalog()
+        self._wt = self.tools.workflow()
         self.member = self.portal.member()
         factory = queryUtility(IVocabularyFactory, 'apyb.papers.languages')
         self.voc = factory(self.context)
@@ -363,6 +364,24 @@ class Speakers(grok.View):
                                          path=self._path,
                                          sort_on='sortable_title')
         return results
+
+    def registration_state(self, speaker):
+        ''' Given a speaker object we return the workflow state 
+            of its attendee_object
+        '''
+        registration = speaker.registration
+        if registration:
+            wt = self._wt
+            attendee_object = registration.to_object
+            state = wt.getInfoFor(attendee_object,'review_state')
+            return state
+
+    def registration_url(self, speaker):
+        ''' Given a speaker object we return an url to its attendee_object '''
+        registration = speaker.registration
+        if registration:
+            attendee_object = registration.to_object
+            return attendee_object.absolute_url()
 
     @property
     def show_border(self):
