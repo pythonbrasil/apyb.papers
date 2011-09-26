@@ -492,9 +492,11 @@ class JSONView(View):
         data['points'] = self.context.points or 0.0
         data['state'] = self._wt.getInfoFor(self.context, 'review_state')
         if data['state'] == 'confirmed':
+            start = self.context.startDate.asdatetime()
+            end = self.context.endDate.asdatetime()
             data['talk_location'] = self.location(self.context.location)
-            data['talk_start'] = self.context.startDate.asdatetime()
-            data['talk_end'] = self.context.endDate.asdatetime()
+            data['talk_start'] = start.isoformat()
+            data['talk_end'] = end.isoformat()
         self.request.response.setHeader('Content-Type',
                                         'application/json;charset=utf-8')
         return json.dumps(data, encoding='utf-8', ensure_ascii=False)
