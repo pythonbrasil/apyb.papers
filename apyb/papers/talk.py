@@ -480,6 +480,7 @@ class JSONView(View):
 
     def render(self):
         data = {'speakers': self.speakers()}
+        data['id'] = self.context.uid
         data['url'] = self.context.absolute_url()
         data['title'] = self.context.title
         data['summary'] = self.context.text

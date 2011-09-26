@@ -230,6 +230,7 @@ class JSONView(View):
         talks = []
         for brain in brains:
             talk = {}
+            talk['id'] = brain.UID
             talk['creation_date'] = brain.CreationDate
             talk['title'] = brain.Title
             talk['description'] = brain.Description
