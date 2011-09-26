@@ -183,6 +183,15 @@ class JSONView(View):
         self._talks = dict([(b.UID, b)
                                for b in super(JSONView, self).tracks()])
 
+    def location(self, value):
+        rooms = self.rooms
+        location = value
+        try:
+            term = rooms.getTerm(location)
+        except LookupError:
+            return 'PythonBrasil[7]'
+        return term.title
+
     def speakers_info(self, speakers):
         ''' Return a list of speakers in here '''
         speaker_image = self.helper.speaker_image_from_brain
@@ -223,6 +232,10 @@ class JSONView(View):
             talk['language'] = brain.language
             talk['points'] = brain.points or 0.0
             talk['state'] = brain.review_state
+            if talk['state'] == 'confirmed':
+                talk['talk_location'] = self.location(brain.location)
+                talk['talk_start'] = brain.start
+                talk['talk_end'] = brain.end
             talk['url'] = '%s' % brain.getURL()
             talk['json_url'] = '%s/json' % brain.getURL()
             talks.append(talk)
