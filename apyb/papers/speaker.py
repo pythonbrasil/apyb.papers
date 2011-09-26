@@ -18,7 +18,7 @@ from zope.component import getUtility
 from zope.app.intid.interfaces import IIntIds
 from z3c.relationfield.schema import RelationChoice
 
-from apyb.registration.registration import IRegistration
+from apyb.registration.attendee import IAttendee
 
 from apyb.papers import MessageFactory as _
 
@@ -85,7 +85,7 @@ class ISpeaker(form.Schema):
     dexterity.write_permission(registration='cmf.ReviewPortalContent')
     registration = RelationChoice(
      title=_(u"Registration"),
-     source=ObjPathSourceBinder(object_provides=IRegistration.__identifier__),
+     source=ObjPathSourceBinder(object_provides=IAttendee.__identifier__),
      required=False,
     )
 
