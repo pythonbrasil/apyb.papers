@@ -55,14 +55,7 @@ class Generate(grok.View):
         self._mt = self.tools.membership()
         self._wt = self.tools.workflow()
         self.member = self.portal.member()
-        self.role_types = {'apyb': u'Participante',
-                           'student': u'Participante',
-                           'individual': u'Participante',
-                           'government': u'Participante',
-                           'group': u'Participante',
-                           'speaker': u'Palestrante',
-                           'sponsor': u'Participante',
-                           'organizer': u'Participante'}
+        self.role_types = {'speaker_c': u'Palestrante',}
 
     def generate(self, name, role, year=2011, url=None):
 
