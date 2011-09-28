@@ -19,6 +19,7 @@ from apyb.pythonbrasil.edition import IEdition
 
 base_path = os.path.dirname(mailers.__file__)
 
+BAD_CERT_FILE = '%s/certificate_resources/bad_certificado.png' % base_path
 CERT_FILE = '%s/certificate_resources/certificado.png' % base_path
 FONT_FILE = '%s/certificate_resources/Vera.ttf' % base_path
 
@@ -88,25 +89,25 @@ class Generate(grok.View):
         return output.getvalue()
 
     def render(self):
-        if not self.attendee_uid:
-            # We should raise an exception here
-            pass
-        url = '%s/%s' % (self.url, self.attendee_uid)
-        ct = self._ct
-        kw={}
-        kw['path'] = self.path
-        kw['portal_type'] = 'apyb.registration.attendee'
-        kw['UID'] = int(self.attendee_uid)
-        #kw['review_state'] = 'attended'
-        brains = ct.unrestrictedSearchResults(**kw)
-        if not brains:
-            # We should raise an exception here
-            pass
-        # should be only one
-        result = brains[0]
-        name = result.Title
-        att_role = self.role_types.get(result.Subject[0], 'Participante')
-        image = self.generate(name, att_role, year=2011, url=url)
+        image = None
+        if self.attendee_uid and self.attendee_uid.isdigit():
+            url = '%s/%s' % (self.url, self.attendee_uid)
+            ct = self._ct
+            kw={}
+            kw['path'] = self.path
+            kw['portal_type'] = 'apyb.registration.attendee'
+            kw['UID'] = int(self.attendee_uid)
+            #kw['review_state'] = 'attended'
+            brains = ct.unrestrictedSearchResults(**kw)
+            if brains:
+                # should be only one
+                result = brains[0]
+                name = result.Title
+                att_role = self.role_types.get(result.Subject[0], 
+                                               'Participante')
+                image = self.generate(name, att_role, year=2011, url=url)
+        if not image:
+            image = open(BAD_CERT_FILE).read()
         self.request.response.setHeader('Content-Disposition',
                                         'attachment; filename="%s.png"' %
                                          str(self.attendee_uid))
