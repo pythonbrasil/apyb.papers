@@ -13,11 +13,11 @@ from zope.component import getMultiAdapter
 
 from zope.publisher.interfaces import IPublishTraverse
 
-from apyb.papers.browser import mailer
+from apyb.papers.browser import mailers
 
 from apyb.pythonbrasil.edition import IEdition
 
-base_path = os.path.dirname(mailer.__file__)
+base_path = os.path.dirname(mailers.__file__)
 
 CERT_FILE = '%s/certificate_resources/certificado.png' % base_path
 FONT_FILE = '%s/certificate_resources/Vera.ttf' % base_path
@@ -26,7 +26,7 @@ FONT_FILE = '%s/certificate_resources/Vera.ttf' % base_path
 class Generate(grok.View):
     grok.context(IEdition)
     grok.name('certificate')
-    grok.require('zope.Public')
+    grok.require('zope2.View')
     grok.implements(IPublishTraverse)
 
     attendee_uid = ''
@@ -63,23 +63,24 @@ class Generate(grok.View):
                            'sponsor': u'Participante',
                            'organizer': u'Participante'}
 
-    def generate(name, role, year=2011, url=None):
+    def generate(self, name, role, year=2011, url=None):
 
-        img = Image.open(CERT_FILE % year)
+        img = Image.open(CERT_FILE)
         draw = ImageDraw.Draw(img)
 
         font = ImageFont.truetype(FONT_FILE, 128)
 
-        pos = 1750, 1620
+        pos = 1050, 1620
         draw.text(pos, name, font=font)
 
-        pos = 3500, 2230
+        pos = 3000, 2230
         draw.text(pos, role, font=font)
 
         if url:
-            pos = 3060, 3400
+            text = u'Certificado gerado em %s'
+            pos = 1800, 3400
             font = ImageFont.truetype(FONT_FILE, 45)
-            draw.text(pos, url, font=font)
+            draw.text(pos, text % url, font=font)
 
         output = StringIO()
         img.save(output, format='PNG')
@@ -90,12 +91,12 @@ class Generate(grok.View):
         if not self.attendee_uid:
             # We should raise an exception here
             pass
-        url = '%s/%s' % (self.url, str(self.attendee_uid))
+        url = '%s/%s' % (self.url, self.attendee_uid)
         ct = self._ct
         kw={}
         kw['path'] = self.path
         kw['portal_type'] = 'apyb.registration.attendee'
-        kw['UID'] = self.attendee_uid
+        kw['UID'] = int(self.attendee_uid)
         #kw['review_state'] = 'attended'
         brains = ct.unrestrictedSearchResults(**kw)
         if not brains:
