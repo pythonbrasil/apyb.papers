@@ -97,7 +97,7 @@ class Generate(grok.View):
             kw['path'] = self.path
             kw['portal_type'] = 'apyb.registration.attendee'
             kw['UID'] = int(self.attendee_uid)
-            #kw['review_state'] = 'attended'
+            kw['review_state'] = 'attended'
             brains = ct.unrestrictedSearchResults(**kw)
             if brains:
                 # should be only one
