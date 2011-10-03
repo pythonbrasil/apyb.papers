@@ -49,7 +49,7 @@ class Generate(grok.View):
                                      name=u'plone_tools')
         self.portal = getMultiAdapter((context, self.request),
                                      name=u'plone_portal_state')
-        self.url = '%s/certificate/' % (self.state.canonical_object_url())
+        self.url = '%s/certificate' % (self.state.canonical_object_url())
         self.path = '/'.join(context.getPhysicalPath())
         self._ct = self.tools.catalog()
         self._mt = self.tools.membership()
