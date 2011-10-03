@@ -65,6 +65,7 @@ class Generate(grok.View):
         font = ImageFont.truetype(FONT_FILE, 128)
 
         pos = 1050, 1620
+        name = name.encode('latin-1')
         draw.text(pos, name, font=font)
 
         pos = 3000, 2230
